@@ -1,4 +1,3 @@
-
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
@@ -810,7 +809,18 @@ SNS○万人・観客○人・メディア露出○件。
 
     <!-- クラブ資料 -->
     <div id="p-club" class="pg"><div class="scr">
-      <div class="ph"><h2>各クラブ資料</h2><p>資料が届いたらここに貼る</p></div>
+      <div class="ph"><h2>各クラブ資料</h2><p>資料が届いたらURLを貼って「開く」ボタンで即アクセス</p></div>
+
+      <div class="card" style="background:#EFF6FF;border:1px solid #BFDBFE">
+        <span class="bdg btea">📌 Google Drive共有フォルダの作り方</span>
+        <ol style="margin:10px 0 0;padding-left:18px;font-size:13px;line-height:2;color:var(--color-text-secondary)">
+          <li>Google Driveで「知変創造」フォルダを作成</li>
+          <li>クラブごとにサブフォルダを作成（提案書・契約書・数字資料などを格納）</li>
+          <li>フォルダを右クリック →「共有」→ 野村さんのGmailを追加</li>
+          <li>フォルダのリンクをコピーして下の各クラブ欄に貼り付ける</li>
+          <li>「開く」ボタンでいつでも即アクセス</li>
+        </ol>
+      </div>
 
       <!-- 山梨クィーンビーズ -->
       <div class="card">
@@ -818,8 +828,11 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
-            <textarea class="memo-ta" id="club-queens-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-queens-proposal')" style="min-height:60px"></textarea>
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="club-queens-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-queens-drive')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('club-queens-drive')" style="padding:8px 14px;background:#0C447C;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
@@ -832,11 +845,6 @@ SNS○万人・観客○人・メディア露出○件。
             <textarea class="memo-ta" id="club-queens-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-queens-plan')" style="min-height:60px"></textarea>
           </div>
 
-          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
-            <textarea class="memo-ta" id="club-queens-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-queens-contract')" style="min-height:60px"></textarea>
-          </div>
-
         </div>
       </div>
 
@@ -846,8 +854,11 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
-            <textarea class="memo-ta" id="club-sunrise-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-sunrise-proposal')" style="min-height:60px"></textarea>
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="club-sunrise-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-sunrise-drive')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('club-sunrise-drive')" style="padding:8px 14px;background:#E05A1A;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
@@ -860,11 +871,6 @@ SNS○万人・観客○人・メディア露出○件。
             <textarea class="memo-ta" id="club-sunrise-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-sunrise-plan')" style="min-height:60px"></textarea>
           </div>
 
-          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
-            <textarea class="memo-ta" id="club-sunrise-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-sunrise-contract')" style="min-height:60px"></textarea>
-          </div>
-
         </div>
       </div>
 
@@ -874,8 +880,11 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
-            <textarea class="memo-ta" id="club-beatrains-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-beatrains-proposal')" style="min-height:60px"></textarea>
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="club-beatrains-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-beatrains-drive')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('club-beatrains-drive')" style="padding:8px 14px;background:#C02080;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
@@ -886,11 +895,6 @@ SNS○万人・観客○人・メディア露出○件。
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
             <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
             <textarea class="memo-ta" id="club-beatrains-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-beatrains-plan')" style="min-height:60px"></textarea>
-          </div>
-
-          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
-            <textarea class="memo-ta" id="club-beatrains-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-beatrains-contract')" style="min-height:60px"></textarea>
           </div>
 
         </div>
@@ -940,8 +944,8 @@ const NXT_LABELS={
   'nxt-found':'全体 ── 独立・法人設立',
   'nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'
 };
+function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
 function nxtCheck(id){
-  const el=document.getElementById(id);
   if(!el)return;
   const cb=el.querySelector('input[type=checkbox]');
   const isDone=!el.classList.contains('done');
@@ -985,9 +989,9 @@ function renderNxt(){
   if(el)el.textContent=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+'('+w[d.getDay()]+')';
   try{const v=localStorage.getItem('ctfv3_m1');if(v){const e=document.getElementById('m1');if(e)e.value=v}}catch(e){}
   // クラブ資料の復元
-  ['club-queens-proposal','club-queens-stats','club-queens-plan','club-queens-contract',
-   'club-sunrise-proposal','club-sunrise-stats','club-sunrise-plan','club-sunrise-contract',
-   'club-beatrains-proposal','club-beatrains-stats','club-beatrains-plan','club-beatrains-contract'
+  ['club-queens-drive','club-queens-stats','club-queens-plan',
+   'club-sunrise-drive','club-sunrise-stats','club-sunrise-plan',
+   'club-beatrains-drive','club-beatrains-stats','club-beatrains-plan'
   ].forEach(id=>{try{const v=localStorage.getItem('ctfv3_'+id);if(v){const e=document.getElementById(id);if(e)e.value=v}}catch(e){}});
   // ネクストアクションの状態復元
   try{
