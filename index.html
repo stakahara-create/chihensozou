@@ -912,96 +912,32 @@ SNS○万人・観客○人・メディア露出○件。
 </div>
 
 <script>
+// ナビ・BMC・チェック（グローバル関数）
 const AP=['home','hojin','roles','bmc','flow','next','risk','call','meeting','club','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
-function tgB(id){
-  const bc=document.getElementById('bc'+id),bd=document.getElementById('bd'+id);
-  if(!bc||!bd)return;
-  const was=bd.classList.contains('op');
-  document.querySelectorAll('.bcbd').forEach(b=>b.classList.remove('op'));
-  document.querySelectorAll('.bc').forEach(b=>b.classList.remove('op'));
-  if(!was){bd.classList.add('op');bc.classList.add('op')}
-}
-function tc(r){r.classList.toggle('done');r.querySelector('input[type=checkbox]').checked=r.classList.contains('done')}
-let tmr={};
-function sm(id){clearTimeout(tmr[id]);tmr[id]=setTimeout(()=>{try{localStorage.setItem('ctfv3_'+id,document.getElementById(id).value)}catch(e){}const s=document.getElementById('s'+id.replace('m',''));if(s){s.style.display='block';setTimeout(()=>s.style.display='none',1400)}},600)}
-
-// ネクストアクション チェック→完了移動
-const NXT_LABELS={
-  'nxt-queens-contract':'山梨クィーンビーズ ── 契約締結',
-  'nxt-queens-approach':'山梨クィーンビーズ ── アプローチ開始',
-  'nxt-queens-first':'山梨クィーンビーズ ── 初成約1件を取る',
-  'nxt-queens-report':'山梨クィーンビーズ ── 月次レポート体制の確立',
-  'nxt-sunrise-contract':'上野原サンライズ ── 契約締結',
-  'nxt-sunrise-approach':'上野原サンライズ ── アプローチ開始',
-  'nxt-sunrise-first':'上野原サンライズ ── 初成約1件を取る',
-  'nxt-sunrise-report':'上野原サンライズ ── 月次レポート体制の確立',
-  'nxt-beatrains-contract':'八王子ビートレインズ ── 契約締結',
-  'nxt-beatrains-approach':'八王子ビートレインズ ── アプローチ開始',
-  'nxt-beatrains-first':'八王子ビートレインズ ── 初成約1件を取る',
-  'nxt-beatrains-report':'八王子ビートレインズ ── 月次レポート体制の確立',
-  'nxt-100':'全体 ── 月収100万を2〜3ヶ月継続',
-  'nxt-found':'全体 ── 独立・法人設立',
-  'nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'
-};
+function tgB(id){const bc=document.getElementById('bc'+id),bd=document.getElementById('bd'+id);if(!bc||!bd)return;const was=bd.classList.contains('op');document.querySelectorAll('.bcbd').forEach(b=>b.classList.remove('op'));document.querySelectorAll('.bc').forEach(b=>b.classList.remove('op'));if(!was){bd.classList.add('op');bc.classList.add('op')}}
 function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
-function nxtCheck(id){
-  const el=document.getElementById(id);
-  if(!el)return;
-  const cb=el.querySelector('input[type=checkbox]');
-  const isDone=!el.classList.contains('done');
-  el.classList.toggle('done',isDone);
-  cb.checked=isDone;
-  // localStorageに保存
-  try{
-    const saved=JSON.parse(localStorage.getItem('nxt_done')||'[]');
-    const updated=isDone?[...new Set([...saved,id])]:saved.filter(x=>x!==id);
-    localStorage.setItem('nxt_done',JSON.stringify(updated));
-  }catch(e){}
-  renderNxt();
-}
-function renderNxt(){
-  const doneCard=document.getElementById('done-card');
-  const doneList=document.getElementById('done-list');
-  const actionList=document.getElementById('action-list');
-  if(!doneCard||!doneList||!actionList)return;
-  // 完了済みリストを再描画
-  const doneItems=actionList.querySelectorAll('.ck.done');
-  if(doneItems.length>0){
-    doneCard.style.display='block';
-    doneList.innerHTML='';
-    doneItems.forEach(el=>{
-      const id=el.id;
-      const li=document.createElement('li');
-      li.textContent=NXT_LABELS[id]||id;
-      li.style.cursor='pointer';
-      li.title='クリックで戻す';
-      li.onclick=()=>nxtCheck(id);
-      doneList.appendChild(li);
-    });
-  } else {
-    doneCard.style.display='none';
-    doneList.innerHTML='';
-  }
-}
-(function(){
-  const d=new Date(),w=['日','月','火','水','木','金','土'];
-  const el=document.getElementById('nd');
-  if(el)el.textContent=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+'('+w[d.getDay()]+')';
-  try{const v=localStorage.getItem('ctfv3_m1');if(v){const e=document.getElementById('m1');if(e)e.value=v}}catch(e){}
-  // クラブ資料の復元
-  ['club-queens-drive','club-queens-stats','club-queens-plan',
-   'club-sunrise-drive','club-sunrise-stats','club-sunrise-plan',
-   'club-beatrains-drive','club-beatrains-stats','club-beatrains-plan'
-  ].forEach(id=>{try{const v=localStorage.getItem('ctfv3_'+id);if(v){const e=document.getElementById(id);if(e)e.value=v}}catch(e){}});
-  // ネクストアクションの状態復元
-  try{
-    const saved=JSON.parse(localStorage.getItem('nxt_done')||'[]');
-    saved.forEach(id=>{
-      const el=document.getElementById(id);
-      if(el){el.classList.add('done');const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=true;}
-    });
-    renderNxt();
-  }catch(e){}
-})()
+const NXT_LABELS={'nxt-queens-contract':'山梨クィーンビーズ ── 契約締結','nxt-queens-approach':'山梨クィーンビーズ ── アプローチ開始','nxt-queens-first':'山梨クィーンビーズ ── 初成約1件を取る','nxt-queens-report':'山梨クィーンビーズ ── 月次レポート体制の確立','nxt-sunrise-contract':'上野原サンライズ ── 契約締結','nxt-sunrise-approach':'上野原サンライズ ── アプローチ開始','nxt-sunrise-first':'上野原サンライズ ── 初成約1件を取る','nxt-sunrise-report':'上野原サンライズ ── 月次レポート体制の確立','nxt-beatrains-contract':'八王子ビートレインズ ── 契約締結','nxt-beatrains-approach':'八王子ビートレインズ ── アプローチ開始','nxt-beatrains-first':'八王子ビートレインズ ── 初成約1件を取る','nxt-beatrains-report':'八王子ビートレインズ ── 月次レポート体制の確立','nxt-100':'全体 ── 月収100万を2〜3ヶ月継続','nxt-found':'全体 ── 独立・法人設立','nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'};
+function renderNxt(){const doneCard=document.getElementById('done-card'),doneList=document.getElementById('done-list'),actionList=document.getElementById('action-list');if(!doneCard||!doneList||!actionList)return;const doneItems=actionList.querySelectorAll('.ck.done');if(doneItems.length>0){doneCard.style.display='block';doneList.innerHTML='';doneItems.forEach(el=>{const id=el.id;const li=document.createElement('li');li.textContent=NXT_LABELS[id]||id;li.style.cursor='pointer';li.title='クリックで戻す';li.onclick=()=>nxtCheck(id);doneList.appendChild(li)})}else{doneCard.style.display='none';doneList.innerHTML=''}}
+function nxtCheck(id){const el=document.getElementById(id);if(!el)return;const isDone=!el.classList.contains('done');el.classList.toggle('done',isDone);el.querySelector('input[type=checkbox]').checked=isDone;if(window._fbNxtCheck)window._fbNxtCheck(id,isDone);renderNxt()}
+window._smTmr={};
+function sm(id){const el=document.getElementById(id);if(!el)return;clearTimeout(window._smTmr[id]);window._smTmr[id]=setTimeout(()=>{if(window._fbSm)window._fbSm(id,el.value);const s=document.getElementById('s'+id.replace('m',''));if(s){s.style.display='block';setTimeout(()=>s.style.display='none',1400)}},600)}
+const d=new Date(),w=['日','月','火','水','木','金','土'];
+const ndEl=document.getElementById('nd');
+if(ndEl)ndEl.textContent=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+'('+w[d.getDay()]+')';
+</script>
+
+<script type="module">
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-database.js";
+const firebaseConfig={apiKey:"AIzaSyAGSoXmEiBCt8q62N8CAMMqDVLPgHB6nBE",authDomain:"company-efb27.firebaseapp.com",projectId:"company-efb27",storageBucket:"company-efb27.firebasestorage.app",messagingSenderId:"283506844161",appId:"1:283506844161:web:33f06404ce566ed9f29600",databaseURL:"https://company-efb27-default-rtdb.asia-southeast1.firebasedatabase.app"};
+const app=initializeApp(firebaseConfig);
+const db=getDatabase(app);
+const ROOT="terminal/v1";
+function fbSet(path,value){set(ref(db,ROOT+"/"+path),value).catch(e=>console.error("fbSet",e))}
+window._fbSm=function(id,value){fbSet("fields/"+id,value)}
+window._fbNxtCheck=function(id,isDone){fbSet("nxt/"+id,isDone)}
+const FIELDS=['m1','club-queens-drive','club-queens-stats','club-queens-plan','club-sunrise-drive','club-sunrise-stats','club-sunrise-plan','club-beatrains-drive','club-beatrains-stats','club-beatrains-plan'];
+onValue(ref(db,ROOT+"/fields"),snap=>{const data=snap.val()||{};FIELDS.forEach(id=>{const el=document.getElementById(id);if(el&&data[id]!==undefined&&document.activeElement!==el)el.value=data[id]})});
+onValue(ref(db,ROOT+"/nxt"),snap=>{const data=snap.val()||{};const NXT_LABELS=window.NXT_LABELS||{};Object.keys({'nxt-queens-contract':1,'nxt-queens-approach':1,'nxt-queens-first':1,'nxt-queens-report':1,'nxt-sunrise-contract':1,'nxt-sunrise-approach':1,'nxt-sunrise-first':1,'nxt-sunrise-report':1,'nxt-beatrains-contract':1,'nxt-beatrains-approach':1,'nxt-beatrains-first':1,'nxt-beatrains-report':1,'nxt-100':1,'nxt-found':1,'nxt-loan':1}).forEach(id=>{const el=document.getElementById(id);if(!el)return;const isDone=!!data[id];el.classList.toggle('done',isDone);const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=isDone});if(window.renderNxt)window.renderNxt()});
 </script>
