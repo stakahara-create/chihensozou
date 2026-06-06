@@ -946,6 +946,7 @@ const NXT_LABELS={
 };
 function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
 function nxtCheck(id){
+  const el=document.getElementById(id);
   if(!el)return;
   const cb=el.querySelector('input[type=checkbox]');
   const isDone=!el.classList.contains('done');
