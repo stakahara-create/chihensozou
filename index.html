@@ -1,0 +1,1002 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+body{font-family:var(--font-sans)}
+.app{display:flex;min-height:860px}
+.nav{width:172px;flex-shrink:0;background:var(--color-background-secondary);border-right:.5px solid var(--color-border-secondary);display:flex;flex-direction:column}
+.nlogo{padding:16px 14px 14px;border-bottom:.5px solid var(--color-border-secondary);display:flex;align-items:center;gap:10px}
+.nmark{width:36px;height:36px;border-radius:10px;background:#FAEEDA;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nmark i{font-size:19px;color:#633806}
+.ntitle{font-size:14px;font-weight:500;color:var(--color-text-primary)}
+.nsub{font-size:10px;color:var(--color-text-tertiary);margin-top:1px}
+.nb{padding:10px 8px;flex:1}
+.ng{font-size:9px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;padding:10px 8px 3px}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:all .12s}
+.ni i{font-size:15px;flex-shrink:0}
+.ni:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
+.ni.on{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500}
+.main{flex:1;min-width:0;background:var(--color-background-tertiary);overflow:auto}
+.pg{display:none}.pg.on{display:block}
+
+/* HOME */
+.hero{background:var(--color-background-primary);padding:48px 10% 44px;border-bottom:.5px solid var(--color-border-secondary)}
+.hero-eye{font-size:9px;letter-spacing:.22em;color:var(--color-text-tertiary);text-transform:uppercase;margin-bottom:14px}
+.hero-title{font-size:52px;font-weight:500;color:var(--color-text-primary);letter-spacing:.04em;line-height:1;margin-bottom:28px}
+.hs{display:inline-flex;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:13px}
+.hb{font-size:13px;color:var(--color-text-secondary);line-height:1.9;margin-bottom:26px}
+.hb p{margin-bottom:10px}.hb p:last-child{margin-bottom:0}
+.hbold{font-size:15px;font-weight:500;color:var(--color-text-primary);line-height:1.5;margin-bottom:10px}
+.mst{background:var(--color-background-secondary);padding:24px 10%;border-bottom:.5px solid var(--color-border-secondary);cursor:pointer}
+.mst-lbl{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.mst-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
+.mst-c{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:10px;padding:18px 14px;text-align:center}
+.mstv{font-size:24px;font-weight:500;color:var(--color-text-primary);line-height:1}
+.mstl{font-size:11px;color:var(--color-text-tertiary);margin-top:6px}
+.msts{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.bw{height:6px;background:var(--color-background-primary);border-radius:4px;overflow:hidden;margin-bottom:8px}
+.bf{height:100%;width:0;background:#378ADD;border-radius:4px}
+.bls{display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-tertiary)}
+
+/* INNER */
+.scr{padding:28px 10% 56px}
+.ph{margin-bottom:22px}
+.ph h2{font-size:20px;font-weight:500;color:var(--color-text-primary)}
+.ph p{font-size:13px;color:var(--color-text-tertiary);margin-top:4px}
+.card{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:12px;padding:22px 24px;margin-bottom:14px}
+.bdg{display:inline-flex;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px}
+.bpur{background:#EEEDFE;color:#3C3489}.btea{background:#E1F5EE;color:#085041}.bamb{background:#FAEEDA;color:#633806}.bblu{background:#E6F1FB;color:#0C447C}.bcor{background:#FAECE7;color:#712B13}.bpnk{background:#FBEAF0;color:#72243E}.bgrn{background:#EAF3DE;color:#27500A}.bgry{background:#F1EFE8;color:#444441}.bred{background:#FCEBEB;color:#791F1F}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.kv{display:flex;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.kv:last-child{border-bottom:none}
+.kvk{font-size:13px;color:var(--color-text-secondary)}
+.kvv{font-size:13px;font-weight:500;color:var(--color-text-primary);text-align:right;max-width:58%}
+ul.dl{list-style:none;padding:0}
+ul.dl li{font-size:13px;color:var(--color-text-secondary);padding:6px 0;border-bottom:.5px solid var(--color-border-tertiary);line-height:1.5;display:flex;gap:7px}
+ul.dl li:last-child{border-bottom:none}
+ul.dl li::before{content:"▸";color:var(--color-text-tertiary);font-size:11px;flex-shrink:0;margin-top:2px}
+.sr{display:flex;gap:14px;padding:13px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.sr:last-child{border-bottom:none}
+.sn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
+.sb h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.sb p{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
+.ck{display:flex;gap:10px;padding:11px 0;border-bottom:.5px solid var(--color-border-tertiary);cursor:pointer}
+.ck:last-child{border-bottom:none}
+.ck input{margin-top:3px;flex-shrink:0;width:15px;height:15px}
+.ckt h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.ckt p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
+.ck.done .ckt h4{text-decoration:line-through;color:var(--color-text-tertiary)}
+.ck.done .ckt p{color:var(--color-text-tertiary)}
+.rr{display:flex;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.rr:last-child{border-bottom:none}
+.rno{font-size:11px;font-weight:500;color:var(--color-text-tertiary);min-width:22px;margin-top:2px}
+.rw{flex:1}
+.rt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
+.rsub{font-size:12px;color:var(--color-text-tertiary);margin-top:4px;padding-left:10px;border-left:2px solid var(--color-border-secondary);line-height:1.5}
+.av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
+.mem{background:var(--color-background-secondary);border-radius:10px;padding:18px}
+.rbdg{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;flex-shrink:0;margin-top:2px;white-space:nowrap}
+.memo-ta{width:100%;min-height:200px;border:.5px solid var(--color-border-secondary);border-radius:8px;padding:16px;font-size:13px;color:var(--color-text-primary);background:var(--color-background-primary);resize:vertical;font-family:var(--font-sans);line-height:1.7}
+.memo-ta:focus{outline:none;border-color:var(--color-border-primary)}
+.sv{font-size:11px;color:var(--color-text-tertiary);margin-top:5px;display:none}
+.mlbl{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+
+/* 法人化 */
+.th{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:28px 32px;margin-bottom:14px;display:flex;align-items:center;gap:32px}
+.th-big{flex-shrink:0;text-align:center}
+.th-yen{font-size:48px;font-weight:500;color:#fff;line-height:1}
+.th-lbl{font-size:11px;color:rgba(255,255,255,.7);margin-top:6px;letter-spacing:.04em}
+.th-desc{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
+.th-div{width:.5px;background:rgba(255,255,255,.2);align-self:stretch;flex-shrink:0}
+.th-stats{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.ts{background:rgba(255,255,255,.1);border-radius:8px;padding:12px 14px;text-align:center}
+.tsv{font-size:22px;font-weight:500;color:#fff;line-height:1}
+.tsl{font-size:10px;color:rgba(255,255,255,.65);margin-top:5px;line-height:1.3}
+.mtc{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:12px;overflow:hidden;margin-bottom:14px}
+.mth{background:var(--color-background-secondary);padding:14px 20px;border-bottom:.5px solid var(--color-border-secondary);display:flex;align-items:center;gap:8px}
+.mth h3{font-size:13px;font-weight:500;color:var(--color-text-primary)}
+.mch{display:flex;padding:8px 20px;border-bottom:.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
+.mcm{font-size:10px;font-weight:500;color:var(--color-text-tertiary);width:80px;flex-shrink:0}
+.mcb{flex:1;padding:0 16px;font-size:10px;font-weight:500;color:var(--color-text-tertiary)}
+.mcn{display:flex;gap:16px;flex-shrink:0}
+.mcnum{font-size:10px;font-weight:500;color:var(--color-text-tertiary);width:52px;text-align:right}
+.mcnum.c{width:64px}
+.mr{display:flex;align-items:center;padding:12px 20px;border-bottom:.5px solid var(--color-border-tertiary)}
+.mr:last-child{border-bottom:none}
+.mr.hl{background:#EFF6FF}
+.mrm{font-size:13px;font-weight:500;color:var(--color-text-primary);width:80px;flex-shrink:0}
+.mrb{flex:1;padding:0 16px}
+.mrmb{height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
+.mrbf{height:100%;border-radius:4px;background:#378ADD}
+.mrn{display:flex;gap:16px;flex-shrink:0}
+.mrnum{font-size:12px;color:var(--color-text-secondary);width:52px;text-align:right}
+.mrnum.c{font-size:13px;font-weight:500;color:var(--color-text-primary);width:64px}
+.ac{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
+.ai{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:10px;padding:14px 16px}
+.ail{font-size:11px;color:var(--color-text-tertiary);margin-bottom:6px;font-weight:500}
+.aiv{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.4}
+.ais{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+
+/* BMC */
+.bg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.bc{background:var(--color-background-primary);border-radius:14px;overflow:hidden;border:.5px solid var(--color-border-secondary);transition:border-color .15s}
+.bc:hover{border-color:var(--color-border-primary)}
+.bc.op{border-color:var(--color-border-primary)}
+.bct{padding:16px 18px 14px;cursor:pointer;display:flex;flex-direction:column;gap:7px}
+.bcm{display:flex;align-items:center;justify-content:space-between}
+.bcnum{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em}
+.bctg i{font-size:13px;color:var(--color-text-tertiary);transition:transform .2s}
+.bc.op .bctg i{transform:rotate(180deg)}
+.bcl{display:inline-flex;font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;align-self:flex-start}
+.bctit{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
+.bcsub{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
+.bcbd{display:none;border-top:.5px solid var(--color-border-tertiary)}
+.bcbd.op{display:block}
+.bcs{padding:13px 18px;border-bottom:.5px solid var(--color-border-tertiary)}
+.bcs:last-of-type{border-bottom:none}
+.bcsl{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.bcsl i{font-size:12px}
+ul.bl{list-style:none;padding:0;display:flex;flex-direction:column;gap:5px}
+ul.bl li{font-size:12px;color:var(--color-text-secondary);line-height:1.55;display:flex;gap:7px}
+ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;flex-shrink:0;margin-top:2px}
+.bccl{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--color-text-tertiary);cursor:pointer;padding:10px 18px;border-top:.5px solid var(--color-border-tertiary);width:100%}
+.bccl:hover{color:var(--color-text-secondary)}
+.alpur{border-left:3px solid #7F77DD}.alamb{border-left:3px solid #D4903C}.altea{border-left:3px solid #1D9E75}.alcor{border-left:3px solid #C0552B}.algrn{border-left:3px solid #4A8C28}.alblu{border-left:3px solid #378ADD}.alpnk{border-left:3px solid #C0547A}.algry{border-left:3px solid #888880}.alred{border-left:3px solid #B03030}
+</style>
+
+<h2 class="sr-only">知変創造 カンパニーターミナル</h2>
+<div class="app">
+  <div class="nav">
+    <div class="nlogo"><div class="nmark"><i class="ti ti-basketball" aria-hidden="true"></i></div><div><div class="ntitle">知変創造</div><div class="nsub" id="nd"></div></div></div>
+    <div class="nb">
+      <div class="ng">ホーム</div><div class="ni on" onclick="go('home')"><i class="ti ti-home" aria-hidden="true"></i>ホーム</div>
+      <div class="ng">企業基盤</div><div class="ni" onclick="go('hojin')"><i class="ti ti-flag" aria-hidden="true"></i>法人化条件</div><div class="ni" onclick="go('roles')"><i class="ti ti-users" aria-hidden="true"></i>役割・体制・ルール</div>
+      <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
+      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('risk')"><i class="ti ti-shield" aria-hidden="true"></i>営業対策</div>
+      <div class="ng">営業スクリプト</div><div class="ni" onclick="go('call')"><i class="ti ti-phone" aria-hidden="true"></i>架電</div><div class="ni" onclick="go('meeting')"><i class="ti ti-users" aria-hidden="true"></i>商談</div>
+      <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
+      <div class="ng">メモ</div><div class="ni" onclick="go('memo')"><i class="ti ti-notes" aria-hidden="true"></i>メモ帳</div>
+    </div>
+  </div>
+
+  <div class="main">
+
+    <!-- HOME -->
+    <div id="p-home" class="pg on">
+      <div class="hero">
+        <div class="hero-eye">Company Terminal — Bリーグ・Wリーグ スポンサー営業代行</div>
+        <div class="hero-title">知変創造</div>
+        <div class="hs bpur">経営理念</div>
+        <div class="hb">私たちは、深く考え抜いた「知（仮説）」をもって環境の「変（変化）」を捉え、常に最適解を「創造」し続けるプロフェッショナル集団である。変化をリスクではなく起点とし、自らの思考をアップデートし続けることで、確かな価値を届けていく。</div>
+        <div class="hs btea">ビジョン</div>
+        <div class="hbold">「すべての地域に、自走する歓びを。」</div>
+        <div class="hb">私たちが創り出すのは、一時の支援ではなく、永続的に回り続ける歓びの好循環である。知性で変化を捉え、新しい価値を創造し続けることで、全国の事業が自立し、新たな雇用を生み、次の世代を育てる土壌をつくる。日本の隅々まで、挑戦の狼煙が上がり続ける未来を、私たちは実現する。</div>
+        <div class="hs bcor">創業の動機</div>
+        <div class="hb"><p>代表・高原、取締役・野村はともに山梨県の地方で育った。周りには畑、川、山。都市とは程遠い環境である。</p><p>しかしそこには、胸を熱くして事業に挑む経営者たちがいた。地方だから劣っているのではない。認知が届いていない。リーチの幅が狭い。それだけである。</p><p>良いサービスがある。熱意ある経営者がいる。しかし「営業できるリソースが少ない」「採用の手が届かない」「収益を上げる仕組みがない」という理由で、事業のポテンシャルが発揮されないまま終わっている現実がある。</p><p>これは地方の問題ではなく、仕組みの問題である。その仕組みを届けることが、私たちの出発点となった。</p><p>加えて我々のアイデンティティである、「バスケ」から出発することにした。</p></div>
+      </div>
+      <div class="mst" onclick="go('hojin')">
+        <div class="mst-lbl"><i class="ti ti-flag" style="font-size:14px" aria-hidden="true"></i>法人化マストアクション — クリックで詳細へ</div>
+        <div class="mst-g">
+          <div class="mst-c" style="border-left:3px solid #378ADD"><div class="mstv" style="color:#0C447C;font-size:30px">月収100万</div><div class="mstl">独立トリガー</div><div class="msts">2〜3ヶ月継続 → 独立</div></div>
+          <div class="mst-c"><div class="mstv">6ヶ月</div><div class="mstl">達成目標期間</div><div class="msts">月8社×毎月積み上げ</div></div>
+          <div class="mst-c"><div class="mstv">公庫融資</div><div class="mstl">独立後すぐ申請</div><div class="msts">日本政策金融公庫</div></div>
+        </div>
+        <div class="bw"><div class="bf"></div></div>
+        <div class="bls"><span>1ヶ月 17万</span><span>3ヶ月 51万</span><span>5ヶ月 85万</span><span>6ヶ月 102万 ★</span></div>
+      </div>
+    </div>
+
+    <!-- 法人化条件 -->
+    <div id="p-hojin" class="pg"><div class="scr">
+      <div class="ph"><h2>法人化条件</h2><p>この数字を達成したら独立・法人設立へ</p></div>
+      <div class="th"><div class="th-big"><div class="th-yen">月収100万</div><div class="th-lbl">独立トリガー</div><div class="th-desc">2〜3ヶ月継続 → 独立 → 公庫融資</div></div><div class="th-div"></div><div class="th-stats"><div class="ts"><div class="tsv">25%</div><div class="tsl">成果報酬率</div></div><div class="ts"><div class="tsv">年100万</div><div class="tsl">平均単価/社</div></div><div class="ts"><div class="tsv">月8.3万</div><div class="tsl">1社からの月収入</div></div><div class="ts"><div class="tsv">月8社</div><div class="tsl">毎月新規積み上げ</div></div><div class="ts"><div class="tsv">6ヶ月</div><div class="tsl">達成目安期間</div></div><div class="ts"><div class="tsv">公庫融資</div><div class="tsl">独立後すぐ申請</div></div></div></div>
+      <div class="mtc">
+        <div class="mth"><i class="ti ti-chart-bar" style="font-size:14px;color:var(--color-text-tertiary)" aria-hidden="true"></i><h3>月次シミュレーション（月8社積み上げモデル）</h3></div>
+        <div class="mch"><span class="mcm">月</span><span class="mcb">進捗</span><div class="mcn"><span class="mcnum">累計契約社数</span><span class="mcnum c">月収入</span></div></div>
+        <div class="mr"><span class="mrm">1ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:17%"></div></div></div><div class="mrn"><span class="mrnum">8社</span><span class="mrnum c">約17万</span></div></div>
+        <div class="mr"><span class="mrm">2ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:33%"></div></div></div><div class="mrn"><span class="mrnum">16社</span><span class="mrnum c">約34万</span></div></div>
+        <div class="mr"><span class="mrm">3ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:50%"></div></div></div><div class="mrn"><span class="mrnum">24社</span><span class="mrnum c">約51万</span></div></div>
+        <div class="mr"><span class="mrm">4ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:67%"></div></div></div><div class="mrn"><span class="mrnum">32社</span><span class="mrnum c">約68万</span></div></div>
+        <div class="mr"><span class="mrm">5ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:83%"></div></div></div><div class="mrn"><span class="mrnum">40社</span><span class="mrnum c">約85万</span></div></div>
+        <div class="mr hl"><span class="mrm" style="color:#0C447C">6ヶ月目★</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#0C447C"></div></div></div><div class="mrn"><span class="mrnum">48社</span><span class="mrnum c" style="color:#0C447C;font-size:14px">約102万</span></div></div>
+        <div class="mr" style="background:#EFF6FF"><span class="mrm" style="color:#0C447C">7〜8ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#378ADD"></div></div></div><div class="mrn"><span class="mrnum" style="color:#0C447C;font-size:12px">100万継続確認</span><span class="mrnum c" style="color:#0C447C">独立判断</span></div></div>
+      </div>
+      <div style="margin-bottom:10px"><span class="bdg bblu" style="margin-bottom:0">法人設立後のステップ</span></div>
+      <div class="ac">
+        <div class="ai"><div class="ail">資本金</div><div class="aiv">300万円</div><div class="ais">1,000万円未満で設定</div></div>
+        <div class="ai"><div class="ail">消費税免除</div><div class="aiv">法人設立後2年間</div><div class="ais">1,000万円未満設定で適用</div></div>
+        <div class="ai"><div class="ail">株式比率</div><div class="aiv">高原 60%　野村 40%</div><div class="ais">設立時に登記</div></div>
+        <div class="ai"><div class="ail">融資申請先</div><div class="aiv">日本政策金融公庫</div><div class="ais">新創業融資制度</div></div>
+        <div class="ai"><div class="ail">融資条件</div><div class="aiv">無担保・無保証人</div><div class="ais">金利2〜3% 上限〜1,000万円</div></div>
+        <div class="ai"><div class="ail">融資の使途</div><div class="aiv">投資のみ</div><div class="ais">営業ツール・採用・マーケティング</div></div>
+      </div>
+    </div></div>
+
+    <!-- 役割・体制・ルール -->
+    <div id="p-roles" class="pg"><div class="scr">
+      <div class="ph"><h2>役割・体制・ルール</h2><p>2人で動くための設計</p></div>
+      <div class="card"><span class="bdg bgrn">役割分担</span>
+        <div class="g2" style="margin-top:4px">
+          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:#E6F1FB;color:#0C447C">高原</div><div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">高原（代表）</div><div style="font-size:11px;color:var(--color-text-tertiary)">株式比率 60%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>バックオフィス全般（労務・総務・経理）</li><li>月次レポート最終確認・クラブへ提出</li><li>法人設立手続き・融資申請の主担当</li></ul></div>
+          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:#FAEEDA;color:#633806">野村</div><div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">野村（取締役）</div><div style="font-size:11px;color:var(--color-text-tertiary)">株式比率 40%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>SNS運用・コンテンツ企画の実施</li><li>採用支援業務の担当</li></ul></div>
+        </div>
+      </div>
+      <div class="card"><span class="bdg bgrn">資本・報酬の設計</span>
+        <div class="g2" style="margin-top:4px">
+          <div class="mem" style="padding:14px 16px"><div class="kv"><span class="kvk">資本金</span><span class="kvv">300万円</span></div><div class="kv"><span class="kvk">資本金の上限</span><span class="kvv">1,000万円未満</span></div></div>
+          <div class="mem" style="padding:14px 16px"><div class="kv"><span class="kvk">株式比率</span><span class="kvv">高原 60% ／ 野村 40%</span></div><div class="kv"><span class="kvk">報酬</span><span class="kvv">月収100万継続まで無報酬</span></div></div>
+        </div>
+      </div>
+      <div class="card"><span class="bdg bgrn">チームルール 8条</span>
+        <div class="rr"><span class="rno">01</span><div class="rw"><div class="rt">CRMは当日中に入力する。翌日持ち越し厳禁。</div></div></div>
+        <div class="rr"><span class="rno">02</span><div class="rw"><div class="rt">月次レポートは月末日までに各クラブへ提出。遅延なし。</div></div></div>
+        <div class="rr"><span class="rno">03</span><div class="rw"><div class="rt">対面商談を常に最優先とする。オンラインは仮の手段。</div></div></div>
+        <div class="rr"><span class="rno">04</span><div class="rw"><div class="rt">大前提として量の担保は重要。その上で4軸（認知・採用・CSR・ビジネス）で企業を選定してからアプローチする。</div><div class="rsub">量を確保しながら質にもこだわる。数と精度を両立させることで成約率を高める。</div></div></div>
+        <div class="rr"><span class="rno">05</span><div class="rw"><div class="rt">融資資金を生活費に使用しない。投資目的のみ。</div></div></div>
+        <div class="rr"><span class="rno">06</span><div class="rw"><div class="rt">意思決定は代表（高原）が最終判断。野村は意見を言う権利と義務を持つ。</div></div></div>
+        <div class="rr"><span class="rno">07</span><div class="rw"><div class="rt">互いの役割を尊重する。相手の担当領域への介入は事前に相談・合意の上で行う。</div><div class="rsub">役割を守りながらも、積極的に意見を言い合える関係を大切にする。</div></div></div>
+        <div class="rr"><span class="rno">08</span><div class="rw"><div class="rt">週1回、進捗・課題・翌週アクションを2人でレビューする。</div></div></div>
+      </div>
+    </div></div>
+
+    <!-- BMC -->
+    <div id="p-bmc" class="pg"><div class="scr">
+      <div class="ph"><h2>ビジネスモデルキャンバス</h2><p>全9ブロック — クリックで詳細を展開 <span style="font-size:11px;font-weight:500;padding:2px 8px;border-radius:20px;background:#F1EFE8;color:#444441;margin-left:6px">2026年5月更新</span></p></div>
+      <div class="bg">
+
+        <div class="bc alpur" id="bc01"><div class="bct" onclick="tgB('01')"><div class="bcm"><span class="bcnum">01</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bpur">CS 顧客セグメント</span><div class="bctit">独立採算型バスケクラブ</div><div class="bcsub">Bリーグ・Wリーグ 専任営業担当なし</div></div>
+          <div class="bcbd" id="bd01">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-basketball" aria-hidden="true"></i>Bリーグ 地方独立型（関東エリア）</div><ul class="bl"><li>B-One・B-Nextカテゴリのクラブ</li><li>親会社・大企業バックなし、独立採算運営</li><li>八王子ビートレインズ・東京ユナイテッドBCなど</li><li>年間スポンサー収入が総収益の50%以上を占める</li><li>専任営業担当者が不在、現場スタッフが兼任対応</li><li>選手が別の仕事をしながら競技している環境</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-star" aria-hidden="true"></i>Wリーグ クラブチーム</div><ul class="bl"><li>WFutureカテゴリの独立採算型クラブ</li><li>親会社なしで自力運営</li><li>山梨クィーンビーズなど地方密着型</li><li>専任営業担当者が不在、現場スタッフが兼任対応</li><li>スポンサー収入が収益の柱にもかかわらず営業リソース不足</li></ul></div>
+            <div class="bccl" onclick="tgB('01')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc alamb" id="bc02"><div class="bct" onclick="tgB('02')"><div class="bcm"><span class="bcnum">02</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bamb">VP 価値提案</span><div class="bctit">クラブの「外部営業部」</div><div class="bcsub">成果報酬・一貫代行・可視化・自走支援</div></div>
+          <div class="bcbd" id="bd02">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-briefcase" aria-hidden="true"></i>営業代行（コア）</div><ul class="bl"><li>スポンサー候補企業の選定・リストアップ</li><li>アプローチ・提案・商談・クロージングまで一貫代行</li><li>契約後のアップセル・フォローアップ・更新交渉</li><li>完全成果報酬（協賛金の20〜30%）でクラブのリスクゼロ</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-chart-bar" aria-hidden="true"></i>可視化・レポート</div><ul class="bl"><li>自社CRMを活用した進捗管理</li><li>月次KPIレポート（アプローチ数・商談数・成約数・獲得金額）</li><li>スポンサーROIの可視化レポートで継続率を向上</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-settings" aria-hidden="true"></i>営業コンサル・ツール導入支援</div><ul class="bl"><li>CRM・営業管理ツールの選定・導入支援</li><li>営業フロー・プロセスの設計・改善提案</li><li>クラブが自走できる営業基盤の構築サポート</li><li>ツール活用トレーニング・運用定着支援</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-brand-instagram" aria-hidden="true"></i>SNS支援</div><ul class="bl"><li>コンテンツ企画・撮影・編集・投稿</li><li>データ分析・改善提案</li><li>スポンサー露出コンテンツの制作</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-users" aria-hidden="true"></i>採用支援</div><ul class="bl"><li>採用ページの作成・求人票の設計</li><li>面接官代行・候補者対応</li><li>人材紹介・RPOとして体育会系人材の採用支援</li></ul></div>
+            <div class="bccl" onclick="tgB('02')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc altea" id="bc03"><div class="bct" onclick="tgB('03')"><div class="bcm"><span class="bcnum">03</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl btea">CH チャネル</span><div class="bctit">接点と届け方の設計</div><div class="bcsub">クラブへ・スポンサーへ両方向の経路</div></div>
+          <div class="bcbd" id="bd03">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-building" aria-hidden="true"></i>クラブ側（サービスを届ける経路）</div><ul class="bl"><li>代表・高原のバスケ競技経験・業界人脈による直接アプローチ</li><li>既存契約クラブからの紹介・口コミ</li><li>バスケ業界の連盟・関係者ネットワーク</li><li>スポーツビジネス系イベント・展示会</li><li>対面訪問・オンライン商談（Zoom・Meet等）</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-target" aria-hidden="true"></i>スポンサー企業側（営業先へのアプローチ経路）</div><ul class="bl"><li>手動リサーチによるターゲット企業の選定</li><li>電話・メール・DMによるアウトバウンド営業</li><li>地域商工会・経済団体を通じた紹介パイプライン</li><li>対面商談・クロージング（常に最優先）</li><li>将来：メディア・地方新聞社・行政との連携</li></ul></div>
+            <div class="bccl" onclick="tgB('03')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc alcor" id="bc04"><div class="bct" onclick="tgB('04')"><div class="bcm"><span class="bcnum">04</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bcor">CR 顧客との関係</span><div class="bctit">伴走型パートナー</div><div class="bcsub">外注ではなくチームの一員として稼働</div></div>
+          <div class="bcbd" id="bd04">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-door-enter" aria-hidden="true"></i>契約前</div><ul class="bl"><li>完全成果報酬による「まず試せる」関係の構築</li><li>リスクゼロで始められる提案でハードルを下げる</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-checks" aria-hidden="true"></i>契約後</div><ul class="bl"><li>外注ではなくチームの一員として稼働</li><li>月次KPIレポートによる完全透明な進捗共有</li><li>定期ミーティングによる方針・戦略のすり合わせ</li><li>成果報酬により利害を完全一致させる</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-infinity" aria-hidden="true"></i>長期関係</div><ul class="bl"><li>既存スポンサーの深耕・追加提案・金額アップ</li><li>ROI可視化レポートで継続率を向上</li><li>SNS・採用支援へ領域を拡張し、不可欠な存在へ</li></ul></div>
+            <div class="bccl" onclick="tgB('04')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc algrn" id="bc05"><div class="bct" onclick="tgB('05')"><div class="bcm"><span class="bcnum">05</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bgrn">RS 収益の流れ</span><div class="bctit">3フェーズ収益モデル</div><div class="bcsub">成果報酬 → 月額ストック → 採用支援</div></div>
+          <div class="bcbd" id="bd05">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-cash" aria-hidden="true"></i>Phase 1 — 成果報酬（現在・メイン）</div><ul class="bl"><li>スポンサー協賛金の20〜30%を報酬とする</li><li>例）100万円契約 → 25万円の報酬</li><li>例）300万円契約 → 75万円の報酬</li><li>複数クラブ×複数成約で収益を積み上げる</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-repeat" aria-hidden="true"></i>Phase 2 — 月額サポート（ストック収益化）</div><ul class="bl"><li>SNS運用：5〜15万円／月</li><li>営業支援：10〜30万円／月</li><li>スポンサー管理：5万円〜／月</li><li>複数クラブ展開でストック収益を安定化</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-users-plus" aria-hidden="true"></i>Phase 3 — 採用支援フィー（第3の柱）</div><ul class="bl"><li>人材紹介フィー：採用者年収の30〜35%</li><li>RPO（採用代行）：月額10〜50万円</li><li>体育会系人材を求める企業へのマッチング</li></ul></div>
+            <div class="bccl" onclick="tgB('05')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc alblu" id="bc06"><div class="bct" onclick="tgB('06')"><div class="bcm"><span class="bcnum">06</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bblu">KR 主要リソース</span><div class="bctit">競合優位の源泉</div><div class="bcsub">人・ツール・無形資産・財務</div></div>
+          <div class="bcbd" id="bd06">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-user-check" aria-hidden="true"></i>人的リソース</div><ul class="bl"><li>代表・高原：バスケ競技経験・法人営業経験・業界人脈</li><li>取締役・野村：営業担当・業界人脈</li><li>スポンサー候補企業のリサーチ・選定力</li><li>商談・クロージング力 ／ 提案書・営業資料の作成力</li><li>クラブ関係者・選手との信頼関係</li><li>地域企業へのリレーション構築力</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-tool" aria-hidden="true"></i>ツール・システム</div><ul class="bl"><li>CRMシステム・営業管理ツール</li><li>提案書テンプレート・月次KPIレポートテンプレート</li><li>SNS運用ツール</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-flame" aria-hidden="true"></i>無形資産</div><ul class="bl"><li>契約クラブとの信頼関係</li><li>スポーツ業界への深い理解</li><li>地方創生への共感と当事者意識</li><li>バスケ業界でのブランド認知</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-coin" aria-hidden="true"></i>財務リソース</div><ul class="bl"><li>資本金：300万円</li><li>日本政策金融公庫「新創業融資制度」（法人設立と同時に申請）</li></ul></div>
+            <div class="bccl" onclick="tgB('06')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc alpnk" id="bc07"><div class="bct" onclick="tgB('07')"><div class="bcm"><span class="bcnum">07</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bpnk">KA 主要活動</span><div class="bctit">毎日の中核業務</div><div class="bcsub">1日1時間、アポ取りに全集中</div></div>
+          <div class="bcbd" id="bd07">
+            <div class="bcs"><ul class="bl"><li>スポンサー候補企業のリサーチ・選定</li><li>提案書・営業資料の作成</li><li>アプローチ・商談・クロージング</li><li>契約締結・条件交渉</li><li>既存スポンサーのフォローアップ・アップセル提案</li><li>月次KPIレポートの作成・クラブへの提出</li><li>CRM管理・進捗データの更新</li><li>SNS・採用支援業務の実施</li></ul></div>
+            <div class="bccl" onclick="tgB('07')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc algry" id="bc08"><div class="bct" onclick="tgB('08')"><div class="bcm"><span class="bcnum">08</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bgry">KP パートナー</span><div class="bctit">エコシステムの構成員</div><div class="bcsub">クラブ・企業・団体・将来連携先</div></div>
+          <div class="bcbd" id="bd08">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-building" aria-hidden="true"></i>現在の契約クラブ</div><ul class="bl"><li>八王子ビートレインズ（Bリーグ・地域ブランド・選手情報の提供元）</li><li>山梨クィーンビーズ（Wリーグ・地元の信頼・紹介元）</li><li>東京ユナイテッドBC（Bリーグ・交渉中）</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-coin" aria-hidden="true"></i>スポンサー企業</div><ul class="bl"><li>地域密着の中小企業（採用・認知・CSRニーズ）</li><li>体育会系人材を採用したい企業（採用支援先）</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-network" aria-hidden="true"></i>紹介・パイプライン</div><ul class="bl"><li>地域商工会・経済団体（法人紹介のパイプライン）</li><li>バスケ業界の連盟・関係者ネットワーク</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-telescope" aria-hidden="true"></i>将来のパートナー</div><ul class="bl"><li>メディア・地方新聞社（クラブ・スポンサーの露出拡大）</li><li>行政・地方自治体（地域創生案件・補助金連携）</li><li>他クラブ・連盟（横展開・信頼拡大）</li></ul></div>
+            <div class="bccl" onclick="tgB('08')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+        <div class="bc alred" id="bc09"><div class="bct" onclick="tgB('09')"><div class="bcm"><span class="bcnum">09</span><div class="bctg"><i class="ti ti-chevron-down" aria-hidden="true"></i></div></div><span class="bcl bred">CS コスト構造</span><div class="bctit">低コスト構造</div><div class="bcsub">設備投資ゼロ・無報酬スタート・資本金300万</div></div>
+          <div class="bcbd" id="bd09">
+            <div class="bcs"><div class="bcsl"><i class="ti ti-user" aria-hidden="true"></i>人件費</div><ul class="bl"><li>法人化まで代表・取締役ともに無報酬</li><li>法人化後は月額ストック収益から報酬設計</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-receipt" aria-hidden="true"></i>固定費</div><ul class="bl"><li>CRM・営業管理ツール：月5,000〜30,000円</li><li>SNS運用ツール：月5,000〜10,000円</li><li>通信費・クラウドサービス：月数千円</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-arrow-up-down" aria-hidden="true"></i>変動費</div><ul class="bl"><li>交通費・対面商談コスト（成約率向上でペイ）</li><li>提案書・営業資料の印刷・制作費</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-rocket" aria-hidden="true"></i>初期投資</div><ul class="bl"><li>資本金：300万円</li><li>設備投資：ゼロ（営業代行は実物設備不要）</li><li>消費税免除：1,000万円未満設定で2年間適用</li></ul></div>
+            <div class="bcs"><div class="bcsl"><i class="ti ti-trending-up" aria-hidden="true"></i>融資後の投資先</div><ul class="bl"><li>CRM・営業ツールの高度化</li><li>SNS運用ツールの強化</li><li>採用・人件費は月額ストック収益でカバー</li></ul></div>
+            <div class="bccl" onclick="tgB('09')"><i class="ti ti-chevron-up" style="font-size:12px" aria-hidden="true"></i>閉じる</div>
+          </div>
+        </div>
+
+      </div>
+    </div></div>
+
+    <!-- 価値の流れ -->
+    <div id="p-flow" class="pg"><div class="scr">
+      <div class="ph"><h2>価値の流れ</h2><p>クラブ契約からスケールまでの6ステップ</p></div>
+      <div class="card">
+        <div class="sr"><div class="sn" style="background:#E1F5EE;color:#085041">1</div><div class="sb"><h4>クラブとの契約締結</h4><p>完全成果報酬型のためクラブ側リスクはゼロ。提案書持参・30分の面談から。地元出身・バスケ経験の感情的信頼を先に積む。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#EEEDFE;color:#3C3489">2</div><div class="sb"><h4>スポンサー候補を手動ピックアップ</h4><p>認知・採用・CSR・ビジネスマッチングの4軸で企業を選定。刺さる提案を設計してからアプローチ。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#FAEEDA;color:#633806">3</div><div class="sb"><h4>アプローチ → 商談 → クロージング</h4><p>月〜木、1日5社以上。対面商談を最優先。CRMで全進捗を当日中に記録。成約率目標10%。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">4</div><div class="sb"><h4>契約成立 → 成果報酬を受領</h4><p>協賛金の25%を受領。平均単価100万×25%＝25万円。月次レポートをクラブへ提出。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#FAECE7;color:#712B13">5</div><div class="sb"><h4>SNS強化でスポンサー価値を底上げ</h4><p>フォロワー増加→露出価値UP→協賛金単価UP の好循環。ROI可視化が継続・追加契約につながる。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#EAF3DE;color:#27500A">6</div><div class="sb"><h4>月収100万を2〜3ヶ月継続 → 独立・法人設立 → スケール</h4><p>複数クラブへ展開。日本政策金融公庫へ融資申請。月額ストック収益から報酬設計。採用支援・SNSが第3・第4の柱へ。</p></div></div>
+      </div>
+    </div></div>
+
+    <!-- ネクストアクション -->
+    <div id="p-next" class="pg"><div class="scr">
+      <div class="ph"><h2>ネクストアクション</h2><p>チェックすると完了済みへ移動</p></div>
+
+      <!-- 完了済みカード -->
+      <div class="card" id="done-card" style="display:none"><span class="bdg btea">✅ 完了済み</span>
+        <ul class="dl" id="done-list"></ul>
+      </div>
+
+      <!-- アクション中カード -->
+      <div class="card">
+        <span class="bdg bcor">🔥 あとはアクションするのみ！</span>
+        <div style="margin-top:12px" id="action-list">
+
+          <!-- 山梨クィーンビーズ -->
+          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px">🏀 山梨クィーンビーズ</div>
+          <div class="ck" id="nxt-queens-contract" onclick="nxtCheck('nxt-queens-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
+          <div class="ck" id="nxt-queens-approach" onclick="nxtCheck('nxt-queens-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
+          <div class="ck" id="nxt-queens-first" onclick="nxtCheck('nxt-queens-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
+          <div class="ck" id="nxt-queens-report" onclick="nxtCheck('nxt-queens-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
+
+          <!-- 上野原サンライズ -->
+          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">🏀 上野原サンライズ</div>
+          <div class="ck" id="nxt-sunrise-contract" onclick="nxtCheck('nxt-sunrise-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
+          <div class="ck" id="nxt-sunrise-approach" onclick="nxtCheck('nxt-sunrise-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
+          <div class="ck" id="nxt-sunrise-first" onclick="nxtCheck('nxt-sunrise-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
+          <div class="ck" id="nxt-sunrise-report" onclick="nxtCheck('nxt-sunrise-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
+
+          <!-- 八王子ビートレインズ -->
+          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">🏀 八王子ビートレインズ</div>
+          <div class="ck" id="nxt-beatrains-contract" onclick="nxtCheck('nxt-beatrains-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
+          <div class="ck" id="nxt-beatrains-approach" onclick="nxtCheck('nxt-beatrains-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
+          <div class="ck" id="nxt-beatrains-first" onclick="nxtCheck('nxt-beatrains-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
+          <div class="ck" id="nxt-beatrains-report" onclick="nxtCheck('nxt-beatrains-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
+
+          <!-- 全体共通 -->
+          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">📌 全体</div>
+          <div class="ck" id="nxt-100" onclick="nxtCheck('nxt-100')"><input type="checkbox"><div class="ckt"><h4>月収100万を2〜3ヶ月継続</h4><p>月8社×6ヶ月積み上げで月収102万が目安。継続確認してから独立判断。</p></div></div>
+          <div class="ck" id="nxt-found" onclick="nxtCheck('nxt-found')"><input type="checkbox"><div class="ckt"><h4>独立・法人設立</h4><p>資本金300万円。株式比率 高原60 / 野村40。消費税免除2年間を活用。</p></div></div>
+          <div class="ck" id="nxt-loan" onclick="nxtCheck('nxt-loan')"><input type="checkbox"><div class="ckt"><h4>日本政策金融公庫へ融資申請</h4><p>独立後すぐ。新創業融資制度。無担保・無保証人、上限〜1,000万円。</p></div></div>
+
+        </div>
+      </div>
+    </div></div>
+
+
+    <!-- リスクと対策 -->
+    <div id="p-risk" class="pg"><div class="scr">
+      <div class="ph"><h2>営業対策</h2><p>スポンサー営業特有の9つの壁と突破策</p></div>
+
+      <div class="card"><span class="bdg bcor">失注リスクと営業対策</span>
+        <p style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:14px">スポンサー営業特有の9つの壁と、具体的な突破策</p>
+
+        <div class="sr">
+          <div class="sn" style="background:#FCEBEB;color:#791F1F">1</div>
+          <div class="sb">
+            <h4>決裁者に会えない</h4>
+            <p>金額が大きいほど決裁層が上がる。担当者止まりでは成約しない。<br>
+            <strong>対策①</strong> 中小企業は社長直送のレター・DM営業を基本とする。「担当者を通して」ではなく「社長に直接お渡ししたい資料があります」と伝える。<br>
+            <strong>対策②</strong> 既存スポンサー企業から他社社長の紹介をもらう紹介営業を仕組み化する。<br>
+            <strong>対策③</strong> 大企業は役員・部長クラスのLinkedIn・SNSへの直接アプローチも活用する。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#FCEBEB;color:#791F1F">2</div>
+          <div class="sb">
+            <h4>稟議で落ちる</h4>
+            <p>担当者がいくら乗り気でも、上が通さなければ終わり。担当者を社内営業マンにする設計が必要。<br>
+            <strong>対策①</strong> 「稟議書のひな形」をこちらから渡す。担当者が書く手間をゼロにする。<br>
+            <strong>対策②</strong> 「上司への説明資料（A4 1枚）」を一緒に作る。ROI数値・他社導入事例を入れる。<br>
+            <strong>対策③</strong> 提案書には必ず「費用対効果の数字」を入れる。感情ではなく数字で稟議を通す。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#FAEEDA;color:#633806">3</div>
+          <div class="sb">
+            <h4>来期予算になる</h4>
+            <p>予算は年度で決まる。「今期はもう無理」は頻出。タイミングを読んで先手を打つ。<br>
+            <strong>対策①</strong> 予算編成時期（10〜11月）に逆算して9月末までに提案を完了させる。<br>
+            <strong>対策②</strong> 「来期の予算に入れてください。今から内諾だけいただければ動けます」と明示的に次を取る。<br>
+            <strong>対策③</strong> 来期見込みリストを別管理し、予算期前に必ずフォローする仕組みをCRMに組む。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#FAEEDA;color:#633806">4</div>
+          <div class="sb">
+            <h4>「検討します」で終わる</h4>
+            <p>最も多い実質断り。検討材料が足りていないか、優先度が低いかのどちらか。<br>
+            <strong>対策①</strong> 「何が決め手になりますか？」と必ず聞く。懸念を表面化させる。<br>
+            <strong>対策②</strong> 次のアクションを必ず設定する。「2週間後の○日にご連絡します」と自分から動く。<br>
+            <strong>対策③</strong> 「他にご検討中のスポンサー案件はありますか？」と競合状況を把握し、優先度を上げる工夫をする。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#FAEEDA;color:#633806">5</div>
+          <div class="sb">
+            <h4>契約まで3〜12ヶ月かかる</h4>
+            <p>スポンサー契約は長期検討が前提。1社に依存すると売上ゼロの月が続く。<br>
+            <strong>対策①</strong> 常に30〜50社を同時進行させる。パイプラインを常に太く保つ。<br>
+            <strong>対策②</strong> フェーズ管理（初回接触→提案済→検討中→内諾→契約）をCRMで可視化し、停滞案件を即把握する。<br>
+            <strong>対策③</strong> 早めの種まきを習慣化。今月の売上は3〜6ヶ月前のアプローチで決まると認識する。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#FAEEDA;color:#633806">6</div>
+          <div class="sb">
+            <h4>ROI・効果が見えない（全失注の根っこ）</h4>
+            <p>業種によって刺さるROIが全く違う。一律の提案では響かない。<br>
+            <strong>対策①</strong> 業種別ROI資料を作成する。不動産→地域認知、採用系→採用コスト比較、飲食→来客増、BtoB製造→福利厚生・社員モチベなど。<br>
+            <strong>対策②</strong> 数字で語る。「SNSリーチ○万人」「試合観客数○人」「メディア露出○件」を資料に明記する。<br>
+            <strong>対策③</strong> 成功事例を早期に作り、「この業種でこれだけ効果が出た」という実績を蓄積・活用する。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#E1F5EE;color:#085041">7</div>
+          <div class="sb">
+            <h4>担当者が社内で動いてくれない</h4>
+            <p>窓口は良いが上が動かない。担当者自身が動く理由を作る必要がある。<br>
+            <strong>対策①</strong> 「この提案を社内で通したら、担当者さんの評価につながります」と伝える。担当者のメリットを明示する。<br>
+            <strong>対策②</strong> 「今シーズン限りの価格」「枠が残り○社」など期限と希少性を設けて緊張感を作る。<br>
+            <strong>対策③</strong> 担当者が上に説明しやすいよう、口頭説明用の一言サマリー（30秒で話せる内容）を提供する。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#E1F5EE;color:#085041">8</div>
+          <div class="sb">
+            <h4>競合他社がすでにスポンサー</h4>
+            <p>同業他社の存在を嫌がるケースがある。事前確認と設計が必要。<br>
+            <strong>対策①</strong> 提案前に既存スポンサーリストを必ず確認し、同業種被りを事前に避ける。<br>
+            <strong>対策②</strong> 同業でも「プランを分ける（ロゴ掲載の露出場所を変える等）」設計で共存させる。<br>
+            <strong>対策③</strong> 逆手に取る。「同業の○○社が既に入っています。御社が入らないと差がつきます」という攻めのアプローチも有効。</p>
+          </div>
+        </div>
+
+        <div class="sr">
+          <div class="sn" style="background:#E1F5EE;color:#085041">9</div>
+          <div class="sb">
+            <h4>チームの知名度が低い</h4>
+            <p>「全国区の知名度がない」は地域密着型チームの宿命。知名度ではなく別の価値で売る。<br>
+            <strong>対策①</strong> 「全国区の知名度」ではなく「この地域での存在感と密着度」を数字で示す。SNSフォロワー数・試合観客数・メディア露出数を資料化する。<br>
+            <strong>対策②</strong> 「地域で応援されているチームを支援している企業」というイメージ価値・CSR視点で訴求する。<br>
+            <strong>対策③</strong> B.League昇格・地域No.1への成長ストーリーを語る。「今入ると創業スポンサーになれる」という先行者メリットを伝える。</p>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="card"><span class="bdg btea">揺るがない前提条件</span>
+        <ul class="dl"><li>独立型クラブは構造的に営業リソース不足 — 需要は確実に存在する</li><li>女子バスケのスポンサー市場はWNBAの成長を見れば拡大フェーズにある</li><li>完全成果報酬型はクラブの意思決定ハードルを最低化する</li><li>SNS×スポンサーの好循環は一度回り始めると自走する</li></ul>
+      </div>
+    </div></div>
+
+    <!-- 架電スクリプト -->
+    <div id="p-call" class="pg"><div class="scr">
+      <div class="ph"><h2>架電スクリプト</h2><p>副業・土日営業 / 優先業種：不動産・飲食・小売（ToC）</p></div>
+
+      <!-- 基本導入 -->
+      <div class="card"><span class="bdg btea">📞 基本導入トーク</span>
+        <div class="sr"><div class="sb">
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「○○様、お忙しいところ失礼します。
+○○（クラブ名）の高原と申します。
+
+地域のバスケットボールクラブのスポンサーシップについて
+ご提案があり、ご連絡いたしました。
+今2〜3分だけよろしいでしょうか？」</p>
+        </div></div>
+      </div>
+
+      <!-- 反応別分岐 -->
+      <div class="card"><span class="bdg bcor">📂 反応別トーク分岐</span>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#0C447C;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">✅ OK・聞くよ</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。
+
+実は○○クラブは現在、地域の企業様に
+ブランド露出の機会をご提供しています。
+
+試合の観客・SNSフォロワーを合わせると
+地域の○万人にリーチできます。
+
+広告費をかけずに地域認知を上げたい企業様に
+非常に喜んでいただいている取り組みです。
+
+一度15分だけ、詳しくお話しさせていただけますか？」</p>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">⏰ 忙しい・今は無理</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました、失礼しました。
+
+一点だけ確認させてください。
+地域の集客や認知について、
+何かお困りのことはございますか？
+
+→ ヒアリングできたら
+「それ、実は今回のご提案で解決できるかもしれません。
+ 改めて来週、○曜日の午前中はいかがでしょうか？」</p>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">❌ 興味ない・うちには関係ない</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうですか、失礼しました。
+
+ただ一点だけ確認させてください。
+最近、集客や新規のお客様の獲得で
+何か課題を感じていらっしゃいますか？
+
+→ YES
+「実はそこに直接効く取り組みなんです。
+ 5分だけ聞いていただけますか？
+ 合わないと思えばすぐに終わります。」
+
+→ NO
+「わかりました。ありがとうございます。
+ もし将来、地域でのブランド強化を検討される際は
+ ぜひ思い出してください。
+ 資料だけメールでお送りしてもよいですか？」</p>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:600;color:#27500A;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏢 競合他社がすでにスポンサー</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうなんですね！
+それは実はチャンスだと思います。
+
+同業の○○様がすでに入られているということは、
+同じ地域のお客様に○○様のブランドが
+先に届いている状態です。
+
+御社が入らないと、そのまま差がついてしまいます。
+一度だけお話しさせていただけますか？」</p>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">💰 お金がない・予算がない</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、コストは大事ですよね。
+
+実は今回のご提案、
+年間で換算すると月○万円からスタートできます。
+
+地域の求人広告や折込チラシと比べると
+かなりコストパフォーマンスが高いんです。
+
+金額の話は後でいくらでも調整できますので、
+まず15分だけ内容を聞いていただけますか？」</p>
+        </div>
+
+        <div style="margin-top:16px">
+          <div style="font-size:11px;font-weight:600;color:#085041;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🚪 担当者が出た・社長につないでもらえない</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。
+
+実は今回、経営判断に関わるご提案なので
+社長か責任者の方に直接お話ししたいのですが、
+お取次ぎいただくことは可能でしょうか？
+
+→ 難しい場合
+「承知しました。では社長にお伝えいただけますか。
+ ○○クラブの高原から、
+ スポンサーのご提案でご連絡があったと。
+ 改めてご連絡いたします。」</p>
+        </div>
+      </div>
+    </div></div>
+
+    <!-- 商談スクリプト -->
+    <div id="p-meeting" class="pg"><div class="scr">
+      <div class="ph"><h2>商談スクリプト</h2><p>導入〜ヒアリング〜提案〜クロージング〜失注対応</p></div>
+
+      <!-- 導入 -->
+      <div class="card"><span class="bdg btea">🤝 導入（アイスブレイク）</span>
+        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「本日はお時間いただきありがとうございます。
+
+私、地元のバスケットボールが好きで、
+○○クラブの営業を担当しています。
+
+今日は売り込みというより、
+御社の状況を少し聞かせていただいて、
+お役に立てそうであればご提案したいと思っています。
+
+まず少し教えていただいてもいいですか？」</p>
+      </div>
+
+      <!-- ヒアリング -->
+      <div class="card"><span class="bdg bpnk">🎤 ヒアリング</span>
+        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「今、集客や新規のお客様獲得は
+どんな方法でやられていますか？」
+
+「SNSやチラシ、広告なども使われていますか？」
+
+「地域のお客様との接点を増やしたい、
+というニーズはありますか？」
+
+「採用面ではいかがですか？
+若い人材の採用に苦労することはありますか？」</p>
+
+        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px;color:#0C447C">
+          💡 ヒアリング後の橋渡し<br>
+          「なるほど、○○という課題があるんですね。実は今回ご提案するのはまさにそこへの打ち手なんです。」
+        </div>
+      </div>
+
+      <!-- 業種別ROI提案 -->
+      <div class="card"><span class="bdg bcor">📊 業種別ROI提案</span>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#0C447C;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏠 不動産</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「地域の方に『○○クラブを応援している不動産会社』
+として認知されると、
+物件を探すとき最初に思い出してもらえます。
+
+地域密着の不動産会社様にとって
+一番効く投資だと思っています。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🍜 飲食店</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「試合後に観客の方が食事に行く流れがあります。
+クーポン配布やSNSでのコラボで
+試合観戦→御社の来店という導線を作れます。
+
+月○人の観客を御社のお客様に変える
+仕組みとして考えていただけます。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#27500A;letter-spacing:.08em;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🛍️ 小売</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ユニフォームやグッズに御社のロゴが入ることで、
+地域の方が日常的に御社の名前を目にします。
+
+折込チラシは捨てられますが、
+ユニフォームは何度も目に入ります。
+継続的な認知という点で全然違います。」</p>
+        </div>
+      </div>
+
+      <!-- クロージング -->
+      <div class="card"><span class="bdg btea">🎯 クロージング</span>
+        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「いかがでしょうか。
+何かご不明な点はありますか？」
+
+「もし進めていただける場合、
+社内でご確認が必要でしょうか？」
+
+「決め手として、何が一番大事でしょうか？」
+
+「次のステップとして、
+いつごろご返答いただけそうですか？」</p>
+      </div>
+
+      <!-- 失注パターン -->
+      <div class="card"><span class="bdg bred">💬 失注パターン別フォロートーク</span>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📅 来期予算</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました。
+来期の予算に入れていただけますか？
+
+今から内諾だけいただければ
+正式な契約は来期でも構いません。
+枠を確保しておきます。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📋 上に確認が必要・稟議</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「もちろんです。
+上の方への説明資料を私が作ります。
+
+A4一枚、数字入りでまとめますので
+そのまま使っていただいて大丈夫です。
+
+どんな点を重視される方ですか？
+コスト重視か、効果重視かで
+資料の内容を変えます。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">❓ 効果がわからない・不安</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、
+やってみないとわからない部分はあります。
+
+ただ、他の広告と違うのは
+地域の人に『応援している会社』として
+プラスのイメージで届く点です。
+
+マイナスになるリスクがほぼゼロというのが
+スポンサーシップの特徴です。
+
+まず小さいプランで試していただけますか？」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">⏱️ 今は忙しい・タイミングが悪い</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました。
+では○月頃に改めてご連絡してもいいですか？
+
+その頃に向けて、御社の業種に合わせた
+資料をお送りしておきます。
+
+メールアドレスを教えていただけますか？」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#085041;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📣 他の広告の方が効果がある</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうですよね、比較は大事だと思います。
+
+一点だけ違いをお伝えすると、
+通常の広告は『見られて終わり』ですが
+スポンサーシップは『応援している会社』として
+感情ごと認知されます。
+
+特にSNSで拡散されるとき、
+広告より圧倒的に信頼度が高いんです。
+
+組み合わせて使っていただくのが
+一番効果的だと思っています。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏢 小さい会社だから効果がない</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「実はそれが一番のチャンスだと思っています。
+
+大企業がスポンサーに並ぶ中に
+地元の○○さんが入ることで
+逆に目立ちます。
+
+地域の人は大企業より
+身近な企業の名前に反応します。」</p>
+        </div>
+
+        <div style="margin-top:12px">
+          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📉 知名度が低い</div>
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、全国区の知名度はまだこれからです。
+
+ただ、この地域での存在感は数字でお見せできます。
+SNS○万人・観客○人・メディア露出○件。
+
+そして今入っていただくと
+創業スポンサーになれます。
+
+チームが成長したとき、
+一番最初から支えていた企業として
+地域に語り継がれます。」</p>
+        </div>
+
+      </div>
+
+      <!-- 更新ルール -->
+      <div class="card"><span class="bdg btea">🔄 更新ルール</span>
+        <ul class="dl">
+          <li>成約したら「何のトークが効いたか」を即記録してCRMに残す</li>
+          <li>失注したら「どのパターンだったか」を即記録してCRMに残す</li>
+          <li>月1回このスクリプトを必ず改訂する</li>
+        </ul>
+      </div>
+
+    </div></div>
+
+    <!-- クラブ資料 -->
+    <div id="p-club" class="pg"><div class="scr">
+      <div class="ph"><h2>各クラブ資料</h2><p>資料が届いたらここに貼る</p></div>
+
+      <!-- 山梨クィーンビーズ -->
+      <div class="card">
+        <span class="bdg btea">🏀 山梨クィーンビーズ</span>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
+            <textarea class="memo-ta" id="club-queens-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-queens-proposal')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <textarea class="memo-ta" id="club-queens-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-queens-stats')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <textarea class="memo-ta" id="club-queens-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-queens-plan')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
+            <textarea class="memo-ta" id="club-queens-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-queens-contract')" style="min-height:60px"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 上野原サンライズ -->
+      <div class="card">
+        <span class="bdg bcor">🏀 上野原サンライズ</span>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
+            <textarea class="memo-ta" id="club-sunrise-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-sunrise-proposal')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <textarea class="memo-ta" id="club-sunrise-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-sunrise-stats')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <textarea class="memo-ta" id="club-sunrise-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-sunrise-plan')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
+            <textarea class="memo-ta" id="club-sunrise-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-sunrise-contract')" style="min-height:60px"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- 八王子ビートレインズ -->
+      <div class="card">
+        <span class="bdg bpnk">🏀 八王子ビートレインズ</span>
+        <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📄 提案書（PDF・画像リンク）</div>
+            <textarea class="memo-ta" id="club-beatrains-proposal" placeholder="URLまたは内容をここに貼り付け..." oninput="sm('club-beatrains-proposal')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <textarea class="memo-ta" id="club-beatrains-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-beatrains-stats')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <textarea class="memo-ta" id="club-beatrains-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-beatrains-plan')" style="min-height:60px"></textarea>
+          </div>
+
+          <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📝 契約書ひな形（URLまたはメモ）</div>
+            <textarea class="memo-ta" id="club-beatrains-contract" placeholder="URLまたは保存場所をここに..." oninput="sm('club-beatrains-contract')" style="min-height:60px"></textarea>
+          </div>
+
+        </div>
+      </div>
+
+    </div></div>
+
+    <!-- メモ -->
+    <div id="p-memo" class="pg"><div class="scr">
+      <div class="ph"><h2>メモ帳</h2><p>入力内容はブラウザに自動保存されます</p></div>
+      <div class="card"><div class="mlbl"><i class="ti ti-notes" style="font-size:15px" aria-hidden="true"></i>自由メモ</div><textarea class="memo-ta" id="m1" placeholder="アイデア、気づき、商談メモ、改善案、懸念事項など..." oninput="sm('m1')"></textarea><div class="sv" id="s1">保存しました</div></div>
+    </div></div>
+
+  </div>
+</div>
+
+<script>
+const AP=['home','hojin','roles','bmc','flow','next','risk','call','meeting','club','memo'];
+function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
+function tgB(id){
+  const bc=document.getElementById('bc'+id),bd=document.getElementById('bd'+id);
+  if(!bc||!bd)return;
+  const was=bd.classList.contains('op');
+  document.querySelectorAll('.bcbd').forEach(b=>b.classList.remove('op'));
+  document.querySelectorAll('.bc').forEach(b=>b.classList.remove('op'));
+  if(!was){bd.classList.add('op');bc.classList.add('op')}
+}
+function tc(r){r.classList.toggle('done');r.querySelector('input[type=checkbox]').checked=r.classList.contains('done')}
+let tmr={};
+function sm(id){clearTimeout(tmr[id]);tmr[id]=setTimeout(()=>{try{localStorage.setItem('ctfv3_'+id,document.getElementById(id).value)}catch(e){}const s=document.getElementById('s'+id.replace('m',''));if(s){s.style.display='block';setTimeout(()=>s.style.display='none',1400)}},600)}
+
+// ネクストアクション チェック→完了移動
+const NXT_LABELS={
+  'nxt-queens-contract':'山梨クィーンビーズ ── 契約締結',
+  'nxt-queens-approach':'山梨クィーンビーズ ── アプローチ開始',
+  'nxt-queens-first':'山梨クィーンビーズ ── 初成約1件を取る',
+  'nxt-queens-report':'山梨クィーンビーズ ── 月次レポート体制の確立',
+  'nxt-sunrise-contract':'上野原サンライズ ── 契約締結',
+  'nxt-sunrise-approach':'上野原サンライズ ── アプローチ開始',
+  'nxt-sunrise-first':'上野原サンライズ ── 初成約1件を取る',
+  'nxt-sunrise-report':'上野原サンライズ ── 月次レポート体制の確立',
+  'nxt-beatrains-contract':'八王子ビートレインズ ── 契約締結',
+  'nxt-beatrains-approach':'八王子ビートレインズ ── アプローチ開始',
+  'nxt-beatrains-first':'八王子ビートレインズ ── 初成約1件を取る',
+  'nxt-beatrains-report':'八王子ビートレインズ ── 月次レポート体制の確立',
+  'nxt-100':'全体 ── 月収100万を2〜3ヶ月継続',
+  'nxt-found':'全体 ── 独立・法人設立',
+  'nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'
+};
+function nxtCheck(id){
+  const el=document.getElementById(id);
+  if(!el)return;
+  const cb=el.querySelector('input[type=checkbox]');
+  const isDone=!el.classList.contains('done');
+  el.classList.toggle('done',isDone);
+  cb.checked=isDone;
+  // localStorageに保存
+  try{
+    const saved=JSON.parse(localStorage.getItem('nxt_done')||'[]');
+    const updated=isDone?[...new Set([...saved,id])]:saved.filter(x=>x!==id);
+    localStorage.setItem('nxt_done',JSON.stringify(updated));
+  }catch(e){}
+  renderNxt();
+}
+function renderNxt(){
+  const doneCard=document.getElementById('done-card');
+  const doneList=document.getElementById('done-list');
+  const actionList=document.getElementById('action-list');
+  if(!doneCard||!doneList||!actionList)return;
+  // 完了済みリストを再描画
+  const doneItems=actionList.querySelectorAll('.ck.done');
+  if(doneItems.length>0){
+    doneCard.style.display='block';
+    doneList.innerHTML='';
+    doneItems.forEach(el=>{
+      const id=el.id;
+      const li=document.createElement('li');
+      li.textContent=NXT_LABELS[id]||id;
+      li.style.cursor='pointer';
+      li.title='クリックで戻す';
+      li.onclick=()=>nxtCheck(id);
+      doneList.appendChild(li);
+    });
+  } else {
+    doneCard.style.display='none';
+    doneList.innerHTML='';
+  }
+}
+(function(){
+  const d=new Date(),w=['日','月','火','水','木','金','土'];
+  const el=document.getElementById('nd');
+  if(el)el.textContent=d.getFullYear()+'/'+(d.getMonth()+1)+'/'+d.getDate()+'('+w[d.getDay()]+')';
+  try{const v=localStorage.getItem('ctfv3_m1');if(v){const e=document.getElementById('m1');if(e)e.value=v}}catch(e){}
+  // クラブ資料の復元
+  ['club-queens-proposal','club-queens-stats','club-queens-plan','club-queens-contract',
+   'club-sunrise-proposal','club-sunrise-stats','club-sunrise-plan','club-sunrise-contract',
+   'club-beatrains-proposal','club-beatrains-stats','club-beatrains-plan','club-beatrains-contract'
+  ].forEach(id=>{try{const v=localStorage.getItem('ctfv3_'+id);if(v){const e=document.getElementById(id);if(e)e.value=v}}catch(e){}});
+  // ネクストアクションの状態復元
+  try{
+    const saved=JSON.parse(localStorage.getItem('nxt_done')||'[]');
+    saved.forEach(id=>{
+      const el=document.getElementById(id);
+      if(el){el.classList.add('done');const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=true;}
+    });
+    renderNxt();
+  }catch(e){}
+})()
+</script>
