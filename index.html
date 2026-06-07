@@ -155,6 +155,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('risk')"><i class="ti ti-shield" aria-hidden="true"></i>営業対策</div>
       <div class="ng">営業スクリプト</div><div class="ni" onclick="go('call')"><i class="ti ti-phone" aria-hidden="true"></i>架電</div><div class="ni" onclick="go('meeting')"><i class="ti ti-users" aria-hidden="true"></i>商談</div>
       <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
+      <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
       <div class="ng">メモ</div><div class="ni" onclick="go('memo')"><i class="ti ti-notes" aria-hidden="true"></i>メモ帳</div>
     </div>
   </div>
@@ -902,6 +903,148 @@ SNS○万人・観客○人・メディア露出○件。
 
     </div></div>
 
+    <!-- ロードマップ -->
+    <div id="p-roadmap" class="pg"><div class="scr">
+      <div class="ph"><h2>売上1億への道</h2><p>ストック型・3パターンシミュレーション</p></div>
+
+      <!-- 前提条件 -->
+      <div class="card"><span class="bdg btea">📌 前提条件</span>
+        <ul class="dl">
+          <li>年間契約単価：<strong>100万円</strong></li>
+          <li>月換算：100万 ÷ 12ヶ月 = <strong>8.3万円/社</strong></li>
+          <li>知変創造の収入：8.3万 × 25% = <strong>2.08万円/社/月</strong></li>
+          <li>ストック型：解約なし・前月契約分も毎月積み上がる</li>
+        </ul>
+      </div>
+
+      <!-- パターン① -->
+      <div class="card"><span class="bdg bpnk">パターン① ｜ 1人4社・2人8社/月（保守的）</span>
+        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">副業・土日のみ・慎重に進める場合</p>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="background:var(--color-bg-secondary)">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">49.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">3ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">24社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">50万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">99.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">166.5万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">83.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.8万</td></tr>
+              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">6ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">349.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">1,300万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">144社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">299万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">3,294万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">24ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">399万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">6,588万</td></tr>
+              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">28ヶ月目🎉</td><td style="padding:8px;text-align:right">8社</td><td style="padding:8px;text-align:right">224社</td><td style="padding:8px;text-align:right">465万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+          📍 月収100万達成：<strong>6ヶ月目</strong>　／　独立判断：<strong>6〜7ヶ月目</strong>　／　累計1億：<strong>28ヶ月目（2年4ヶ月）</strong>
+        </div>
+      </div>
+
+      <!-- パターン② -->
+      <div class="card"><span class="bdg btea">パターン② ｜ 1人8社・2人16社/月（標準・推奨）</span>
+        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">本気で動く・独立を早める・現実的な最短ルート</p>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="background:var(--color-bg-secondary)">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">99.9万</td></tr>
+              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">199.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">64社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">133.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">333.2万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">80社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">166.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">499.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">699.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">2,600万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">288社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">599万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">7,098万</td></tr>
+              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">20ヶ月目🎉</td><td style="padding:8px;text-align:right">16社</td><td style="padding:8px;text-align:right">320社</td><td style="padding:8px;text-align:right">665万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+          📍 月収100万達成：<strong>3ヶ月目</strong>　／　独立判断：<strong>5〜6ヶ月目</strong>　／　累計1億：<strong>20ヶ月目（1年8ヶ月）</strong>
+        </div>
+      </div>
+
+      <!-- パターン③ -->
+      <div class="card"><span class="bdg bcor">パターン③ ｜ 1人10社・2人20社/月（アグレッシブ）</span>
+        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">フルコミット・採用も早める・最速ルート</p>
+        <div style="overflow-x:auto">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="background:var(--color-bg-secondary)">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">41.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">41.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">83.2万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">124.8万</td></tr>
+              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">60社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">124.8万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">120社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">873.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">240社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">499万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">3,245万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">360社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">748万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8,165万</td></tr>
+              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">19ヶ月目🎉</td><td style="padding:8px;text-align:right">20社</td><td style="padding:8px;text-align:right">380社</td><td style="padding:8px;text-align:right">790万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+          📍 月収100万達成：<strong>3ヶ月目以内</strong>　／　独立判断：<strong>5ヶ月目</strong>　／　累計1億：<strong>19ヶ月目（1年7ヶ月）</strong>
+        </div>
+      </div>
+
+      <!-- 比較 -->
+      <div class="card"><span class="bdg btea">📊 3パターン比較</span>
+        <div style="overflow-x:auto;margin-top:12px">
+          <table style="width:100%;border-collapse:collapse;font-size:13px">
+            <thead><tr style="background:var(--color-bg-secondary)">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">パターン</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">月収100万</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">独立判断</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">累計1億</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">12ヶ月月収</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">12ヶ月累計</th>
+            </tr></thead>
+            <tbody>
+              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">①保守的（月8社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">6〜7ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">28ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">1,300万</td></tr>
+              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);font-weight:600">②標準・推奨（月16社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">3ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">5〜6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">20ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);font-weight:600">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);font-weight:600">2,600万</td></tr>
+              <tr><td style="padding:8px">③アグレッシブ（月20社）</td><td style="padding:8px;text-align:center">3ヶ月以内</td><td style="padding:8px;text-align:center">5ヶ月目</td><td style="padding:8px;text-align:center">19ヶ月目</td><td style="padding:8px;text-align:right">499万</td><td style="padding:8px;text-align:right">3,245万</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- 1億を早める3つの鍵 -->
+      <div class="card"><span class="bdg bcor">🔑 1億達成をさらに早める3つの鍵</span>
+        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">1</div><div class="sb"><h4>単価を上げる</h4><p>年間200万単価に変更した場合、パターン②で20ヶ月 → 約10ヶ月に短縮。単価向上が最もレバレッジが効く。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">2</div><div class="sb"><h4>人を増やす</h4><p>3人目を7〜8ヶ月目に採用し月24社ペースへ加速。累計1億を3〜4ヶ月短縮できる。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">3</div><div class="sb"><h4>クラブを増やす</h4><p>3クラブフル稼働で商圏を広げる。1クラブの上限（社数・業種）を突破。パターン②で1億を15ヶ月目に前倒し可能。</p></div></div>
+      </div>
+
+      <!-- 更新ルール -->
+      <div class="card"><span class="bdg btea">🔄 更新ルール</span>
+        <ul class="dl">
+          <li>このロードマップは実績で上書きすることが前提</li>
+          <li>毎月の成約数・月収を記録して実績と比較する</li>
+          <li>四半期ごとに数字を見直して修正する</li>
+        </ul>
+      </div>
+
+    </div></div>
+
     <!-- メモ -->
     <div id="p-memo" class="pg"><div class="scr">
       <div class="ph"><h2>メモ帳</h2><p>入力内容はブラウザに自動保存されます</p></div>
@@ -913,7 +1056,7 @@ SNS○万人・観客○人・メディア露出○件。
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','hojin','roles','bmc','flow','next','risk','call','meeting','club','memo'];
+const AP=['home','hojin','roles','bmc','flow','next','risk','call','meeting','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function tgB(id){const bc=document.getElementById('bc'+id),bd=document.getElementById('bd'+id);if(!bc||!bd)return;const was=bd.classList.contains('op');document.querySelectorAll('.bcbd').forEach(b=>b.classList.remove('op'));document.querySelectorAll('.bc').forEach(b=>b.classList.remove('op'));if(!was){bd.classList.add('op');bc.classList.add('op')}}
 function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
