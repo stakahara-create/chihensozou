@@ -1,147 +1,201 @@
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+:root{
+  --bg:#0A0A0A;
+  --bg2:#111111;
+  --bg3:#181818;
+  --bg4:#202020;
+  --border:#2A2A2A;
+  --border2:#333333;
+  --text:#F0F0F0;
+  --text2:#A0A0A0;
+  --text3:#606060;
+  --accent:#E8C547;
+  --accent2:#C4A030;
+  --blue:#4A9EFF;
+  --blue2:#1A6FCC;
+  --green:#3DD68C;
+  --red:#FF6B6B;
+  --orange:#FF9F47;
+}
 *{box-sizing:border-box;margin:0;padding:0}
 .sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
-body{font-family:var(--font-sans)}
-.app{display:flex;min-height:860px}
-.nav{width:172px;flex-shrink:0;background:var(--color-background-secondary);border-right:.5px solid var(--color-border-secondary);display:flex;flex-direction:column}
-.nlogo{padding:16px 14px 14px;border-bottom:.5px solid var(--color-border-secondary);display:flex;align-items:center;gap:10px}
-.nmark{width:36px;height:36px;border-radius:10px;background:#FAEEDA;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.nmark i{font-size:19px;color:#633806}
-.ntitle{font-size:14px;font-weight:500;color:var(--color-text-primary)}
-.nsub{font-size:10px;color:var(--color-text-tertiary);margin-top:1px}
-.nb{padding:10px 8px;flex:1}
-.ng{font-size:9px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.08em;text-transform:uppercase;padding:10px 8px 3px}
-.ni{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:8px;cursor:pointer;font-size:13px;color:var(--color-text-secondary);transition:all .12s}
-.ni i{font-size:15px;flex-shrink:0}
-.ni:hover{background:var(--color-background-primary);color:var(--color-text-primary)}
-.ni.on{background:var(--color-background-primary);color:var(--color-text-primary);font-weight:500}
-.main{flex:1;min-width:0;background:var(--color-background-tertiary);overflow:auto}
+body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text)}
+.app{display:flex;min-height:100vh}
+
+/* NAV */
+.nav{width:200px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);display:flex;flex-direction:column;position:sticky;top:0;height:100vh;overflow-y:auto}
+.nlogo{padding:20px 16px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px}
+.nmark{width:36px;height:36px;border-radius:8px;background:var(--accent);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nmark i{font-size:18px;color:#000}
+.ntitle{font-family:'Syne',sans-serif;font-size:14px;font-weight:700;color:var(--text);letter-spacing:.02em}
+.nsub{font-size:10px;color:var(--text3);margin-top:2px}
+.nb{padding:12px 8px;flex:1}
+.ng{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.12em;text-transform:uppercase;padding:14px 10px 4px}
+.ni{display:flex;align-items:center;gap:8px;padding:8px 10px;border-radius:6px;cursor:pointer;font-size:12px;color:var(--text2);transition:all .12s;font-weight:400}
+.ni i{font-size:14px;flex-shrink:0}
+.ni:hover{background:var(--bg3);color:var(--text)}
+.ni.on{background:var(--accent);color:#000;font-weight:600}
+.ni.on i{color:#000}
+
+/* MAIN */
+.main{flex:1;min-width:0;background:var(--bg);overflow:auto}
 .pg{display:none}.pg.on{display:block}
 
 /* HOME */
-.hero{background:var(--color-background-primary);padding:48px 10% 44px;border-bottom:.5px solid var(--color-border-secondary)}
-.hero-eye{font-size:9px;letter-spacing:.22em;color:var(--color-text-tertiary);text-transform:uppercase;margin-bottom:14px}
-.hero-title{font-size:52px;font-weight:500;color:var(--color-text-primary);letter-spacing:.04em;line-height:1;margin-bottom:28px}
-.hs{display:inline-flex;font-size:11px;font-weight:500;padding:4px 12px;border-radius:20px;margin-bottom:13px}
-.hb{font-size:13px;color:var(--color-text-secondary);line-height:1.9;margin-bottom:26px}
+.hero{background:var(--bg2);padding:52px 8% 48px;border-bottom:1px solid var(--border)}
+.hero-eye{font-size:9px;letter-spacing:.24em;color:var(--accent);text-transform:uppercase;margin-bottom:16px;font-weight:600}
+.hero-title{font-family:'Syne',sans-serif;font-size:48px;font-weight:700;color:var(--text);letter-spacing:.02em;line-height:1.05;margin-bottom:24px}
+.hs{display:inline-flex;font-size:10px;font-weight:600;padding:4px 12px;border-radius:4px;margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+.hb{font-size:13px;color:var(--text2);line-height:1.9;margin-bottom:24px}
 .hb p{margin-bottom:10px}.hb p:last-child{margin-bottom:0}
-.hbold{font-size:15px;font-weight:500;color:var(--color-text-primary);line-height:1.5;margin-bottom:10px}
-.mst{background:var(--color-background-secondary);padding:24px 10%;border-bottom:.5px solid var(--color-border-secondary);cursor:pointer}
-.mst-lbl{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.07em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:6px}
+.hbold{font-size:15px;font-weight:500;color:var(--text);line-height:1.5;margin-bottom:10px}
+.mst{background:var(--bg3);padding:24px 8%;border-bottom:1px solid var(--border);cursor:pointer;transition:background .12s}
+.mst:hover{background:var(--bg4)}
+.mst-lbl{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;display:flex;align-items:center;gap:6px}
 .mst-g{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:16px}
-.mst-c{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:10px;padding:18px 14px;text-align:center}
-.mstv{font-size:24px;font-weight:500;color:var(--color-text-primary);line-height:1}
-.mstl{font-size:11px;color:var(--color-text-tertiary);margin-top:6px}
-.msts{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
-.bw{height:6px;background:var(--color-background-primary);border-radius:4px;overflow:hidden;margin-bottom:8px}
-.bf{height:100%;width:0;background:#378ADD;border-radius:4px}
-.bls{display:flex;justify-content:space-between;font-size:11px;color:var(--color-text-tertiary)}
+.mst-c{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:18px 14px;text-align:center}
+.mstv{font-size:22px;font-weight:600;color:var(--text);line-height:1;font-family:'Syne',sans-serif}
+.mstl{font-size:10px;color:var(--text3);margin-top:6px;letter-spacing:.04em}
+.msts{font-size:11px;color:var(--text2);margin-top:3px}
+.bw{height:4px;background:var(--bg2);border-radius:2px;overflow:hidden;margin-bottom:8px}
+.bf{height:100%;width:0;background:var(--accent);border-radius:2px}
+.bls{display:flex;justify-content:space-between;font-size:10px;color:var(--text3)}
 
 /* INNER */
-.scr{padding:28px 10% 56px}
-.ph{margin-bottom:22px}
-.ph h2{font-size:20px;font-weight:500;color:var(--color-text-primary)}
-.ph p{font-size:13px;color:var(--color-text-tertiary);margin-top:4px}
-.card{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:12px;padding:22px 24px;margin-bottom:14px}
-.bdg{display:inline-flex;font-size:11px;font-weight:500;padding:3px 10px;border-radius:20px;margin-bottom:12px}
-.bpur{background:#EEEDFE;color:#3C3489}.btea{background:#E1F5EE;color:#085041}.bamb{background:#FAEEDA;color:#633806}.bblu{background:#E6F1FB;color:#0C447C}.bcor{background:#FAECE7;color:#712B13}.bpnk{background:#FBEAF0;color:#72243E}.bgrn{background:#EAF3DE;color:#27500A}.bgry{background:#F1EFE8;color:#444441}.bred{background:#FCEBEB;color:#791F1F}
-.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
-.kv{display:flex;justify-content:space-between;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.scr{padding:32px 8% 64px}
+.ph{margin-bottom:28px;padding-bottom:20px;border-bottom:1px solid var(--border)}
+.ph h2{font-family:'Syne',sans-serif;font-size:22px;font-weight:700;color:var(--text);letter-spacing:.02em}
+.ph p{font-size:12px;color:var(--text3);margin-top:6px;letter-spacing:.02em}
+.card{background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:22px 24px;margin-bottom:12px;transition:border-color .12s}
+.card:hover{border-color:var(--border2)}
+.bdg{display:inline-flex;font-size:10px;font-weight:600;padding:3px 10px;border-radius:4px;margin-bottom:12px;letter-spacing:.06em;text-transform:uppercase}
+.bpur{background:rgba(127,119,221,.15);color:#A09AEE}
+.btea{background:rgba(61,214,140,.12);color:#3DD68C}
+.bamb{background:rgba(232,197,71,.12);color:var(--accent)}
+.bblu{background:rgba(74,158,255,.12);color:var(--blue)}
+.bcor{background:rgba(255,159,71,.12);color:var(--orange)}
+.bpnk{background:rgba(255,100,150,.12);color:#FF6496}
+.bgrn{background:rgba(61,214,140,.12);color:#3DD68C}
+.bgry{background:rgba(255,255,255,.06);color:var(--text2)}
+.bred{background:rgba(255,107,107,.12);color:var(--red)}
+.g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
+.kv{display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid var(--border)}
 .kv:last-child{border-bottom:none}
-.kvk{font-size:13px;color:var(--color-text-secondary)}
-.kvv{font-size:13px;font-weight:500;color:var(--color-text-primary);text-align:right;max-width:58%}
+.kvk{font-size:12px;color:var(--text2)}
+.kvv{font-size:12px;font-weight:500;color:var(--text);text-align:right;max-width:58%}
 ul.dl{list-style:none;padding:0}
-ul.dl li{font-size:13px;color:var(--color-text-secondary);padding:6px 0;border-bottom:.5px solid var(--color-border-tertiary);line-height:1.5;display:flex;gap:7px}
+ul.dl li{font-size:13px;color:var(--text2);padding:7px 0;border-bottom:1px solid var(--border);line-height:1.5;display:flex;gap:8px}
 ul.dl li:last-child{border-bottom:none}
-ul.dl li::before{content:"▸";color:var(--color-text-tertiary);font-size:11px;flex-shrink:0;margin-top:2px}
-.sr{display:flex;gap:14px;padding:13px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+ul.dl li::before{content:"→";color:var(--accent);font-size:11px;flex-shrink:0;margin-top:2px}
+.sr{display:flex;gap:14px;padding:14px 0;border-bottom:1px solid var(--border)}
 .sr:last-child{border-bottom:none}
-.sn{width:28px;height:28px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:500;flex-shrink:0;margin-top:1px}
-.sb h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
-.sb p{font-size:12px;color:var(--color-text-secondary);line-height:1.6}
-.ck{display:flex;gap:10px;padding:11px 0;border-bottom:.5px solid var(--color-border-tertiary);cursor:pointer}
+.sn{width:28px;height:28px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;flex-shrink:0;margin-top:1px}
+.sb h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:4px}
+.sb p{font-size:12px;color:var(--text2);line-height:1.65}
+.ck{display:flex;gap:12px;padding:12px 0;border-bottom:1px solid var(--border);cursor:pointer;transition:opacity .12s}
 .ck:last-child{border-bottom:none}
-.ck input{margin-top:3px;flex-shrink:0;width:15px;height:15px}
-.ckt h4{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
-.ckt p{font-size:12px;color:var(--color-text-secondary);line-height:1.5}
-.ck.done .ckt h4{text-decoration:line-through;color:var(--color-text-tertiary)}
-.ck.done .ckt p{color:var(--color-text-tertiary)}
-.rr{display:flex;gap:10px;padding:10px 0;border-bottom:.5px solid var(--color-border-tertiary)}
+.ck:hover{opacity:.8}
+.ck input{margin-top:3px;flex-shrink:0;width:15px;height:15px;accent-color:var(--accent)}
+.ckt h4{font-size:13px;font-weight:500;color:var(--text);margin-bottom:2px}
+.ckt p{font-size:12px;color:var(--text2);line-height:1.5}
+.ck.done .ckt h4{text-decoration:line-through;color:var(--text3)}
+.ck.done .ckt p{color:var(--text3)}
+.rr{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
 .rr:last-child{border-bottom:none}
-.rno{font-size:11px;font-weight:500;color:var(--color-text-tertiary);min-width:22px;margin-top:2px}
+.rno{font-size:11px;font-weight:500;color:var(--text3);min-width:22px;margin-top:2px}
 .rw{flex:1}
-.rt{font-size:13px;color:var(--color-text-secondary);line-height:1.6}
-.rsub{font-size:12px;color:var(--color-text-tertiary);margin-top:4px;padding-left:10px;border-left:2px solid var(--color-border-secondary);line-height:1.5}
+.rt{font-size:13px;color:var(--text2);line-height:1.6}
+.rsub{font-size:12px;color:var(--text3);margin-top:4px;padding-left:10px;border-left:2px solid var(--border2);line-height:1.5}
 .av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:12px;font-weight:500;flex-shrink:0}
-.mem{background:var(--color-background-secondary);border-radius:10px;padding:18px}
-.rbdg{font-size:11px;font-weight:500;padding:3px 8px;border-radius:20px;flex-shrink:0;margin-top:2px;white-space:nowrap}
-.memo-ta{width:100%;min-height:200px;border:.5px solid var(--color-border-secondary);border-radius:8px;padding:16px;font-size:13px;color:var(--color-text-primary);background:var(--color-background-primary);resize:vertical;font-family:var(--font-sans);line-height:1.7}
-.memo-ta:focus{outline:none;border-color:var(--color-border-primary)}
-.sv{font-size:11px;color:var(--color-text-tertiary);margin-top:5px;display:none}
-.mlbl{font-size:12px;font-weight:500;color:var(--color-text-secondary);margin-bottom:8px;display:flex;align-items:center;gap:6px}
+.mem{background:var(--bg3);border-radius:8px;padding:16px}
+.rbdg{font-size:10px;font-weight:600;padding:3px 8px;border-radius:4px;flex-shrink:0;margin-top:2px;white-space:nowrap;letter-spacing:.04em}
+.memo-ta{width:100%;min-height:200px;border:1px solid var(--border);border-radius:8px;padding:16px;font-size:13px;color:var(--text);background:var(--bg3);resize:vertical;font-family:'DM Sans',sans-serif;line-height:1.7}
+.memo-ta:focus{outline:none;border-color:var(--accent)}
+.sv{font-size:11px;color:var(--text3);margin-top:5px;display:none}
+.mlbl{font-size:12px;font-weight:500;color:var(--text2);margin-bottom:8px;display:flex;align-items:center;gap:6px}
 
 /* 法人化 */
-.th{background:linear-gradient(135deg,#0C447C,#185FA5);border-radius:12px;padding:28px 32px;margin-bottom:14px;display:flex;align-items:center;gap:32px}
+.th{background:linear-gradient(135deg,#0C447C 0%,#0A2A50 100%);border:1px solid #1A5A9A;border-radius:10px;padding:28px 32px;margin-bottom:12px;display:flex;align-items:center;gap:32px}
 .th-big{flex-shrink:0;text-align:center}
-.th-yen{font-size:48px;font-weight:500;color:#fff;line-height:1}
-.th-lbl{font-size:11px;color:rgba(255,255,255,.7);margin-top:6px;letter-spacing:.04em}
-.th-desc{font-size:12px;color:rgba(255,255,255,.6);margin-top:4px}
-.th-div{width:.5px;background:rgba(255,255,255,.2);align-self:stretch;flex-shrink:0}
-.th-stats{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.ts{background:rgba(255,255,255,.1);border-radius:8px;padding:12px 14px;text-align:center}
-.tsv{font-size:22px;font-weight:500;color:#fff;line-height:1}
-.tsl{font-size:10px;color:rgba(255,255,255,.65);margin-top:5px;line-height:1.3}
-.mtc{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:12px;overflow:hidden;margin-bottom:14px}
-.mth{background:var(--color-background-secondary);padding:14px 20px;border-bottom:.5px solid var(--color-border-secondary);display:flex;align-items:center;gap:8px}
-.mth h3{font-size:13px;font-weight:500;color:var(--color-text-primary)}
-.mch{display:flex;padding:8px 20px;border-bottom:.5px solid var(--color-border-secondary);background:var(--color-background-secondary)}
-.mcm{font-size:10px;font-weight:500;color:var(--color-text-tertiary);width:80px;flex-shrink:0}
-.mcb{flex:1;padding:0 16px;font-size:10px;font-weight:500;color:var(--color-text-tertiary)}
+.th-yen{font-family:'Syne',sans-serif;font-size:44px;font-weight:700;color:#fff;line-height:1}
+.th-lbl{font-size:10px;color:rgba(255,255,255,.6);margin-top:6px;letter-spacing:.06em;text-transform:uppercase}
+.th-desc{font-size:11px;color:rgba(255,255,255,.5);margin-top:4px}
+.th-div{width:1px;background:rgba(255,255,255,.15);align-self:stretch;flex-shrink:0}
+.th-stats{flex:1;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.ts{background:rgba(255,255,255,.08);border-radius:8px;padding:12px 14px;text-align:center}
+.tsv{font-family:'Syne',sans-serif;font-size:20px;font-weight:700;color:#fff;line-height:1}
+.tsl{font-size:10px;color:rgba(255,255,255,.55);margin-top:5px;line-height:1.3}
+.mtc{background:var(--bg2);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:12px}
+.mth{background:var(--bg3);padding:14px 20px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.mth h3{font-size:13px;font-weight:500;color:var(--text)}
+.mch{display:flex;padding:8px 20px;border-bottom:1px solid var(--border);background:var(--bg3)}
+.mcm{font-size:10px;font-weight:600;color:var(--text3);width:80px;flex-shrink:0;letter-spacing:.04em}
+.mcb{flex:1;padding:0 16px;font-size:10px;font-weight:600;color:var(--text3)}
 .mcn{display:flex;gap:16px;flex-shrink:0}
-.mcnum{font-size:10px;font-weight:500;color:var(--color-text-tertiary);width:52px;text-align:right}
+.mcnum{font-size:10px;font-weight:600;color:var(--text3);width:52px;text-align:right}
 .mcnum.c{width:64px}
-.mr{display:flex;align-items:center;padding:12px 20px;border-bottom:.5px solid var(--color-border-tertiary)}
+.mr{display:flex;align-items:center;padding:12px 20px;border-bottom:1px solid var(--border)}
 .mr:last-child{border-bottom:none}
-.mr.hl{background:#EFF6FF}
-.mrm{font-size:13px;font-weight:500;color:var(--color-text-primary);width:80px;flex-shrink:0}
+.mr.hl{background:rgba(232,197,71,.06)}
+.mrm{font-size:13px;font-weight:500;color:var(--text);width:80px;flex-shrink:0}
 .mrb{flex:1;padding:0 16px}
-.mrmb{height:8px;background:var(--color-background-secondary);border-radius:4px;overflow:hidden}
-.mrbf{height:100%;border-radius:4px;background:#378ADD}
+.mrmb{height:6px;background:var(--bg4);border-radius:3px;overflow:hidden}
+.mrbf{height:100%;border-radius:3px;background:var(--blue)}
 .mrn{display:flex;gap:16px;flex-shrink:0}
-.mrnum{font-size:12px;color:var(--color-text-secondary);width:52px;text-align:right}
-.mrnum.c{font-size:13px;font-weight:500;color:var(--color-text-primary);width:64px}
-.ac{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:14px}
-.ai{background:var(--color-background-primary);border:.5px solid var(--color-border-secondary);border-radius:10px;padding:14px 16px}
-.ail{font-size:11px;color:var(--color-text-tertiary);margin-bottom:6px;font-weight:500}
-.aiv{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.4}
-.ais{font-size:11px;color:var(--color-text-secondary);margin-top:3px}
+.mrnum{font-size:12px;color:var(--text2);width:52px;text-align:right}
+.mrnum.c{font-size:13px;font-weight:500;color:var(--text);width:64px}
+.ac{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-bottom:12px}
+.ai{background:var(--bg2);border:1px solid var(--border);border-radius:8px;padding:14px 16px}
+.ail{font-size:10px;color:var(--text3);margin-bottom:6px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+.aiv{font-size:14px;font-weight:500;color:var(--text);line-height:1.4}
+.ais{font-size:11px;color:var(--text2);margin-top:3px}
 
 /* BMC */
-.bg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px}
-.bc{background:var(--color-background-primary);border-radius:14px;overflow:hidden;border:.5px solid var(--color-border-secondary);transition:border-color .15s}
-.bc:hover{border-color:var(--color-border-primary)}
-.bc.op{border-color:var(--color-border-primary)}
+.bg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.bc{background:var(--bg2);border-radius:10px;overflow:hidden;border:1px solid var(--border);transition:border-color .15s}
+.bc:hover{border-color:var(--border2)}
+.bc.op{border-color:var(--accent)}
 .bct{padding:16px 18px 14px;cursor:pointer;display:flex;flex-direction:column;gap:7px}
 .bcm{display:flex;align-items:center;justify-content:space-between}
-.bcnum{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em}
-.bctg i{font-size:13px;color:var(--color-text-tertiary);transition:transform .2s}
+.bcnum{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.08em}
+.bctg i{font-size:13px;color:var(--text3);transition:transform .2s}
 .bc.op .bctg i{transform:rotate(180deg)}
-.bcl{display:inline-flex;font-size:10px;font-weight:500;padding:3px 9px;border-radius:20px;align-self:flex-start}
-.bctit{font-size:14px;font-weight:500;color:var(--color-text-primary);line-height:1.3}
-.bcsub{font-size:11px;color:var(--color-text-secondary);line-height:1.4}
-.bcbd{display:none;border-top:.5px solid var(--color-border-tertiary)}
+.bcl{display:inline-flex;font-size:10px;font-weight:600;padding:3px 9px;border-radius:4px;align-self:flex-start;letter-spacing:.04em}
+.bctit{font-size:14px;font-weight:500;color:var(--text);line-height:1.3}
+.bcsub{font-size:11px;color:var(--text2);line-height:1.4}
+.bcbd{display:none;border-top:1px solid var(--border)}
 .bcbd.op{display:block}
-.bcs{padding:13px 18px;border-bottom:.5px solid var(--color-border-tertiary)}
+.bcs{padding:13px 18px;border-bottom:1px solid var(--border)}
 .bcs:last-of-type{border-bottom:none}
-.bcsl{font-size:10px;font-weight:500;color:var(--color-text-tertiary);letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
+.bcsl{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:5px}
 .bcsl i{font-size:12px}
 ul.bl{list-style:none;padding:0;display:flex;flex-direction:column;gap:5px}
-ul.bl li{font-size:12px;color:var(--color-text-secondary);line-height:1.55;display:flex;gap:7px}
-ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;flex-shrink:0;margin-top:2px}
-.bccl{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--color-text-tertiary);cursor:pointer;padding:10px 18px;border-top:.5px solid var(--color-border-tertiary);width:100%}
-.bccl:hover{color:var(--color-text-secondary)}
-.alpur{border-left:3px solid #7F77DD}.alamb{border-left:3px solid #D4903C}.altea{border-left:3px solid #1D9E75}.alcor{border-left:3px solid #C0552B}.algrn{border-left:3px solid #4A8C28}.alblu{border-left:3px solid #378ADD}.alpnk{border-left:3px solid #C0547A}.algry{border-left:3px solid #888880}.alred{border-left:3px solid #B03030}
+ul.bl li{font-size:12px;color:var(--text2);line-height:1.55;display:flex;gap:7px}
+ul.bl li::before{content:"→";color:var(--accent);font-size:10px;flex-shrink:0;margin-top:2px}
+.bccl{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--text3);cursor:pointer;padding:10px 18px;border-top:1px solid var(--border);width:100%;transition:color .12s}
+.bccl:hover{color:var(--text2)}
+.alpur{border-left:3px solid #A09AEE}.alamb{border-left:3px solid var(--accent)}.altea{border-left:3px solid var(--green)}.alcor{border-left:3px solid var(--orange)}.algrn{border-left:3px solid var(--green)}.alblu{border-left:3px solid var(--blue)}.alpnk{border-left:3px solid #FF6496}.algry{border-left:3px solid var(--text3)}.alred{border-left:3px solid var(--red)}
+
+/* テーブル */
+table{border-collapse:collapse;font-family:'DM Sans',sans-serif}
+table th{background:var(--bg3)!important;color:var(--text2)!important;border-bottom:1px solid var(--border)!important}
+table td{border-bottom:1px solid var(--border)!important;color:var(--text2)!important}
+table tr:hover td{background:var(--bg3)}
+
+/* アコーディオン */
+.ac-icon{transition:transform .2s}
+
+/* チェックボックスカード */
+.ck-section-header{font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:16px 0 8px;border-bottom:1px solid var(--border);margin-bottom:4px}
+
+/* スクロールバー */
+::-webkit-scrollbar{width:6px;height:6px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text3)}
 </style>
 
 <h2 class="sr-only">知変創造 カンパニーターミナル</h2>
@@ -152,8 +206,8 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="ng">ホーム</div><div class="ni on" onclick="go('home')"><i class="ti ti-home" aria-hidden="true"></i>ホーム</div>
       <div class="ng">企業基盤</div><div class="ni" onclick="go('hojin')"><i class="ti ti-flag" aria-hidden="true"></i>法人化条件</div><div class="ni" onclick="go('roles')"><i class="ti ti-users" aria-hidden="true"></i>役割・体制・ルール</div>
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
-      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('risk')"><i class="ti ti-shield" aria-hidden="true"></i>営業対策</div>
-      <div class="ng">営業スクリプト</div><div class="ni" onclick="go('call')"><i class="ti ti-phone" aria-hidden="true"></i>架電</div><div class="ni" onclick="go('meeting')"><i class="ti ti-users" aria-hidden="true"></i>商談</div>
+      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div>
+      <div class="ng">戦略</div><div class="ni" onclick="go('sales')"><i class="ti ti-target" aria-hidden="true"></i>営業戦略</div><div class="ni" onclick="go('mktg')"><i class="ti ti-speakerphone" aria-hidden="true"></i>マーケティング戦略</div>
       <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
       <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
       <div class="ng">メモ</div><div class="ni" onclick="go('memo')"><i class="ti ti-notes" aria-hidden="true"></i>メモ帳</div>
@@ -178,7 +232,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="mst" onclick="go('hojin')">
         <div class="mst-lbl"><i class="ti ti-flag" style="font-size:14px" aria-hidden="true"></i>法人化マストアクション — クリックで詳細へ</div>
         <div class="mst-g">
-          <div class="mst-c" style="border-left:3px solid #378ADD"><div class="mstv" style="color:#0C447C;font-size:30px">月収100万</div><div class="mstl">独立トリガー</div><div class="msts">2〜3ヶ月継続 → 独立</div></div>
+          <div class="mst-c" style="border-left:3px solid #378ADD"><div class="mstv" style="color:#4A9EFF;font-size:30px">月収100万</div><div class="mstl">独立トリガー</div><div class="msts">2〜3ヶ月継続 → 独立</div></div>
           <div class="mst-c"><div class="mstv">6ヶ月</div><div class="mstl">達成目標期間</div><div class="msts">月8社×毎月積み上げ</div></div>
           <div class="mst-c"><div class="mstv">公庫融資</div><div class="mstl">独立後すぐ申請</div><div class="msts">日本政策金融公庫</div></div>
         </div>
@@ -192,15 +246,15 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="ph"><h2>法人化条件</h2><p>この数字を達成したら独立・法人設立へ</p></div>
       <div class="th"><div class="th-big"><div class="th-yen">月収100万</div><div class="th-lbl">独立トリガー</div><div class="th-desc">2〜3ヶ月継続 → 独立 → 公庫融資</div></div><div class="th-div"></div><div class="th-stats"><div class="ts"><div class="tsv">25%</div><div class="tsl">成果報酬率</div></div><div class="ts"><div class="tsv">年100万</div><div class="tsl">平均単価/社</div></div><div class="ts"><div class="tsv">月8.3万</div><div class="tsl">1社からの月収入</div></div><div class="ts"><div class="tsv">月8社</div><div class="tsl">毎月新規積み上げ</div></div><div class="ts"><div class="tsv">6ヶ月</div><div class="tsl">達成目安期間</div></div><div class="ts"><div class="tsv">公庫融資</div><div class="tsl">独立後すぐ申請</div></div></div></div>
       <div class="mtc">
-        <div class="mth"><i class="ti ti-chart-bar" style="font-size:14px;color:var(--color-text-tertiary)" aria-hidden="true"></i><h3>月次シミュレーション（月8社積み上げモデル）</h3></div>
+        <div class="mth"><i class="ti ti-chart-bar" style="font-size:14px;color:#606060" aria-hidden="true"></i><h3>月次シミュレーション（月8社積み上げモデル）</h3></div>
         <div class="mch"><span class="mcm">月</span><span class="mcb">進捗</span><div class="mcn"><span class="mcnum">累計契約社数</span><span class="mcnum c">月収入</span></div></div>
         <div class="mr"><span class="mrm">1ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:17%"></div></div></div><div class="mrn"><span class="mrnum">8社</span><span class="mrnum c">約17万</span></div></div>
         <div class="mr"><span class="mrm">2ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:33%"></div></div></div><div class="mrn"><span class="mrnum">16社</span><span class="mrnum c">約34万</span></div></div>
         <div class="mr"><span class="mrm">3ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:50%"></div></div></div><div class="mrn"><span class="mrnum">24社</span><span class="mrnum c">約51万</span></div></div>
         <div class="mr"><span class="mrm">4ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:67%"></div></div></div><div class="mrn"><span class="mrnum">32社</span><span class="mrnum c">約68万</span></div></div>
         <div class="mr"><span class="mrm">5ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:83%"></div></div></div><div class="mrn"><span class="mrnum">40社</span><span class="mrnum c">約85万</span></div></div>
-        <div class="mr hl"><span class="mrm" style="color:#0C447C">6ヶ月目★</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#0C447C"></div></div></div><div class="mrn"><span class="mrnum">48社</span><span class="mrnum c" style="color:#0C447C;font-size:14px">約102万</span></div></div>
-        <div class="mr" style="background:#EFF6FF"><span class="mrm" style="color:#0C447C">7〜8ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#378ADD"></div></div></div><div class="mrn"><span class="mrnum" style="color:#0C447C;font-size:12px">100万継続確認</span><span class="mrnum c" style="color:#0C447C">独立判断</span></div></div>
+        <div class="mr hl"><span class="mrm" style="color:#4A9EFF">6ヶ月目★</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#0C447C"></div></div></div><div class="mrn"><span class="mrnum">48社</span><span class="mrnum c" style="color:#4A9EFF;font-size:14px">約102万</span></div></div>
+        <div class="mr" style="background:rgba(74,158,255,.08)"><span class="mrm" style="color:#4A9EFF">7〜8ヶ月目</span><div class="mrb"><div class="mrmb"><div class="mrbf" style="width:100%;background:#378ADD"></div></div></div><div class="mrn"><span class="mrnum" style="color:#4A9EFF;font-size:12px">100万継続確認</span><span class="mrnum c" style="color:#4A9EFF">独立判断</span></div></div>
       </div>
       <div style="margin-bottom:10px"><span class="bdg bblu" style="margin-bottom:0">法人設立後のステップ</span></div>
       <div class="ac">
@@ -218,8 +272,8 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="ph"><h2>役割・体制・ルール</h2><p>2人で動くための設計</p></div>
       <div class="card"><span class="bdg bgrn">役割分担</span>
         <div class="g2" style="margin-top:4px">
-          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:#E6F1FB;color:#0C447C">高原</div><div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">高原（代表）</div><div style="font-size:11px;color:var(--color-text-tertiary)">株式比率 60%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>バックオフィス全般（労務・総務・経理）</li><li>月次レポート最終確認・クラブへ提出</li><li>法人設立手続き・融資申請の主担当</li></ul></div>
-          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:#FAEEDA;color:#633806">野村</div><div><div style="font-size:14px;font-weight:500;color:var(--color-text-primary)">野村（取締役）</div><div style="font-size:11px;color:var(--color-text-tertiary)">株式比率 40%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>SNS運用・コンテンツ企画の実施</li><li>採用支援業務の担当</li></ul></div>
+          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:rgba(74,158,255,.1);color:#4A9EFF">高原</div><div><div style="font-size:14px;font-weight:500;color:#F0F0F0">高原（代表）</div><div style="font-size:11px;color:#606060">株式比率 60%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>バックオフィス全般（労務・総務・経理）</li><li>月次レポート最終確認・クラブへ提出</li><li>法人設立手続き・融資申請の主担当</li></ul></div>
+          <div class="mem"><div style="display:flex;align-items:center;gap:10px;margin-bottom:14px"><div class="av" style="background:rgba(232,197,71,.1);color:#E8C547">野村</div><div><div style="font-size:14px;font-weight:500;color:#F0F0F0">野村（取締役）</div><div style="font-size:11px;color:#606060">株式比率 40%</div></div></div><ul class="dl"><li>営業全般（候補選定・アプローチ・商談・クロージング）</li><li>SNS運用・コンテンツ企画の実施</li><li>採用支援業務の担当</li></ul></div>
         </div>
       </div>
       <div class="card"><span class="bdg bgrn">資本・報酬の設計</span>
@@ -335,12 +389,12 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
     <div id="p-flow" class="pg"><div class="scr">
       <div class="ph"><h2>価値の流れ</h2><p>クラブ契約からスケールまでの6ステップ</p></div>
       <div class="card">
-        <div class="sr"><div class="sn" style="background:#E1F5EE;color:#085041">1</div><div class="sb"><h4>クラブとの契約締結</h4><p>完全成果報酬型のためクラブ側リスクはゼロ。提案書持参・30分の面談から。地元出身・バスケ経験の感情的信頼を先に積む。</p></div></div>
+        <div class="sr"><div class="sn" style="background:#E1F5EE;color:#3DD68C">1</div><div class="sb"><h4>クラブとの契約締結</h4><p>完全成果報酬型のためクラブ側リスクはゼロ。提案書持参・30分の面談から。地元出身・バスケ経験の感情的信頼を先に積む。</p></div></div>
         <div class="sr"><div class="sn" style="background:#EEEDFE;color:#3C3489">2</div><div class="sb"><h4>スポンサー候補を手動ピックアップ</h4><p>認知・採用・CSR・ビジネスマッチングの4軸で企業を選定。刺さる提案を設計してからアプローチ。</p></div></div>
-        <div class="sr"><div class="sn" style="background:#FAEEDA;color:#633806">3</div><div class="sb"><h4>アプローチ → 商談 → クロージング</h4><p>月〜木、1日5社以上。対面商談を最優先。CRMで全進捗を当日中に記録。成約率目標10%。</p></div></div>
-        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">4</div><div class="sb"><h4>契約成立 → 成果報酬を受領</h4><p>協賛金の25%を受領。平均単価100万×25%＝25万円。月次レポートをクラブへ提出。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(232,197,71,.1);color:#E8C547">3</div><div class="sb"><h4>アプローチ → 商談 → クロージング</h4><p>月〜木、1日5社以上。対面商談を最優先。CRMで全進捗を当日中に記録。成約率目標10%。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">4</div><div class="sb"><h4>契約成立 → 成果報酬を受領</h4><p>協賛金の25%を受領。平均単価100万×25%＝25万円。月次レポートをクラブへ提出。</p></div></div>
         <div class="sr"><div class="sn" style="background:#FAECE7;color:#712B13">5</div><div class="sb"><h4>SNS強化でスポンサー価値を底上げ</h4><p>フォロワー増加→露出価値UP→協賛金単価UP の好循環。ROI可視化が継続・追加契約につながる。</p></div></div>
-        <div class="sr"><div class="sn" style="background:#EAF3DE;color:#27500A">6</div><div class="sb"><h4>月収100万を2〜3ヶ月継続 → 独立・法人設立 → スケール</h4><p>複数クラブへ展開。日本政策金融公庫へ融資申請。月額ストック収益から報酬設計。採用支援・SNSが第3・第4の柱へ。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(61,214,140,.08);color:#3DD68C">6</div><div class="sb"><h4>月収100万を2〜3ヶ月継続 → 独立・法人設立 → スケール</h4><p>複数クラブへ展開。日本政策金融公庫へ融資申請。月額ストック収益から報酬設計。採用支援・SNSが第3・第4の柱へ。</p></div></div>
       </div>
     </div></div>
 
@@ -359,28 +413,28 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         <div style="margin-top:12px" id="action-list">
 
           <!-- 山梨クィーンビーズ -->
-          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px">🏀 山梨クィーンビーズ</div>
+          <div style="font-size:11px;font-weight:600;color:#606060;letter-spacing:.08em;padding:14px 0 6px;border-bottom:1px solid #2A2A2A;margin-bottom:4px">🏀 山梨クィーンビーズ</div>
           <div class="ck" id="nxt-queens-contract" onclick="nxtCheck('nxt-queens-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
           <div class="ck" id="nxt-queens-approach" onclick="nxtCheck('nxt-queens-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
           <div class="ck" id="nxt-queens-first" onclick="nxtCheck('nxt-queens-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
           <div class="ck" id="nxt-queens-report" onclick="nxtCheck('nxt-queens-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
 
           <!-- 上野原サンライズ -->
-          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">🏀 上野原サンライズ</div>
+          <div style="font-size:11px;font-weight:600;color:#606060;letter-spacing:.08em;padding:14px 0 6px;border-bottom:1px solid #2A2A2A;margin-bottom:4px;margin-top:8px">🏀 上野原サンライズ</div>
           <div class="ck" id="nxt-sunrise-contract" onclick="nxtCheck('nxt-sunrise-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
           <div class="ck" id="nxt-sunrise-approach" onclick="nxtCheck('nxt-sunrise-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
           <div class="ck" id="nxt-sunrise-first" onclick="nxtCheck('nxt-sunrise-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
           <div class="ck" id="nxt-sunrise-report" onclick="nxtCheck('nxt-sunrise-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
 
           <!-- 八王子ビートレインズ -->
-          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">🏀 八王子ビートレインズ</div>
+          <div style="font-size:11px;font-weight:600;color:#606060;letter-spacing:.08em;padding:14px 0 6px;border-bottom:1px solid #2A2A2A;margin-bottom:4px;margin-top:8px">🏀 八王子ビートレインズ</div>
           <div class="ck" id="nxt-beatrains-contract" onclick="nxtCheck('nxt-beatrains-contract')"><input type="checkbox"><div class="ckt"><h4>契約締結</h4><p>リーガルチェック完了後に締結。完全成果報酬・リスクゼロを前面に打ち出す。</p></div></div>
           <div class="ck" id="nxt-beatrains-approach" onclick="nxtCheck('nxt-beatrains-approach')"><input type="checkbox"><div class="ckt"><h4>アプローチ開始</h4><p>候補リストをもとに今すぐ動く。1日5社以上。CRMに当日中に記録。</p></div></div>
           <div class="ck" id="nxt-beatrains-first" onclick="nxtCheck('nxt-beatrains-first')"><input type="checkbox"><div class="ckt"><h4>初成約1件を取る</h4><p>実績ゼロからの脱却。1件が全てを変える。成約後すぐ提案書・トークに反映。</p></div></div>
           <div class="ck" id="nxt-beatrains-report" onclick="nxtCheck('nxt-beatrains-report')"><input type="checkbox"><div class="ckt"><h4>月次レポート体制の確立</h4><p>毎月末にクラブへ提出。クラブとの伴走関係を深める。</p></div></div>
 
           <!-- 全体共通 -->
-          <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);letter-spacing:.08em;padding:14px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:4px;margin-top:8px">📌 全体</div>
+          <div style="font-size:11px;font-weight:600;color:#606060;letter-spacing:.08em;padding:14px 0 6px;border-bottom:1px solid #2A2A2A;margin-bottom:4px;margin-top:8px">📌 全体</div>
           <div class="ck" id="nxt-100" onclick="nxtCheck('nxt-100')"><input type="checkbox"><div class="ckt"><h4>月収100万を2〜3ヶ月継続</h4><p>月8社×6ヶ月積み上げで月収102万が目安。継続確認してから独立判断。</p></div></div>
           <div class="ck" id="nxt-found" onclick="nxtCheck('nxt-found')"><input type="checkbox"><div class="ckt"><h4>独立・法人設立</h4><p>資本金300万円。株式比率 高原60 / 野村40。消費税免除2年間を活用。</p></div></div>
           <div class="ck" id="nxt-loan" onclick="nxtCheck('nxt-loan')"><input type="checkbox"><div class="ckt"><h4>日本政策金融公庫へ融資申請</h4><p>独立後すぐ。新創業融資制度。無担保・無保証人、上限〜1,000万円。</p></div></div>
@@ -395,10 +449,10 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       <div class="ph"><h2>営業対策</h2><p>スポンサー営業特有の9つの壁と突破策</p></div>
 
       <div class="card"><span class="bdg bcor">失注リスクと営業対策</span>
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:14px">スポンサー営業特有の9つの壁と、具体的な突破策</p>
+        <p style="font-size:12px;color:#606060;margin-bottom:14px">スポンサー営業特有の9つの壁と、具体的な突破策</p>
 
         <div class="sr">
-          <div class="sn" style="background:#FCEBEB;color:#791F1F">1</div>
+          <div class="sn" style="background:rgba(255,107,107,.1);color:#FF6B6B">1</div>
           <div class="sb">
             <h4>決裁者に会えない</h4>
             <p>金額が大きいほど決裁層が上がる。担当者止まりでは成約しない。<br>
@@ -409,7 +463,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#FCEBEB;color:#791F1F">2</div>
+          <div class="sn" style="background:rgba(255,107,107,.1);color:#FF6B6B">2</div>
           <div class="sb">
             <h4>稟議で落ちる</h4>
             <p>担当者がいくら乗り気でも、上が通さなければ終わり。担当者を社内営業マンにする設計が必要。<br>
@@ -420,7 +474,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#FAEEDA;color:#633806">3</div>
+          <div class="sn" style="background:rgba(232,197,71,.1);color:#E8C547">3</div>
           <div class="sb">
             <h4>来期予算になる</h4>
             <p>予算は年度で決まる。「今期はもう無理」は頻出。タイミングを読んで先手を打つ。<br>
@@ -431,7 +485,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#FAEEDA;color:#633806">4</div>
+          <div class="sn" style="background:rgba(232,197,71,.1);color:#E8C547">4</div>
           <div class="sb">
             <h4>「検討します」で終わる</h4>
             <p>最も多い実質断り。検討材料が足りていないか、優先度が低いかのどちらか。<br>
@@ -442,7 +496,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#FAEEDA;color:#633806">5</div>
+          <div class="sn" style="background:rgba(232,197,71,.1);color:#E8C547">5</div>
           <div class="sb">
             <h4>契約まで3〜12ヶ月かかる</h4>
             <p>スポンサー契約は長期検討が前提。1社に依存すると売上ゼロの月が続く。<br>
@@ -453,7 +507,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#FAEEDA;color:#633806">6</div>
+          <div class="sn" style="background:rgba(232,197,71,.1);color:#E8C547">6</div>
           <div class="sb">
             <h4>ROI・効果が見えない（全失注の根っこ）</h4>
             <p>業種によって刺さるROIが全く違う。一律の提案では響かない。<br>
@@ -464,7 +518,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#E1F5EE;color:#085041">7</div>
+          <div class="sn" style="background:#E1F5EE;color:#3DD68C">7</div>
           <div class="sb">
             <h4>担当者が社内で動いてくれない</h4>
             <p>窓口は良いが上が動かない。担当者自身が動く理由を作る必要がある。<br>
@@ -475,7 +529,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#E1F5EE;color:#085041">8</div>
+          <div class="sn" style="background:#E1F5EE;color:#3DD68C">8</div>
           <div class="sb">
             <h4>競合他社がすでにスポンサー</h4>
             <p>同業他社の存在を嫌がるケースがある。事前確認と設計が必要。<br>
@@ -486,7 +540,7 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
         </div>
 
         <div class="sr">
-          <div class="sn" style="background:#E1F5EE;color:#085041">9</div>
+          <div class="sn" style="background:#E1F5EE;color:#3DD68C">9</div>
           <div class="sb">
             <h4>チームの知名度が低い</h4>
             <p>「全国区の知名度がない」は地域密着型チームの宿命。知名度ではなく別の価値で売る。<br>
@@ -503,307 +557,889 @@ ul.bl li::before{content:"▸";color:var(--color-text-tertiary);font-size:10px;f
       </div>
     </div></div>
 
-    <!-- 架電スクリプト -->
-    <div id="p-call" class="pg"><div class="scr">
-      <div class="ph"><h2>架電スクリプト</h2><p>副業・土日営業 / 優先業種：不動産・飲食・小売（ToC）</p></div>
 
-      <!-- 基本導入 -->
-      <div class="card"><span class="bdg btea">📞 基本導入トーク</span>
-        <div class="sr"><div class="sb">
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「○○様、お忙しいところ失礼します。
+    <!-- 営業戦略 -->
+    <div id="p-sales" class="pg"><div class="scr">
+      <div class="ph"><h2>営業戦略</h2><p>ターゲットを絞り、顧客に直接商品を販売して成約を獲得する</p></div>
+
+      <div class="card" style="background:rgba(74,158,255,.08);border:1px solid #BFDBFE">
+        <span class="bdg btea">営業戦略とは</span>
+        <p style="font-size:13px;line-height:2;margin-top:10px;white-space:pre-wrap">マーケティングが「市場全体に売れる状態を作る」のに対して
+営業戦略は「ターゲットを絞り、直接商談して成約を獲得すること」。
+
+・誰に会いに行くか（ターゲティング）
+・何を課題として掴むか（ヒアリング設計）
+・どう提案するか（商談シナリオ）
+・どうクロージングするか（成約設計）
+
+この4つを型として持つことで
+誰が動いても同じ成果が出る再現性を作る。</p>
+      </div>
+
+      <!-- アコーディオン：ヒアリング設計 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-hearing')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-ear" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">ヒアリング設計</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-hearing-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-hearing" style="display:none;padding:0 18px 18px">
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;margin-bottom:16px">
+            <strong>目的：課題を「引き出す」のではなく「気づかせる」</strong><br>
+            企業の担当者・社長は自分の課題を言語化できていないことが多い。「集客どうですか？」ではなく「今、新規のお客様はどこから来ていますか？」と聞くことで、自分で課題に気づかせる。これがヒアリング設計の本質。
+          </div>
+
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">STEP1｜現状確認（事実を掴む）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：現状を数字で把握する。感情を入れない。NG：「困っていることはありますか？」（Yes/Noで終わる）</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今、集客や新規顧客はどんな方法でやっていますか？」
+「広告や販促に月どのくらい使っていますか？」
+「採用は今年何人採れましたか？」
+「SNSはどのプラットフォームを使っていますか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">STEP2｜課題の深掘り（痛みを数値化する）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：「実は効果が出ていない」という事実を自分の口で言わせる。否定せず、ただ事実を引き出す。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今の集客方法で、一番効果が出ていないと感じるものはどれですか？」
+「求人広告を出して、実際に応募は来ていますか？」
+「チラシや広告を出してから来客に繋がっていると実感できますか？」
+「地域での認知について、競合他社と比べてどう感じますか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">STEP3｜理想の状態を聞く（欲しい未来を描かせる）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：「欲しい未来」を自分で言語化させる。この後の提案が「押しつけ」ではなく「解決策」になる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「もし地域の方に御社の名前が○万人に届くとしたら、何が変わりますか？」
+「採用が今の3倍うまくいったら、どんなことが可能になりますか？」
+「競合他社より先に地域でブランドを作れたら、どんな影響がありますか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">STEP4｜課題と理想のギャップを確認する</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：「今のままではダメだ」という認識を持たせる。この後の提案への心理的な準備ができる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今の状態と、その理想の状態の間にある一番の壁は何だと思いますか？」
+「今まで試してきた中で、一番惜しかった方法はどれですか？」
+「予算をかけても効果が出なかった経験はありますか？」</p>
+            </div>
+          </div>
+
+          <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">STEP5｜橋渡し（提案への自然な流れを作る）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：「あなたの課題を解決するために来た」という文脈を作る。提案は「売り込み」ではなく「解決策の提示」として入る。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「なるほど、○○という課題があるんですね。
+ そして○○という状態を目指したい。
+ 実は今回ご提案するのはまさにそこへの打ち手なんです。
+ 5分だけ聞いていただけますか？」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：商談シナリオ -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-scenario')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-map-2" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">商談シナリオ設計</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-scenario-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-scenario" style="display:none;padding:0 18px 18px">
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;margin-bottom:16px">
+            <strong>目的：商談は「偶然の会話」ではなく「設計された流れ」</strong><br>
+            成約する商談には必ず流れがある。なぜアイスブレイクをするのか、なぜヒアリングを先にするのか、なぜ数字を見せるタイミングがあるのか。全部に理由がある。その理由ごと設計する。
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">①アイスブレイク（2〜3分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：警戒心を解く。「売り込みに来た人」ではなく「話せる人」として認識させる。相手に話させる。自分が話しすぎない。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:1.8;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「地元出身なんですか？」「この辺のチーム、ご存知でしたか？」「バスケ観られたことありますか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">②ゴール設定（1分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：今日の商談のゴールを先に言う。「何をしに来たか」を明確にする。相手の防御姿勢が下がる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今日は売り込みではなく、まず御社の状況を少し聞かせていただいて、
+お役に立てそうなら提案させていただく、そういう場にしたいと思っています。」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">③ヒアリング（10〜15分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060">ヒアリング設計の5段階構造を使う。8割聞いて2割話す。メモを取る。自分の話をしたくなったら我慢する。</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">④課題の合意（2〜3分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：「あなたの課題はこれですよね？」と確認する。相手が「そうです」と言った瞬間に提案への扉が開く。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今のお話をまとめると、○○という状況で、○○という課題があって、
+本当は○○という状態を目指したい、ということでよろしいでしょうか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">⑤提案（5〜10分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：課題への解決策として提案を提示する。提案書は「補足資料」。話しながら見せる。資料を読み上げるだけはNG。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「先ほどおっしゃっていた○○という課題、実は弊社のご提案で解決できる可能性があります。
+具体的には…（クラブの数字・露出・ROIを提示）
+御社の業種でいうと、○○という効果が期待できます。」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">⑥条件確認（3〜5分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">目的：稟議・予算・決裁者を事前に把握して次手を打てる状態にする。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「ご検討いただける場合、社内でご確認が必要でしょうか？」
+「決め手として、何が一番大事でしょうか？」
+「予算感はどのくらいをお考えですか？」</p>
+            </div>
+          </div>
+
+          <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">⑦ネクストアクションの設定（1〜2分）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">鉄則：商談その日に次のアクションを決める。「ではご検討ください」で帰るのは絶対NG。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「では○日にご連絡させていただいてよいですか？」
+「社内でご確認が必要でしたら、説明資料を私が作って送りますので、
+ それをそのまま使っていただけますか？」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：成約設計 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-closing2')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-trophy" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">成約設計</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-closing2-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-closing2" style="display:none;padding:0 18px 18px">
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;margin-bottom:16px">
+            <strong>目的：「いつ・どのタイミングで・どう決めてもらうか」を設計する</strong>
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div style="font-size:12px;font-weight:600;color:#606060;margin-bottom:10px">クロージングの3つのタイミング</div>
+
+            <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">タイミング①：相手が前のめりになった瞬間</div>
+              <div style="padding:12px 14px">
+                <p style="font-size:12px;color:#606060;margin-bottom:8px">サイン：「それ、うちでもできますか？」「具体的にはどうやるんですか？」「金額はどのくらいですか？」→ このサインが出たら即クロージングに入る</p>
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。では具体的に進める方向で動かせていただきますか？」</p>
+              </div>
+            </div>
+
+            <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">タイミング②：課題に合意した瞬間</div>
+              <div style="padding:12px 14px">
+                <p style="font-size:12px;color:#606060;margin-bottom:8px">「そうです、それが一番の課題なんです」と相手が言った直後が最大のチャンス。</p>
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「それを解決できる方法が今日持ってきたご提案です。一度やってみませんか？」</p>
+              </div>
+            </div>
+
+            <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">タイミング③：期限・希少性を作る</div>
+              <div style="padding:12px 14px">
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「今シーズンのゴールドプランは残り2社です」
+「同業種は1社限定でお受けしています」
+「来シーズンから価格が上がる予定です」</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:#606060;margin-bottom:10px">クロージングの4パターン</div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">パターン①：直接型（最もシンプル）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">迷っている相手に決断を促す。沈黙を恐れない。聞いたら黙って待つ。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「いかがでしょうか。進める方向でよろしいですか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">パターン②：二択型（決断のハードルを下げる）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">「やるかやらないか」ではなく「どちらにするか」に変える。決断のハードルが下がる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「シルバープランとゴールドプラン、どちらがご予算に合っていますか？」</p>
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">パターン③：段階型（リスクを下げて決断させる）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">「大きな決断」を「小さな決断」に変える。まず試してもらうことで成約のハードルを下げる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「まず小さいプランで3ヶ月だけ試してみませんか？
+ 効果が出なければ更新しなくて構いません。
+ リスクなく始められます。」</p>
+            </div>
+          </div>
+
+          <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">パターン④：確認型（懸念を表面化させる）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">隠れた懸念を引き出して潰す。「特にない」と言えば即クロージングへ。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「何か気になる点や、進めるにあたって懸念はありますか？」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-call')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-phone" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">架電スクリプト</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-call-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-call" style="display:none;padding:0 18px 18px">
+          <p style="font-size:12px;color:#606060;margin-bottom:14px">副業・土日営業 / 優先業種：不動産・飲食・小売（ToC）</p>
+
+          <div style="margin-bottom:16px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;letter-spacing:.08em;padding:8px 0 6px;border-bottom:1px solid #2A2A2A;margin-bottom:8px">📞 基本導入トーク</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:14px 16px;border-radius:8px;white-space:pre-wrap">「○○様、お忙しいところ失礼します。
 ○○（クラブ名）の高原と申します。
 
 地域のバスケットボールクラブのスポンサーシップについて
 ご提案があり、ご連絡いたしました。
 今2〜3分だけよろしいでしょうか？」</p>
-        </div></div>
-      </div>
+          </div>
 
-      <!-- 反応別分岐 -->
-      <div class="card"><span class="bdg bcor">📂 反応別トーク分岐</span>
+          <div style="margin-bottom:12px;font-size:11px;font-weight:600;color:#606060;letter-spacing:.08em">📂 反応別トーク分岐</div>
 
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#0C447C;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">✅ OK・聞くよ</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。
-
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">✅ OK・聞くよ</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。
 実は○○クラブは現在、地域の企業様に
 ブランド露出の機会をご提供しています。
-
 試合の観客・SNSフォロワーを合わせると
 地域の○万人にリーチできます。
-
-広告費をかけずに地域認知を上げたい企業様に
-非常に喜んでいただいている取り組みです。
-
 一度15分だけ、詳しくお話しさせていただけますか？」</p>
-        </div>
+          </div>
 
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">⏰ 忙しい・今は無理</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました、失礼しました。
-
-一点だけ確認させてください。
-地域の集客や認知について、
-何かお困りのことはございますか？
-
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#E8C547;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">⏰ 忙しい・今は無理</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「承知しました。一点だけ確認させてください。
+地域の集客や認知について何かお困りのことはありますか？
 → ヒアリングできたら
 「それ、実は今回のご提案で解決できるかもしれません。
  改めて来週、○曜日の午前中はいかがでしょうか？」</p>
-        </div>
+          </div>
 
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">❌ 興味ない・うちには関係ない</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうですか、失礼しました。
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#FF6B6B;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">❌ 興味ない・うちには関係ない</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「そうですか。ただ一点だけ確認させてください。
+最近、集客や新規のお客様の獲得で何か課題を感じていますか？
+→ YES「実はそこに直接効く取り組みなんです。5分だけ聞いていただけますか？」
+→ NO「わかりました。資料だけメールでお送りしてもよいですか？」</p>
+          </div>
 
-ただ一点だけ確認させてください。
-最近、集客や新規のお客様の獲得で
-何か課題を感じていらっしゃいますか？
-
-→ YES
-「実はそこに直接効く取り組みなんです。
- 5分だけ聞いていただけますか？
- 合わないと思えばすぐに終わります。」
-
-→ NO
-「わかりました。ありがとうございます。
- もし将来、地域でのブランド強化を検討される際は
- ぜひ思い出してください。
- 資料だけメールでお送りしてもよいですか？」</p>
-        </div>
-
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:600;color:#27500A;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏢 競合他社がすでにスポンサー</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうなんですね！
-それは実はチャンスだと思います。
-
-同業の○○様がすでに入られているということは、
-同じ地域のお客様に○○様のブランドが
-先に届いている状態です。
-
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#3DD68C;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🏢 競合他社がすでにスポンサー</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「それは実はチャンスだと思います。
+同業の○○様がすでに入られているということは
+同じ地域のお客様に先に届いている状態です。
 御社が入らないと、そのまま差がついてしまいます。
 一度だけお話しさせていただけますか？」</p>
-        </div>
+          </div>
 
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">💰 お金がない・予算がない</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、コストは大事ですよね。
-
-実は今回のご提案、
-年間で換算すると月○万円からスタートできます。
-
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#E8C547;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">💰 お金がない・予算がない</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、コストは大事ですよね。
+実は月○万円からスタートできます。
 地域の求人広告や折込チラシと比べると
-かなりコストパフォーマンスが高いんです。
-
-金額の話は後でいくらでも調整できますので、
+コストパフォーマンスが高いんです。
 まず15分だけ内容を聞いていただけますか？」</p>
-        </div>
+          </div>
 
-        <div style="margin-top:16px">
-          <div style="font-size:11px;font-weight:600;color:#085041;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🚪 担当者が出た・社長につないでもらえない</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ありがとうございます。
-
-実は今回、経営判断に関わるご提案なので
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#3DD68C;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🚪 担当者が出た・社長につないでもらえない</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「実は今回、経営判断に関わるご提案なので
 社長か責任者の方に直接お話ししたいのですが、
 お取次ぎいただくことは可能でしょうか？
-
 → 難しい場合
-「承知しました。では社長にお伝えいただけますか。
- ○○クラブの高原から、
- スポンサーのご提案でご連絡があったと。
+「では○○クラブの高原から
+ スポンサーのご提案でご連絡があったとお伝えください。
  改めてご連絡いたします。」</p>
+          </div>
         </div>
       </div>
-    </div></div>
 
-    <!-- 商談スクリプト -->
-    <div id="p-meeting" class="pg"><div class="scr">
-      <div class="ph"><h2>商談スクリプト</h2><p>導入〜ヒアリング〜提案〜クロージング〜失注対応</p></div>
-
-      <!-- 導入 -->
-      <div class="card"><span class="bdg btea">🤝 導入（アイスブレイク）</span>
-        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「本日はお時間いただきありがとうございます。
-
-私、地元のバスケットボールが好きで、
-○○クラブの営業を担当しています。
-
-今日は売り込みというより、
-御社の状況を少し聞かせていただいて、
+      <!-- アコーディオン：商談フロー -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-meeting')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-users" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">商談フロー</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-meeting-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-meeting" style="display:none;padding:0 18px 18px">
+          <p style="font-size:12px;color:#606060;margin-bottom:14px">導入〜ヒアリング〜提案〜クロージング</p>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🤝 導入（アイスブレイク）</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「本日はお時間いただきありがとうございます。
+今日は売り込みというより、御社の状況を少し聞かせていただいて、
 お役に立てそうであればご提案したいと思っています。
-
 まず少し教えていただいてもいいですか？」</p>
-      </div>
-
-      <!-- ヒアリング -->
-      <div class="card"><span class="bdg bpnk">🎤 ヒアリング</span>
-        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「今、集客や新規のお客様獲得は
-どんな方法でやられていますか？」
-
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🎤 ヒアリング</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「今、集客や新規のお客様獲得はどんな方法でやられていますか？」
 「SNSやチラシ、広告なども使われていますか？」
+「地域のお客様との接点を増やしたいニーズはありますか？」
+「採用面ではいかがですか？若い人材の採用に苦労することはありますか？」
 
-「地域のお客様との接点を増やしたい、
-というニーズはありますか？」
-
-「採用面ではいかがですか？
-若い人材の採用に苦労することはありますか？」</p>
-
-        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px;color:#0C447C">
-          💡 ヒアリング後の橋渡し<br>
-          「なるほど、○○という課題があるんですね。実は今回ご提案するのはまさにそこへの打ち手なんです。」
+→ ヒアリング後の橋渡し
+「なるほど、○○という課題があるんですね。
+ 実は今回ご提案するのはまさにそこへの打ち手なんです。」</p>
+          </div>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🎯 クロージング</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「いかがでしょうか。何かご不明な点はありますか？」
+「もし進めていただける場合、社内でご確認が必要でしょうか？」
+「決め手として、何が一番大事でしょうか？」
+「次のステップとして、いつごろご返答いただけそうですか？」</p>
+          </div>
         </div>
       </div>
 
-      <!-- 業種別ROI提案 -->
-      <div class="card"><span class="bdg bcor">📊 業種別ROI提案</span>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#0C447C;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏠 不動産</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「地域の方に『○○クラブを応援している不動産会社』
-として認知されると、
-物件を探すとき最初に思い出してもらえます。
-
-地域密着の不動産会社様にとって
-一番効く投資だと思っています。」</p>
+      <!-- アコーディオン：業種別トーク -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-industry')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-building" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">業種別トーク</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-industry-icon" style="color:#606060;transition:transform .2s"></i>
         </div>
+        <div id="ac-industry" style="display:none;padding:0 18px 18px">
+          <p style="font-size:12px;color:#606060;margin-bottom:14px">業種ごとに刺さるROIと訴求を変える</p>
 
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🍜 飲食店</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「試合後に観客の方が食事に行く流れがあります。
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#4A9EFF;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🏠 不動産</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「地域の方に『○○クラブを応援している不動産会社』として認知されると、
+物件を探すとき最初に思い出してもらえます。
+地域密着の不動産会社様にとって一番効く投資だと思っています。」</p>
+          </div>
+
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#E8C547;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🍜 飲食店</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「試合後に観客の方が食事に行く流れがあります。
 クーポン配布やSNSでのコラボで
 試合観戦→御社の来店という導線を作れます。
+月○人の観客を御社のお客様に変える仕組みとして考えていただけます。」</p>
+          </div>
 
-月○人の観客を御社のお客様に変える
-仕組みとして考えていただけます。」</p>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#27500A;letter-spacing:.08em;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🛍️ 小売</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「ユニフォームやグッズに御社のロゴが入ることで、
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#3DD68C;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">🛍️ 小売</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「ユニフォームやグッズに御社のロゴが入ることで、
 地域の方が日常的に御社の名前を目にします。
-
-折込チラシは捨てられますが、
-ユニフォームは何度も目に入ります。
+折込チラシは捨てられますが、ユニフォームは何度も目に入ります。
 継続的な認知という点で全然違います。」</p>
+          </div>
+
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#3DD68C;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">💼 採用・HR系</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「求人媒体に1回出稿すると○万円。応募が来なければそれで終わりです。
+年間100万円で20〜30代○万人に御社のブランドを届け続けられたら
+採用コストとして安くないですか？」</p>
+          </div>
+
+          <div>
+            <div style="font-size:11px;font-weight:600;color:#FF6B6B;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:6px">⚖️ 士業</div>
+            <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:12px 14px;border-radius:8px;white-space:pre-wrap">「士業の新規顧客は信頼がないと来ません。
+地域のスポーツを支援しているというポジションは
+どんな広告よりも信頼を作ります。」</p>
+          </div>
         </div>
       </div>
 
-      <!-- クロージング -->
-      <div class="card"><span class="bdg btea">🎯 クロージング</span>
-        <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「いかがでしょうか。
-何かご不明な点はありますか？」
-
-「もし進めていただける場合、
-社内でご確認が必要でしょうか？」
-
+      <!-- アコーディオン：クロージング -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-closing')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-check" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">クロージング</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-closing-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-closing" style="display:none;padding:0 18px 18px">
+          <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:14px 16px;border-radius:8px;white-space:pre-wrap">「いかがでしょうか。何かご不明な点はありますか？」
+「もし進めていただける場合、社内でご確認が必要でしょうか？」
 「決め手として、何が一番大事でしょうか？」
-
-「次のステップとして、
-いつごろご返答いただけそうですか？」</p>
+「次のステップとして、いつごろご返答いただけそうですか？」</p>
+          <div style="margin-top:12px;padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;color:#4A9EFF">
+            💡 商談後の即アクション：当日中にCRM入力 → 翌日お礼メール → 2週間後フォロー日程をカレンダーに入れる
+          </div>
+        </div>
       </div>
 
-      <!-- 失注パターン -->
-      <div class="card"><span class="bdg bred">💬 失注パターン別フォロートーク</span>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📅 来期予算</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました。
-来期の予算に入れていただけますか？
-
-今から内諾だけいただければ
-正式な契約は来期でも構いません。
-枠を確保しておきます。」</p>
+      <!-- アコーディオン：失注対応 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-lost')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-refresh" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">失注対応</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-lost-icon" style="color:#606060;transition:transform .2s"></i>
         </div>
+        <div id="ac-lost" style="display:none;padding:0 18px 18px">
+          <p style="font-size:12px;color:#606060;margin-bottom:14px">失注パターンを正確に分類して対応する。「検討します」で終わらせない。</p>
 
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📋 上に確認が必要・稟議</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「もちろんです。
-上の方への説明資料を私が作ります。
+          <!-- 1 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(255,107,107,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#FF6B6B">1｜決裁者に会えない</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">金額が大きいほど決裁層が上がる。担当者止まりでは成約しない。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「今回の件、最終的に決める方にお時間をいただけますか？A4一枚の資料をご用意しています」
+対策②：担当者に稟議書ひな形を渡す。「これをそのまま使っていただければ大丈夫です」
+対策③：既存スポンサーから社長紹介をもらう紹介営業を仕組み化する</p>
+            </div>
+          </div>
 
-A4一枚、数字入りでまとめますので
-そのまま使っていただいて大丈夫です。
+          <!-- 2 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(255,107,107,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#FF6B6B">2｜稟議で落ちる</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">担当者がいくら乗り気でも、上が通さなければ終わり。担当者を社内営業マンにする。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「上司への説明資料を私が作ります。ROI数値・他社導入事例入りでA4一枚にまとめます」
+対策②：「コスト重視の方ですか？効果重視の方ですか？それで資料の内容を変えます」
+対策③：「この提案を通していただけると、担当者様の社内評価にもつながると思います」</p>
+            </div>
+          </div>
 
-どんな点を重視される方ですか？
-コスト重視か、効果重視かで
-資料の内容を変えます。」</p>
+          <!-- 3 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">3｜来期予算になる</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">予算は年度で決まる。「今期はもう無理」は頻出。タイミングを読んで先手を打つ。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「来期の予算に入れていただけますか？今から内諾だけいただければ正式な契約は来期でも構いません。枠を確保しておきます」
+対策②：予算編成時期（10〜11月）に逆算して9月末までに提案を完了させる
+対策③：来期見込みリストをCRMで別管理し、予算期前に必ずフォローする</p>
+            </div>
+          </div>
+
+          <!-- 4 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">4｜「検討します」で終わる</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">最も多い実質断り。検討材料が足りていないか、優先度が低いかのどちらか。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「何が決め手になりますか？懸念点があれば一緒に解決させてください」
+対策②：「2週間後の○日にご連絡します」と自分から次のアクションを設定する
+対策③：「他にご検討中のスポンサー案件はありますか？」と競合状況を把握する</p>
+            </div>
+          </div>
+
+          <!-- 5 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">5｜契約まで3〜12ヶ月かかる</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">スポンサー契約は長期検討が前提。1社に依存するとゼロ月が続く。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：常に30〜50社を同時進行させる。パイプラインを常に太く保つ
+対策②：CRMでフェーズ管理（初回接触→提案済→検討中→内諾→契約）し停滞案件を即把握
+対策③：今月の売上は3〜6ヶ月前のアプローチで決まると認識して早めに種まきを習慣化する</p>
+            </div>
+          </div>
+
+          <!-- 6 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(232,197,71,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#E8C547">6｜ROI・効果が見えない（全失注の根っこ）</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">業種によって刺さるROIが全く違う。一律の提案では響かない。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：業種別ROI資料を作成する。不動産→地域認知、採用系→採用コスト比較、飲食→来客増
+対策②：「SNSリーチ○万人」「試合観客○人」「メディア露出○件」を提案書に明記する
+対策③：成功事例を早期に作り「この業種でこれだけ効果が出た」という実績を積み上げる
+対策④：「他の広告と違うのは地域の人に『応援している会社』としてプラスのイメージで届く点です。マイナスになるリスクがほぼゼロです。まず小さいプランで試していただけますか？」</p>
+            </div>
+          </div>
+
+          <!-- 7 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">7｜担当者が社内で動いてくれない</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">窓口は良いが上が動かない。担当者自身が動く理由を作る。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「この提案を社内で通していただけると担当者様の評価につながります」と伝える
+対策②：「今シーズン限りの価格」「枠が残り○社」など期限と希少性を設けて緊張感を作る
+対策③：担当者が上に説明しやすいよう口頭説明用の一言サマリー（30秒で話せる内容）を提供する</p>
+            </div>
+          </div>
+
+          <!-- 8 -->
+          <div style="margin-bottom:14px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">8｜競合他社がすでにスポンサー</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">同業他社の存在を嫌がるケースがある。逆手に取れる。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：提案前に既存スポンサーリストを確認し同業種被りを事前に避ける
+対策②：同業でも「プランを分ける（ロゴ掲載の露出場所を変える等）」設計で共存させる
+対策③：「同業の○○社が既に入っています。御社が入らないと差がつきます」と攻めのアプローチも有効</p>
+            </div>
+          </div>
+
+          <!-- 9 -->
+          <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">9｜チームの知名度が低い</div>
+            <div style="padding:12px 14px">
+              <p style="font-size:12px;color:#606060;margin-bottom:8px">「全国区の知名度がない」は地域密着型チームの宿命。知名度ではなく別の価値で売る。</p>
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">対策①：「全国区の知名度ではなくこの地域での存在感と密着度」を数字で示す
+対策②：「地域で応援されているチームを支援している企業」というCSR視点で訴求する
+対策③：「今入ると創業スポンサーになれます。チームが成長したとき一番最初から支えていた企業として地域に語り継がれます」</p>
+            </div>
+          </div>
+
         </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">❓ 効果がわからない・不安</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、
-やってみないとわからない部分はあります。
-
-ただ、他の広告と違うのは
-地域の人に『応援している会社』として
-プラスのイメージで届く点です。
-
-マイナスになるリスクがほぼゼロというのが
-スポンサーシップの特徴です。
-
-まず小さいプランで試していただけますか？」</p>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">⏱️ 今は忙しい・タイミングが悪い</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「承知しました。
-では○月頃に改めてご連絡してもいいですか？
-
-その頃に向けて、御社の業種に合わせた
-資料をお送りしておきます。
-
-メールアドレスを教えていただけますか？」</p>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#085041;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📣 他の広告の方が効果がある</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「そうですよね、比較は大事だと思います。
-
-一点だけ違いをお伝えすると、
-通常の広告は『見られて終わり』ですが
-スポンサーシップは『応援している会社』として
-感情ごと認知されます。
-
-特にSNSで拡散されるとき、
-広告より圧倒的に信頼度が高いんです。
-
-組み合わせて使っていただくのが
-一番効果的だと思っています。」</p>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#633806;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">🏢 小さい会社だから効果がない</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「実はそれが一番のチャンスだと思っています。
-
-大企業がスポンサーに並ぶ中に
-地元の○○さんが入ることで
-逆に目立ちます。
-
-地域の人は大企業より
-身近な企業の名前に反応します。」</p>
-        </div>
-
-        <div style="margin-top:12px">
-          <div style="font-size:11px;font-weight:600;color:#791F1F;letter-spacing:.08em;padding:10px 0 6px;border-bottom:.5px solid var(--color-border-secondary);margin-bottom:8px">📉 知名度が低い</div>
-          <p style="font-family:monospace;font-size:13px;line-height:2;background:var(--color-bg-secondary);padding:14px 16px;border-radius:8px;white-space:pre-wrap">「おっしゃる通り、全国区の知名度はまだこれからです。
-
-ただ、この地域での存在感は数字でお見せできます。
-SNS○万人・観客○人・メディア露出○件。
-
-そして今入っていただくと
-創業スポンサーになれます。
-
-チームが成長したとき、
-一番最初から支えていた企業として
-地域に語り継がれます。」</p>
-        </div>
-
       </div>
 
-      <!-- 更新ルール -->
-      <div class="card"><span class="bdg btea">🔄 更新ルール</span>
-        <ul class="dl">
-          <li>成約したら「何のトークが効いたか」を即記録してCRMに残す</li>
-          <li>失注したら「どのパターンだったか」を即記録してCRMに残す</li>
-          <li>月1回このスクリプトを必ず改訂する</li>
-        </ul>
+    </div></div>
+
+    <!-- マーケティング戦略 -->
+    <div id="p-mktg" class="pg"><div class="scr">
+      <div class="ph"><h2>マーケティング戦略</h2><p>商品が売れる仕組みを作ること。市場全体に働きかけ「欲しい」状態を作る</p></div>
+
+      <div class="card" style="background:rgba(74,158,255,.08);border:1px solid #BFDBFE">
+        <span class="bdg btea">マーケティングとは</span>
+        <p style="font-size:13px;line-height:2;margin-top:10px;white-space:pre-wrap">営業が「個別に売る」のに対して
+マーケティングは「売れる状態を作る」こと。
+
+・誰に届けるか（ターゲット設計）
+・何を伝えるか（メッセージ設計）
+・どう認知させるか（チャネル設計）
+・なぜ買うのか（ポジショニング）
+
+この4つを設計することで
+営業が動く前から「欲しい」状態を作る。</p>
+      </div>
+
+      <!-- アコーディオン：ポジショニング -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-pos')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-flag" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">ポジショニング（課題解決型への転換）</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-pos-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-pos" style="display:none;padding:0 18px 18px">
+          <div style="margin-bottom:14px;padding:12px 14px;background:rgba(255,107,107,.1);border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:6px;color:#FF6B6B">❌ やめること</div>
+            <p style="font-family:monospace;line-height:2;white-space:pre-wrap">「スポンサー枠を買いませんか？」
+「クラブを応援してください」
+「協賛金をお願いします」</p>
+          </div>
+          <div style="margin-bottom:14px;padding:12px 14px;background:rgba(61,214,140,.08);border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:6px;color:#3DD68C">✅ これで行く</div>
+            <p style="font-family:monospace;line-height:2;white-space:pre-wrap">「御社の○○という課題、解決できます」
+「他の広告より効果的な理由があります」
+「お金を払う理由があるからご提案します」</p>
+          </div>
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;color:#4A9EFF;font-weight:600;text-align:center">
+            一言で言うと：「採用・集客・ブランディング課題を地域スポーツで解決する会社」
+          </div>
+
+          <div style="margin-top:16px">
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">業種別「課題×お金を払う理由」</div>
+
+            <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">🏠 不動産・建設</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：地域認知・差別化・若者へのリーチ<br>「折込チラシは翌日捨てられます。年間100万円で地域○人に365日届き続ける媒体があります。」</p>
+            </div>
+            <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">🍜 飲食店・カフェ</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：新規集客・リピーター・週末集客<br>「試合当日、御社の近くに○人のお腹を空かせたお客様が動きます。その導線をGoogleより安く作れます。」</p>
+            </div>
+            <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">🛍️ 小売・ショップ</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：来客減・EC競合・若者認知<br>「ECに負ける一番の理由はリアルでの認知不足です。地域○万人に繰り返し届く仕組みを作りましょう。」</p>
+            </div>
+            <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">💼 採用・人材・HR系</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：若者採用・求人効果・採用コスト<br>「求人媒体は応募が来なければそれで終わりです。年間100万円で20〜30代○万人に365日届き続けたら採用コストとして安くないですか？」</p>
+            </div>
+            <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">⚖️ 士業（税理士・社労士・弁護士）</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：新規顧客・紹介以外の集客・信頼構築<br>「士業の新規顧客は信頼がないと来ません。地域スポーツを支援しているポジションはどんな広告よりも信頼を作ります。」</p>
+            </div>
+            <div style="padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+              <div style="font-weight:600;margin-bottom:4px">💆 美容・健康・フィットネス</div>
+              <p style="color:#A0A0A0;line-height:1.8">課題：新規集客・若者女性へのリーチ・競合差別化<br>「御社のターゲットと女子バスケの観客層は完全一致です。SNS広告よりリアルな接点の方が圧倒的に記憶に残ります。」</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：ターゲット設計 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-target')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-target" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">ターゲット設計（業種・エリア）</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-target-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-target" style="display:none;padding:0 18px 18px">
+          <div style="margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:#3DD68C;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:8px">✅ 狙う会社の条件</div>
+            <ul class="dl">
+              <li>売上1億〜10億円の中小企業</li>
+              <li>地域に根ざしている（本社が商圏内）</li>
+              <li>採用か集客に課題がある（求人広告を出している・SNSが弱い）</li>
+              <li>社長が40代以下（スポーツへの親和性）</li>
+              <li>SNSアカウントがある（情報感度が高い）</li>
+              <li>競合他社がまだスポンサーに入っていない</li>
+            </ul>
+          </div>
+          <div style="margin-bottom:16px">
+            <div style="font-size:11px;font-weight:600;color:#FF6B6B;padding:8px 0 4px;border-bottom:1px solid #2A2A2A;margin-bottom:8px">❌ 除外する会社</div>
+            <ul class="dl">
+              <li>上場企業・大企業（稟議が重すぎる）</li>
+              <li>既存スポンサーと完全同業種</li>
+              <li>業績が明らかに悪い会社</li>
+              <li>社長に会えない構造の会社</li>
+            </ul>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:10px">クラブ別ターゲットエリア×業種</div>
+          <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:4px">🏀 山梨クィーンビーズ</div>
+            <p style="color:#A0A0A0;line-height:1.8">エリア：甲府市・甲斐市・笛吹市・山梨県全域<br>狙い業種：不動産・建設・飲食・観光・ワイナリー・士業<br>課題軸：地域認知・採用・観光集客</p>
+          </div>
+          <div style="margin-bottom:10px;padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:4px">🏀 上野原サンライズ</div>
+            <p style="color:#A0A0A0;line-height:1.8">エリア：上野原市・相模原市・大月市・山梨県全域<br>狙い業種：製造・建設・小売・飲食・採用系<br>課題軸：採用ブランディング・地域認知</p>
+          </div>
+          <div style="padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:4px">🏀 八王子ビートレインズ</div>
+            <p style="color:#A0A0A0;line-height:1.8">エリア：八王子市・日野市・多摩市・東京西部全域<br>狙い業種：IT・採用・不動産・飲食・小売・美容<br>課題軸：採用・若者認知・ブランディング</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：SNS発信計画 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-sns')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-brand-instagram" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">SNS発信計画</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-sns-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-sns" style="display:none;padding:0 18px 18px">
+          <p style="font-size:12px;color:#606060;margin-bottom:12px">向こうから問い合わせが来る仕組みを育てる。今すぐ効果は出ないが、3〜6ヶ月後にアウトバウンドと合わさって加速する。毎日続けることが唯一の近道。</p>
+          <div style="margin-bottom:12px">
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">週間投稿カレンダー（Instagram・X共通）</div>
+            <div style="overflow-x:auto">
+              <table style="width:100%;border-collapse:collapse;font-size:13px">
+                <thead><tr style="background:#181818">
+                  <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">曜日</th>
+                  <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">テーマ</th>
+                  <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">具体例</th>
+                </tr></thead>
+                <tbody>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">月</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">業種別課題</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「採用できない会社がやっていないこと」</td></tr>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">火</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">ROI・数字</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「求人広告vsスポンサー、コスパ比較」</td></tr>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">水</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">クラブ紹介</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「山梨クィーンビーズの観客数が増えている理由」</td></tr>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">木</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">成功事例</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「協賛を始めた○○社に起きたこと」（成約後）</td></tr>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">金</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">経営者向け</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「地域で選ばれる会社になる方法」</td></tr>
+                  <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">土</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">活動報告</td><td style="padding:8px;border-bottom:1px solid #2A2A2A">「今週の気づき・商談の結果」</td></tr>
+                  <tr><td style="padding:8px">日</td><td style="padding:8px">ビジョン</td><td style="padding:8px">「山梨にB.Leagueを作る理由」</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div style="padding:12px 14px;background:#181818;border-radius:8px;font-size:13px">
+            <div style="font-weight:600;margin-bottom:6px">固定ハッシュタグ</div>
+            <p style="font-family:monospace;line-height:2">#バスケスポンサー #地域スポーツ #スポンサーシップ<br>#山梨クィーンビーズ #上野原サンライズ #八王子ビートレインズ<br>#中小企業マーケティング #地域密着 #スポーツビジネス</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：認知拡大の仕組み -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-grow')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-trending-up" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">認知拡大の仕組み</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-grow-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-grow" style="display:none;padding:0 18px 18px">
+          <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">1</div><div class="sb"><h4>紹介の連鎖</h4><p>成約後に必ず聞く：「同じような課題を持っている経営者の方をご紹介いただけますか？」紹介は成約率が3〜5倍。アプローチコストゼロ。信頼が先に届いている状態で商談できる。</p></div></div>
+          <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">2</div><div class="sb"><h4>既存スポンサーをSNSで露出</h4><p>成約後すぐ「○○社がスポンサーになりました！」をクラブSNSで投稿。協賛企業にSNS投稿テンプレを渡す。その投稿を見た同業他社が「うちも」となる。競合他社への危機感が最強のクロージング。</p></div></div>
+          <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">3</div><div class="sb"><h4>季節・イベント連動</h4><p>試合前月→「試合当日に御社の名前が○人に届きます」採用シーズン（2〜4月）→「採用広告代わりに使えます」年度末（2〜3月）→「来期の予算に入れてください」地域イベント前→「○○祭りと合わせて露出できます」</p></div></div>
+          <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">4</div><div class="sb"><h4>月次レポートでアップセル・紹介を生む</h4><p>毎月クラブへ提出するレポートに露出回数・SNSリーチ数・観客数を記載。「御社のロゴがこれだけ見られました」→ 解約防止・アップセル・紹介の3つが生まれる。</p></div></div>
+          <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">5</div><div class="sb"><h4>note記事（3ヶ月後以降）</h4><p>「採用広告を出しても応募が来ない会社が見直すべき1つのこと」「折込チラシをやめて地域スポーツに協賛した不動産会社の話」「地域の中小企業がスポンサーを始めるべき3つの理由」など、実績が出てから書く。</p></div></div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：メッセージ設計 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-msg')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-message" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">メッセージ設計</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-msg-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-msg" style="display:none;padding:0 18px 18px">
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;margin-bottom:16px">
+            <strong>目的：業種ごとに「刺さる言葉」を変える</strong><br>
+            同じ商品でも、誰に・何を言うかで反応が全く変わる。「地域に届けます」ではなく「採用コストが○万円下がります」「試合後のお客様を御社に送り込めます」。具体的な数字と業種特有の言葉で話す。
+          </div>
+
+          <div style="margin-bottom:14px">
+            <div style="font-size:12px;font-weight:600;color:#606060;margin-bottom:10px">メッセージ設計の3原則</div>
+
+            <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">原則①：Before/Afterで語る</div>
+              <div style="padding:12px 14px">
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">Before：「今、折込チラシに月○万かけているが効果が見えない」
+After：「弊社経由で地域○万人に365日届き続ける」
+
+→ 現状の痛みと未来の解決をセットで伝える</p>
+              </div>
+            </div>
+
+            <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">原則②：数字で語る（曖昧な言葉を使わない）</div>
+              <div style="padding:12px 14px">
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">NG：「多くの方に届きます」
+OK：「試合観客○人・SNSフォロワー○人・年間露出○回」
+
+NG：「採用に効果があります」
+OK：「求人広告1本○万円と比べて年間○万円のコスト削減」</p>
+              </div>
+            </div>
+
+            <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+              <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">原則③：競合と比較させる（有利な土俵で戦う）</div>
+              <div style="padding:12px 14px">
+                <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">「折込チラシは翌日捨てられます。ユニフォームのロゴは1年間消えません。」
+
+「求人サイトは応募が来なければそれで終わりです。
+ 弊社は応募がなくても認知は積み上がり続けます。」</p>
+              </div>
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:#606060;margin-bottom:10px">競合との明確な差</div>
+          <div style="overflow-x:auto">
+            <table style="width:100%;border-collapse:collapse;font-size:12px">
+              <thead><tr style="background:#181818">
+                <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A"></th>
+                <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">広告代理店</th>
+                <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">求人媒体</th>
+                <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">弊社</th>
+              </tr></thead>
+              <tbody>
+                <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">売るもの</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">広告枠</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">掲載枠</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">課題解決</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">効果の持続</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">掲載期間のみ</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">掲載期間のみ</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">年間・ストック型</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">イメージ</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">中立</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">中立</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">応援している会社</td></tr>
+                <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">ターゲット</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">不特定多数</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">求職者のみ</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">地域の見込み顧客全員</td></tr>
+                <tr><td style="padding:8px">解約リスク</td><td style="padding:8px;text-align:center">掲載終了で即ゼロ</td><td style="padding:8px;text-align:center">掲載終了で即ゼロ</td><td style="padding:8px;text-align:center;color:#4A9EFF;font-weight:600">継続契約でストック</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- アコーディオン：チャネル設計 -->
+      <div class="card" style="padding:0">
+        <div onclick="acToggle('ac-channel')" style="padding:16px 18px;cursor:pointer;display:flex;justify-content:space-between;align-items:center">
+          <div style="display:flex;align-items:center;gap:10px">
+            <i class="ti ti-network" style="color:#4A9EFF;font-size:16px"></i>
+            <span style="font-weight:600;font-size:14px">チャネル設計</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="ac-channel-icon" style="color:#606060;transition:transform .2s"></i>
+        </div>
+        <div id="ac-channel" style="display:none;padding:0 18px 18px">
+          <div style="padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px;margin-bottom:16px">
+            <strong>目的：どこで・どうやって認知させるかを設計する</strong><br>
+            チャネルとは「顧客との接点」のこと。1つのチャネルに頼ると不安定になる。複数のチャネルで「何度も接触する」設計が重要。人は平均7回接触して初めて行動する。（セブンヒッツ理論）
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">チャネル①：架電・飛び込み（今すぐ接触）</div>
+            <div style="padding:12px 14px;font-size:13px;color:#A0A0A0;line-height:1.8">
+              特徴：即効性が高い・コストゼロ・成約率が高い<br>
+              使い方：アポ取り・初回接触に特化する<br>
+              頻度：毎日10〜20社
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">チャネル②：SNS（認知の積み上げ）</div>
+            <div style="padding:12px 14px;font-size:13px;color:#A0A0A0;line-height:1.8">
+              特徴：24時間働く・フォロワーに届き続ける<br>
+              使い方：課題解決型コンテンツを毎日投稿<br>
+              効果：架電前に「知っている状態」を作れる → 「あ、あのバスケのスポンサーの人ですよね」になる
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">チャネル③：DM・メール（温度感のある接触）</div>
+            <div style="padding:12px 14px;font-size:13px;color:#A0A0A0;line-height:1.8">
+              特徴：個別感・丁寧さが伝わる<br>
+              使い方：架電後のフォロー・アポ確定後の資料送付<br>
+              文面：業種に合わせたメッセージに変える
+            </div>
+          </div>
+
+          <div style="margin-bottom:10px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">チャネル④：レター営業（差別化できる接触）</div>
+            <div style="padding:12px 14px;font-size:13px;color:#A0A0A0;line-height:1.8">
+              特徴：今の時代に珍しい・物理的に残る・捨てにくい<br>
+              使い方：電話が繋がらない会社・中小企業への差別化<br>
+              効果：「手紙が来た」という事実が社長の目に触れやすい
+            </div>
+          </div>
+
+          <div style="margin-bottom:16px;border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(74,158,255,.1);padding:10px 14px;font-size:12px;font-weight:600;color:#4A9EFF">チャネル⑤：紹介（最強のチャネル）</div>
+            <div style="padding:12px 14px;font-size:13px;color:#A0A0A0;line-height:1.8">
+              特徴：信頼が先に届く・成約率3〜5倍・コストゼロ<br>
+              使い方：成約企業から必ず紹介を依頼する仕組みを作る<br>
+              設計：「同じような課題を持っている経営者をご紹介いただけますか？」を毎回の商談後の習慣にする
+            </div>
+          </div>
+
+          <div style="font-size:12px;font-weight:600;color:#606060;margin-bottom:10px">チャネルの組み合わせ設計（セブンヒッツ戦略）</div>
+          <div style="border:1px solid #2A2A2A;border-radius:10px;overflow:hidden">
+            <div style="background:rgba(61,214,140,.08);padding:10px 14px;font-size:12px;font-weight:600;color:#3DD68C">7回の接触を設計して成約率を上げる</div>
+            <div style="padding:12px 14px">
+              <p style="font-family:monospace;font-size:13px;line-height:2;background:#181818;padding:10px 12px;border-radius:8px;white-space:pre-wrap">1回目：SNSフォロー・いいね（認知）
+2回目：SNS投稿を見る（興味）
+3回目：架電（初回接触）
+4回目：架電後のメール・資料送付（関係構築）
+5回目：商談（提案）
+6回目：商談後のフォロー連絡（検討促進）
+7回目：クロージング（成約）
+
+→ 7回の接触を「設計」することで
+　 成約率が上がり、アプローチが「押しつけ」でなくなる</p>
+            </div>
+          </div>
+        </div>
       </div>
 
     </div></div>
@@ -812,9 +1448,9 @@ SNS○万人・観客○人・メディア露出○件。
     <div id="p-club" class="pg"><div class="scr">
       <div class="ph"><h2>各クラブ資料</h2><p>資料が届いたらURLを貼って「開く」ボタンで即アクセス</p></div>
 
-      <div class="card" style="background:#EFF6FF;border:1px solid #BFDBFE">
+      <div class="card" style="background:rgba(74,158,255,.08);border:1px solid #BFDBFE">
         <span class="bdg btea">📌 Google Drive共有フォルダの作り方</span>
-        <ol style="margin:10px 0 0;padding-left:18px;font-size:13px;line-height:2;color:var(--color-text-secondary)">
+        <ol style="margin:10px 0 0;padding-left:18px;font-size:13px;line-height:2;color:#A0A0A0">
           <li>Google Driveで「知変創造」フォルダを作成</li>
           <li>クラブごとにサブフォルダを作成（提案書・契約書・数字資料などを格納）</li>
           <li>フォルダを右クリック →「共有」→ 野村さんのGmailを追加</li>
@@ -829,7 +1465,7 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
             <div style="display:flex;gap:8px;align-items:flex-start">
               <textarea class="memo-ta" id="club-queens-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-queens-drive')" style="min-height:44px;flex:1"></textarea>
               <button onclick="openUrl('club-queens-drive')" style="padding:8px 14px;background:#0C447C;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
@@ -837,12 +1473,12 @@ SNS○万人・観客○人・メディア露出○件。
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
             <textarea class="memo-ta" id="club-queens-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-queens-stats')" style="min-height:60px"></textarea>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
             <textarea class="memo-ta" id="club-queens-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-queens-plan')" style="min-height:60px"></textarea>
           </div>
 
@@ -855,7 +1491,7 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
             <div style="display:flex;gap:8px;align-items:flex-start">
               <textarea class="memo-ta" id="club-sunrise-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-sunrise-drive')" style="min-height:44px;flex:1"></textarea>
               <button onclick="openUrl('club-sunrise-drive')" style="padding:8px 14px;background:#E05A1A;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
@@ -863,12 +1499,12 @@ SNS○万人・観客○人・メディア露出○件。
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
             <textarea class="memo-ta" id="club-sunrise-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-sunrise-stats')" style="min-height:60px"></textarea>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
             <textarea class="memo-ta" id="club-sunrise-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-sunrise-plan')" style="min-height:60px"></textarea>
           </div>
 
@@ -881,7 +1517,7 @@ SNS○万人・観客○人・メディア露出○件。
         <div style="margin-top:14px;display:flex;flex-direction:column;gap:12px">
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📁 Google Driveフォルダ（全資料）</div>
             <div style="display:flex;gap:8px;align-items:flex-start">
               <textarea class="memo-ta" id="club-beatrains-drive" placeholder="Google DriveフォルダのURLをここに貼り付け..." oninput="sm('club-beatrains-drive')" style="min-height:44px;flex:1"></textarea>
               <button onclick="openUrl('club-beatrains-drive')" style="padding:8px 14px;background:#C02080;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
@@ -889,12 +1525,12 @@ SNS○万人・観客○人・メディア露出○件。
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">📊 クラブの数字（観客数・SNS・メディア露出）</div>
             <textarea class="memo-ta" id="club-beatrains-stats" placeholder="例）観客数：○人／試合、SNSフォロワー：○人、メディア露出：○件..." oninput="sm('club-beatrains-stats')" style="min-height:60px"></textarea>
           </div>
 
           <div style="border:1.5px dashed var(--color-border-secondary);border-radius:10px;padding:14px 16px">
-            <div style="font-size:11px;font-weight:600;color:var(--color-text-tertiary);margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
+            <div style="font-size:11px;font-weight:600;color:#606060;margin-bottom:8px">💰 スポンサープラン一覧・金額</div>
             <textarea class="memo-ta" id="club-beatrains-plan" placeholder="例）ゴールドプラン：年間○万円、シルバープラン：年間○万円..." oninput="sm('club-beatrains-plan')" style="min-height:60px"></textarea>
           </div>
 
@@ -919,89 +1555,89 @@ SNS○万人・観客○人・メディア露出○件。
 
       <!-- パターン① -->
       <div class="card"><span class="bdg bpnk">パターン① ｜ 1人4社・2人8社/月（保守的）</span>
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">副業・土日のみ・慎重に進める場合</p>
+        <p style="font-size:12px;color:#606060;margin:8px 0 12px">副業・土日のみ・慎重に進める場合</p>
         <div style="overflow-x:auto">
           <table style="width:100%;border-collapse:collapse;font-size:13px">
-            <thead><tr style="background:var(--color-bg-secondary)">
-              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            <thead><tr style="background:#181818">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計収入</th>
             </tr></thead>
             <tbody>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16.6万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">49.9万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">3ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">24社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">50万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">99.9万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">166.5万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">83.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.8万</td></tr>
-              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">6ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">349.8万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">1,300万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">144社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">299万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">3,294万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">24ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">399万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">6,588万</td></tr>
-              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">28ヶ月目🎉</td><td style="padding:8px;text-align:right">8社</td><td style="padding:8px;text-align:right">224社</td><td style="padding:8px;text-align:right">465万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">49.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">3ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">24社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">50万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">99.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">166.5万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">83.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">249.8万</td></tr>
+              <tr style="background:rgba(74,158,255,.08)"><td style="padding:8px;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">6ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">349.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">1,300万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">144社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">299万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">3,294万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">24ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">399万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">6,588万</td></tr>
+              <tr style="background:rgba(61,214,140,.08)"><td style="padding:8px;color:#3DD68C;font-weight:600">28ヶ月目🎉</td><td style="padding:8px;text-align:right">8社</td><td style="padding:8px;text-align:right">224社</td><td style="padding:8px;text-align:right">465万</td><td style="padding:8px;text-align:right;color:#3DD68C;font-weight:600">約1億突破</td></tr>
             </tbody>
           </table>
         </div>
-        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+        <div style="margin-top:12px;padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px">
           📍 月収100万達成：<strong>6ヶ月目</strong>　／　独立判断：<strong>6〜7ヶ月目</strong>　／　累計1億：<strong>28ヶ月目（2年4ヶ月）</strong>
         </div>
       </div>
 
       <!-- パターン② -->
       <div class="card"><span class="bdg btea">パターン② ｜ 1人8社・2人16社/月（標準・推奨）</span>
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">本気で動く・独立を早める・現実的な最短ルート</p>
+        <p style="font-size:12px;color:#606060;margin:8px 0 12px">本気で動く・独立を早める・現実的な最短ルート</p>
         <div style="overflow-x:auto">
           <table style="width:100%;border-collapse:collapse;font-size:13px">
-            <thead><tr style="background:var(--color-bg-secondary)">
-              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            <thead><tr style="background:#181818">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計収入</th>
             </tr></thead>
             <tbody>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">33.3万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">99.9万</td></tr>
-              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">199.9万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">64社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">133.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">333.2万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">80社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">166.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">499.8万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">699.8万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">2,600万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">288社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">599万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">7,098万</td></tr>
-              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">20ヶ月目🎉</td><td style="padding:8px;text-align:right">16社</td><td style="padding:8px;text-align:right">320社</td><td style="padding:8px;text-align:right">665万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">33.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">33.3万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">32社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">66.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">99.9万</td></tr>
+              <tr style="background:rgba(74,158,255,.08)"><td style="padding:8px;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">48社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">100万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">199.9万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">4ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">64社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">133.3万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">333.2万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">5ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">80社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">166.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">499.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">96社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">699.8万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">192社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">2,600万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">16社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">288社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">599万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">7,098万</td></tr>
+              <tr style="background:rgba(61,214,140,.08)"><td style="padding:8px;color:#3DD68C;font-weight:600">20ヶ月目🎉</td><td style="padding:8px;text-align:right">16社</td><td style="padding:8px;text-align:right">320社</td><td style="padding:8px;text-align:right">665万</td><td style="padding:8px;text-align:right;color:#3DD68C;font-weight:600">約1億突破</td></tr>
             </tbody>
           </table>
         </div>
-        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+        <div style="margin-top:12px;padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px">
           📍 月収100万達成：<strong>3ヶ月目</strong>　／　独立判断：<strong>5〜6ヶ月目</strong>　／　累計1億：<strong>20ヶ月目（1年8ヶ月）</strong>
         </div>
       </div>
 
       <!-- パターン③ -->
       <div class="card"><span class="bdg bcor">パターン③ ｜ 1人10社・2人20社/月（アグレッシブ）</span>
-        <p style="font-size:12px;color:var(--color-text-tertiary);margin:8px 0 12px">フルコミット・採用も早める・最速ルート</p>
+        <p style="font-size:12px;color:#606060;margin:8px 0 12px">フルコミット・採用も早める・最速ルート</p>
         <div style="overflow-x:auto">
           <table style="width:100%;border-collapse:collapse;font-size:13px">
-            <thead><tr style="background:var(--color-bg-secondary)">
-              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">月</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">新規</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計社数</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">月収入</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">累計収入</th>
+            <thead><tr style="background:#181818">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">月</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">新規</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計社数</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">月収入</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">累計収入</th>
             </tr></thead>
             <tbody>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">41.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">41.6万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">83.2万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">124.8万</td></tr>
-              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">60社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);color:#0C447C;font-weight:600">124.8万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.6万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">120社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">249.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">873.6万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">240社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">499万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">3,245万</td></tr>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">360社</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">748万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">8,165万</td></tr>
-              <tr style="background:#EAF3DE"><td style="padding:8px;color:#27500A;font-weight:600">19ヶ月目🎉</td><td style="padding:8px;text-align:right">20社</td><td style="padding:8px;text-align:right">380社</td><td style="padding:8px;text-align:right">790万</td><td style="padding:8px;text-align:right;color:#27500A;font-weight:600">約1億突破</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">1ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">41.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">41.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">2ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">40社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">83.2万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">124.8万</td></tr>
+              <tr style="background:rgba(74,158,255,.08)"><td style="padding:8px;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">3ヶ月目★</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">60社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A;color:#4A9EFF;font-weight:600">124.8万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">249.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">6ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">120社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">249.6万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">873.6万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">12ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">240社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">499万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">3,245万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">18ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">20社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">360社</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">748万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">8,165万</td></tr>
+              <tr style="background:rgba(61,214,140,.08)"><td style="padding:8px;color:#3DD68C;font-weight:600">19ヶ月目🎉</td><td style="padding:8px;text-align:right">20社</td><td style="padding:8px;text-align:right">380社</td><td style="padding:8px;text-align:right">790万</td><td style="padding:8px;text-align:right;color:#3DD68C;font-weight:600">約1億突破</td></tr>
             </tbody>
           </table>
         </div>
-        <div style="margin-top:12px;padding:12px 14px;background:#EFF6FF;border-radius:8px;font-size:13px">
+        <div style="margin-top:12px;padding:12px 14px;background:rgba(74,158,255,.08);border-radius:8px;font-size:13px">
           📍 月収100万達成：<strong>3ヶ月目以内</strong>　／　独立判断：<strong>5ヶ月目</strong>　／　累計1億：<strong>19ヶ月目（1年7ヶ月）</strong>
         </div>
       </div>
@@ -1010,17 +1646,17 @@ SNS○万人・観客○人・メディア露出○件。
       <div class="card"><span class="bdg btea">📊 3パターン比較</span>
         <div style="overflow-x:auto;margin-top:12px">
           <table style="width:100%;border-collapse:collapse;font-size:13px">
-            <thead><tr style="background:var(--color-bg-secondary)">
-              <th style="padding:8px;text-align:left;border-bottom:1px solid var(--color-border-secondary)">パターン</th>
-              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">月収100万</th>
-              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">独立判断</th>
-              <th style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">累計1億</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">12ヶ月月収</th>
-              <th style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">12ヶ月累計</th>
+            <thead><tr style="background:#181818">
+              <th style="padding:8px;text-align:left;border-bottom:1px solid #2A2A2A">パターン</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">月収100万</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">独立判断</th>
+              <th style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">累計1億</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">12ヶ月月収</th>
+              <th style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">12ヶ月累計</th>
             </tr></thead>
             <tbody>
-              <tr><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary)">①保守的（月8社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">6〜7ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary)">28ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary)">1,300万</td></tr>
-              <tr style="background:#EFF6FF"><td style="padding:8px;border-bottom:1px solid var(--color-border-secondary);font-weight:600">②標準・推奨（月16社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">3ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">5〜6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid var(--color-border-secondary);font-weight:600">20ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);font-weight:600">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid var(--color-border-secondary);font-weight:600">2,600万</td></tr>
+              <tr><td style="padding:8px;border-bottom:1px solid #2A2A2A">①保守的（月8社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">6〜7ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A">28ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">200万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A">1,300万</td></tr>
+              <tr style="background:rgba(74,158,255,.08)"><td style="padding:8px;border-bottom:1px solid #2A2A2A;font-weight:600">②標準・推奨（月16社）</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;font-weight:600">3ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;font-weight:600">5〜6ヶ月目</td><td style="padding:8px;text-align:center;border-bottom:1px solid #2A2A2A;font-weight:600">20ヶ月目</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A;font-weight:600">400万</td><td style="padding:8px;text-align:right;border-bottom:1px solid #2A2A2A;font-weight:600">2,600万</td></tr>
               <tr><td style="padding:8px">③アグレッシブ（月20社）</td><td style="padding:8px;text-align:center">3ヶ月以内</td><td style="padding:8px;text-align:center">5ヶ月目</td><td style="padding:8px;text-align:center">19ヶ月目</td><td style="padding:8px;text-align:right">499万</td><td style="padding:8px;text-align:right">3,245万</td></tr>
             </tbody>
           </table>
@@ -1029,9 +1665,9 @@ SNS○万人・観客○人・メディア露出○件。
 
       <!-- 1億を早める3つの鍵 -->
       <div class="card"><span class="bdg bcor">🔑 1億達成をさらに早める3つの鍵</span>
-        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">1</div><div class="sb"><h4>単価を上げる</h4><p>年間200万単価に変更した場合、パターン②で20ヶ月 → 約10ヶ月に短縮。単価向上が最もレバレッジが効く。</p></div></div>
-        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">2</div><div class="sb"><h4>人を増やす</h4><p>3人目を7〜8ヶ月目に採用し月24社ペースへ加速。累計1億を3〜4ヶ月短縮できる。</p></div></div>
-        <div class="sr"><div class="sn" style="background:#E6F1FB;color:#0C447C">3</div><div class="sb"><h4>クラブを増やす</h4><p>3クラブフル稼働で商圏を広げる。1クラブの上限（社数・業種）を突破。パターン②で1億を15ヶ月目に前倒し可能。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">1</div><div class="sb"><h4>単価を上げる</h4><p>年間200万単価に変更した場合、パターン②で20ヶ月 → 約10ヶ月に短縮。単価向上が最もレバレッジが効く。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">2</div><div class="sb"><h4>人を増やす</h4><p>3人目を7〜8ヶ月目に採用し月24社ペースへ加速。累計1億を3〜4ヶ月短縮できる。</p></div></div>
+        <div class="sr"><div class="sn" style="background:rgba(74,158,255,.1);color:#4A9EFF">3</div><div class="sb"><h4>クラブを増やす</h4><p>3クラブフル稼働で商圏を広げる。1クラブの上限（社数・業種）を突破。パターン②で1億を15ヶ月目に前倒し可能。</p></div></div>
       </div>
 
       <!-- 更新ルール -->
@@ -1056,8 +1692,16 @@ SNS○万人・観客○人・メディア露出○件。
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','hojin','roles','bmc','flow','next','risk','call','meeting','club','roadmap','memo'];
+const AP=['home','hojin','roles','bmc','flow','next','sales','mktg','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
+function acToggle(id){
+  const el=document.getElementById(id);
+  const icon=document.getElementById(id+'-icon');
+  if(!el)return;
+  const isOpen=el.style.display!=='none';
+  el.style.display=isOpen?'none':'block';
+  if(icon)icon.style.transform=isOpen?'':'rotate(180deg)';
+}
 function tgB(id){const bc=document.getElementById('bc'+id),bd=document.getElementById('bd'+id);if(!bc||!bd)return;const was=bd.classList.contains('op');document.querySelectorAll('.bcbd').forEach(b=>b.classList.remove('op'));document.querySelectorAll('.bc').forEach(b=>b.classList.remove('op'));if(!was){bd.classList.add('op');bc.classList.add('op')}}
 function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
 const NXT_LABELS={'nxt-queens-contract':'山梨クィーンビーズ ── 契約締結','nxt-queens-approach':'山梨クィーンビーズ ── アプローチ開始','nxt-queens-first':'山梨クィーンビーズ ── 初成約1件を取る','nxt-queens-report':'山梨クィーンビーズ ── 月次レポート体制の確立','nxt-sunrise-contract':'上野原サンライズ ── 契約締結','nxt-sunrise-approach':'上野原サンライズ ── アプローチ開始','nxt-sunrise-first':'上野原サンライズ ── 初成約1件を取る','nxt-sunrise-report':'上野原サンライズ ── 月次レポート体制の確立','nxt-beatrains-contract':'八王子ビートレインズ ── 契約締結','nxt-beatrains-approach':'八王子ビートレインズ ── アプローチ開始','nxt-beatrains-first':'八王子ビートレインズ ── 初成約1件を取る','nxt-beatrains-report':'八王子ビートレインズ ── 月次レポート体制の確立','nxt-100':'全体 ── 月収100万を2〜3ヶ月継続','nxt-found':'全体 ── 独立・法人設立','nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'};
