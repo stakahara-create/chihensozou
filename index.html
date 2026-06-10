@@ -206,7 +206,7 @@ table tr:hover td{background:var(--bg3)}
       <div class="ng">ホーム</div><div class="ni on" onclick="go('home')"><i class="ti ti-home" aria-hidden="true"></i>ホーム</div>
       <div class="ng">企業基盤</div><div class="ni" onclick="go('hojin')"><i class="ti ti-flag" aria-hidden="true"></i>法人化条件</div><div class="ni" onclick="go('roles')"><i class="ti ti-users" aria-hidden="true"></i>役割・体制・ルール</div>
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
-      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div>
+      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div>
       <div class="ng">戦略</div><div class="ni" onclick="go('sales')"><i class="ti ti-target" aria-hidden="true"></i>営業戦略</div><div class="ni" onclick="go('mktg')"><i class="ti ti-speakerphone" aria-hidden="true"></i>マーケティング戦略</div>
       <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
       <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
@@ -1681,6 +1681,99 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
     </div></div>
 
+    <!-- 営業準備チェック -->
+    <div id="p-prep" class="pg"><div class="scr">
+      <div class="ph"><h2>営業準備チェック</h2><p>クラブ別に進捗管理 — チェックはFirebaseに自動保存</p></div>
+<!-- 進捗サマリー -->
+      <div style="display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;margin-bottom:20px">
+        <div class="card" style="text-align:center;padding:18px 12px">
+          <div style="font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">八王子ビートレインズ</div>
+          <div id="prog-beatrains" style="font-size:28px;font-weight:700;color:var(--blue);font-family:'Syne',sans-serif">0/18</div>
+          <div style="height:5px;background:var(--bg3);border-radius:3px;margin-top:10px;overflow:hidden"><div id="bar-beatrains" style="height:100%;background:var(--blue);border-radius:3px;width:0%;transition:width .4s"></div></div>
+        </div>
+        <div class="card" style="text-align:center;padding:18px 12px">
+          <div style="font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">山梨クィーンビーズ</div>
+          <div id="prog-queens" style="font-size:28px;font-weight:700;color:var(--green);font-family:'Syne',sans-serif">0/18</div>
+          <div style="height:5px;background:var(--bg3);border-radius:3px;margin-top:10px;overflow:hidden"><div id="bar-queens" style="height:100%;background:var(--green);border-radius:3px;width:0%;transition:width .4s"></div></div>
+        </div>
+        <div class="card" style="text-align:center;padding:18px 12px">
+          <div style="font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.08em;text-transform:uppercase;margin-bottom:8px">上野原サンライズ</div>
+          <div id="prog-sunrise" style="font-size:28px;font-weight:700;color:var(--orange);font-family:'Syne',sans-serif">0/18</div>
+          <div style="height:5px;background:var(--bg3);border-radius:3px;margin-top:10px;overflow:hidden"><div id="bar-sunrise" style="height:100%;background:var(--orange);border-radius:3px;width:0%;transition:width .4s"></div></div>
+        </div>
+      </div>
+
+      <!-- 八王子ビートレインズ -->
+      <div class="card" style="margin-bottom:12px">
+        <span class="bdg bblu">🏀 八王子ビートレインズ</span>
+        <div class="ck-section-header" style="margin-top:8px">クラブに依頼するもの</div>
+        <div class="ck" id="prep-bt-meishi" onclick="prepCheck('prep-bt-meishi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>名刺（八王子ビートレインズ名義）</h4><p>クラブ側に作成依頼。費用負担もあわせて確認。</p></div></div>
+        <div class="ck" id="prep-bt-itaku" onclick="prepCheck('prep-bt-itaku')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>委託状・授権書</h4><p>「高原・野村はビートレインズのスポンサー営業代行です」という書面。商談先での信頼の根拠になる。</p></div></div>
+        <div class="ck" id="prep-bt-mail" onclick="prepCheck('prep-bt-mail')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>クラブ名義メールアドレス</h4><p>フリーメールは信頼度が落ちる。クラブドメインのアドレスを発行してもらう。</p></div></div>
+        <div class="ck" id="prep-bt-menu" onclick="prepCheck('prep-bt-menu')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スポンサーメニュー表（最新版）</h4><p>プラン・単価・特典一覧。クラブから入手 or 共同作成。</p></div></div>
+        <div class="ck" id="prep-bt-chat" onclick="prepCheck('prep-bt-chat')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スタッフとの連絡チャット開設</h4><p>LINE / Slack等。報告・質問・契約承認の連絡先を確定。</p></div></div>
+        <div class="ck-section-header">自分で用意するもの</div>
+        <div class="ck" id="prep-bt-shiryou" onclick="prepCheck('prep-bt-shiryou')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>提案資料（ビートレインズ版）</h4><p>クラブの強み・エリア・観客データを反映した提案書。</p></div></div>
+        <div class="ck" id="prep-bt-roi" onclick="prepCheck('prep-bt-roi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>ROIシミュレーター（ビートレインズ版数値）</h4><p>観客数・リーチ数・採用効果をビートレインズの実数値で設定。</p></div></div>
+        <div class="ck" id="prep-bt-crm" onclick="prepCheck('prep-bt-crm')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>CRM初期設定（候補企業リスト入力）</h4><p>スポンサー候補200社を登録してアプローチ管理を開始。</p></div></div>
+        <div class="ck-section-header">クラブスタッフと決めること</div>
+        <div class="ck" id="prep-bt-flow" onclick="prepCheck('prep-bt-flow')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>契約承認フローの確定</h4><p>「商談後、正式契約前にクラブ確認が必要か？」を明確化。</p></div></div>
+        <div class="ck" id="prep-bt-report" onclick="prepCheck('prep-bt-report')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>報告頻度・フォーマットの合意</h4><p>月次レポートの提出日・形式・送付先を決定。</p></div></div>
+        <div class="ck" id="prep-bt-kickoff" onclick="prepCheck('prep-bt-kickoff')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>キックオフMTGの実施</h4><p>スタッフと顔合わせ・営業方針の共有・Q&A。営業開始前に必須。</p></div></div>
+      </div>
+
+      <!-- 山梨クィーンビーズ -->
+      <div class="card" style="margin-bottom:12px">
+        <span class="bdg btea">🏀 山梨クィーンビーズ</span>
+        <div class="ck-section-header" style="margin-top:8px">クラブに依頼するもの</div>
+        <div class="ck" id="prep-qb-meishi" onclick="prepCheck('prep-qb-meishi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>名刺（山梨クィーンビーズ名義）</h4><p>クラブ側に作成依頼。費用負担もあわせて確認。</p></div></div>
+        <div class="ck" id="prep-qb-itaku" onclick="prepCheck('prep-qb-itaku')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>委託状・授権書</h4><p>「高原・野村はクィーンビーズのスポンサー営業代行です」という書面。</p></div></div>
+        <div class="ck" id="prep-qb-mail" onclick="prepCheck('prep-qb-mail')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>クラブ名義メールアドレス</h4><p>クラブドメインのアドレスを発行してもらう。</p></div></div>
+        <div class="ck" id="prep-qb-menu" onclick="prepCheck('prep-qb-menu')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スポンサーメニュー表（最新版）</h4><p>プラン・単価・特典一覧。クラブから入手 or 共同作成。</p></div></div>
+        <div class="ck" id="prep-qb-chat" onclick="prepCheck('prep-qb-chat')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スタッフとの連絡チャット開設</h4><p>LINE / Slack等。報告・質問・契約承認の連絡先を確定。</p></div></div>
+        <div class="ck-section-header">自分で用意するもの</div>
+        <div class="ck" id="prep-qb-shiryou" onclick="prepCheck('prep-qb-shiryou')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>提案資料（クィーンビーズ版）</h4><p>女子バスケ・山梨エリアの特性を反映した提案書。</p></div></div>
+        <div class="ck" id="prep-qb-roi" onclick="prepCheck('prep-qb-roi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>ROIシミュレーター（クィーンビーズ版数値）</h4><p>観客数・リーチ数をクィーンビーズの実数値で設定。</p></div></div>
+        <div class="ck" id="prep-qb-crm" onclick="prepCheck('prep-qb-crm')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>CRM初期設定（候補企業リスト入力）</h4><p>スポンサー候補100社を登録してアプローチ管理を開始。</p></div></div>
+        <div class="ck-section-header">クラブスタッフと決めること</div>
+        <div class="ck" id="prep-qb-flow" onclick="prepCheck('prep-qb-flow')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>契約承認フローの確定</h4><p>「商談後、正式契約前にクラブ確認が必要か？」を明確化。</p></div></div>
+        <div class="ck" id="prep-qb-report" onclick="prepCheck('prep-qb-report')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>報告頻度・フォーマットの合意</h4><p>月次レポートの提出日・形式・送付先を決定。</p></div></div>
+        <div class="ck" id="prep-qb-kickoff" onclick="prepCheck('prep-qb-kickoff')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>キックオフMTGの実施</h4><p>スタッフと顔合わせ・営業方針の共有・Q&A。営業開始前に必須。</p></div></div>
+      </div>
+
+      <!-- 上野原サンライズ -->
+      <div class="card" style="margin-bottom:12px">
+        <span class="bdg bcor">🏀 上野原サンライズ</span>
+        <div class="ck-section-header" style="margin-top:8px">クラブに依頼するもの</div>
+        <div class="ck" id="prep-sr-meishi" onclick="prepCheck('prep-sr-meishi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>名刺（上野原サンライズ名義）</h4><p>クラブ側に作成依頼。費用負担もあわせて確認。</p></div></div>
+        <div class="ck" id="prep-sr-itaku" onclick="prepCheck('prep-sr-itaku')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>委託状・授権書</h4><p>「高原・野村はサンライズのスポンサー営業代行です」という書面。</p></div></div>
+        <div class="ck" id="prep-sr-mail" onclick="prepCheck('prep-sr-mail')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>クラブ名義メールアドレス</h4><p>クラブドメインのアドレスを発行してもらう。</p></div></div>
+        <div class="ck" id="prep-sr-menu" onclick="prepCheck('prep-sr-menu')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スポンサーメニュー表（最新版）</h4><p>プラン・単価・特典一覧。クラブから入手 or 共同作成。</p></div></div>
+        <div class="ck" id="prep-sr-chat" onclick="prepCheck('prep-sr-chat')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>スタッフとの連絡チャット開設</h4><p>LINE / Slack等。報告・質問・契約承認の連絡先を確定。</p></div></div>
+        <div class="ck-section-header">自分で用意するもの</div>
+        <div class="ck" id="prep-sr-shiryou" onclick="prepCheck('prep-sr-shiryou')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>提案資料（サンライズ版）</h4><p>上野原エリア・クラブの特性を反映した提案書。</p></div></div>
+        <div class="ck" id="prep-sr-roi" onclick="prepCheck('prep-sr-roi')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>ROIシミュレーター（サンライズ版数値）</h4><p>観客数・リーチ数をサンライズの実数値で設定。</p></div></div>
+        <div class="ck" id="prep-sr-crm" onclick="prepCheck('prep-sr-crm')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>CRM初期設定（候補企業リスト入力）</h4><p>スポンサー候補100社を登録してアプローチ管理を開始。</p></div></div>
+        <div class="ck-section-header">クラブスタッフと決めること</div>
+        <div class="ck" id="prep-sr-flow" onclick="prepCheck('prep-sr-flow')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>契約承認フローの確定</h4><p>「商談後、正式契約前にクラブ確認が必要か？」を明確化。</p></div></div>
+        <div class="ck" id="prep-sr-report" onclick="prepCheck('prep-sr-report')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>報告頻度・フォーマットの合意</h4><p>月次レポートの提出日・形式・送付先を決定。</p></div></div>
+        <div class="ck" id="prep-sr-kickoff" onclick="prepCheck('prep-sr-kickoff')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>キックオフMTGの実施</h4><p>スタッフと顔合わせ・営業方針の共有・Q&A。営業開始前に必須。</p></div></div>
+      </div>
+
+      <!-- 共通ツール -->
+      <div class="card">
+        <span class="bdg bgrn">🛠 共通ツール・環境</span>
+        <div class="ck-section-header" style="margin-top:8px">営業ツール</div>
+        <div class="ck" id="prep-common-pc" onclick="prepCheck('prep-common-pc')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>PC・充電器（持ち歩き用）</h4><p>商談先でのプレゼン・その場でのCRM入力に必要。</p></div></div>
+        <div class="ck" id="prep-common-meishi-app" onclick="prepCheck('prep-common-meishi-app')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>名刺管理アプリの設定</h4><p>SanSan / Eight等。商談後すぐスキャンしてCRMと連携。</p></div></div>
+        <div class="ck" id="prep-common-contract" onclick="prepCheck('prep-common-contract')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>契約書ひな形の最終確認</h4><p>3クラブ別のひな形を整備。印鑑 or 電子署名手段も確認。</p></div></div>
+        <div class="ck" id="prep-common-traffic" onclick="prepCheck('prep-common-traffic')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>交通費・移動手段の確保</h4><p>八王子・山梨・上野原の移動ルート・費用を事前に把握。</p></div></div>
+        <div class="ck-section-header">メンタル・習慣</div>
+        <div class="ck" id="prep-common-mental" onclick="prepCheck('prep-common-mental')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>断られ続けても崩れないペース設計</h4><p>成約率10%想定なら10件断られてやっと1件。断られるのが正常。週単位でKPIを見る習慣を作る。</p></div></div>
+        <div class="ck" id="prep-common-review" onclick="prepCheck('prep-common-review')"><input type="checkbox" onclick="event.stopPropagation()"><div class="ckt"><h4>週次レビュー習慣の設計（高原・野村）</h4><p>毎週同じ曜日・時間に2人でアプローチ数・商談数・成約数を確認。</p></div></div>
+      </div>
+    </div></div>
+
     <!-- メモ -->
     <div id="p-memo" class="pg"><div class="scr">
       <div class="ph"><h2>メモ帳</h2><p>入力内容はブラウザに自動保存されます</p></div>
@@ -1692,7 +1785,7 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','hojin','roles','bmc','flow','next','sales','mktg','club','roadmap','memo'];
+const AP=['home','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function acToggle(id){
   const el=document.getElementById(id);
@@ -1706,6 +1799,34 @@ function tgB(id){const bc=document.getElementById('bc'+id),bd=document.getElemen
 function openUrl(id){const el=document.getElementById(id);if(el&&el.value.trim()){window.open(el.value.trim(),'_blank')}else{alert('URLを入力してください')}}
 const NXT_LABELS={'nxt-queens-contract':'山梨クィーンビーズ ── 契約締結','nxt-queens-approach':'山梨クィーンビーズ ── アプローチ開始','nxt-queens-first':'山梨クィーンビーズ ── 初成約1件を取る','nxt-queens-report':'山梨クィーンビーズ ── 月次レポート体制の確立','nxt-sunrise-contract':'上野原サンライズ ── 契約締結','nxt-sunrise-approach':'上野原サンライズ ── アプローチ開始','nxt-sunrise-first':'上野原サンライズ ── 初成約1件を取る','nxt-sunrise-report':'上野原サンライズ ── 月次レポート体制の確立','nxt-beatrains-contract':'八王子ビートレインズ ── 契約締結','nxt-beatrains-approach':'八王子ビートレインズ ── アプローチ開始','nxt-beatrains-first':'八王子ビートレインズ ── 初成約1件を取る','nxt-beatrains-report':'八王子ビートレインズ ── 月次レポート体制の確立','nxt-100':'全体 ── 月収100万を2〜3ヶ月継続','nxt-found':'全体 ── 独立・法人設立','nxt-loan':'全体 ── 日本政策金融公庫へ融資申請'};
 function renderNxt(){const doneCard=document.getElementById('done-card'),doneList=document.getElementById('done-list'),actionList=document.getElementById('action-list');if(!doneCard||!doneList||!actionList)return;const doneItems=actionList.querySelectorAll('.ck.done');if(doneItems.length>0){doneCard.style.display='block';doneList.innerHTML='';doneItems.forEach(el=>{const id=el.id;const li=document.createElement('li');li.textContent=NXT_LABELS[id]||id;li.style.cursor='pointer';li.title='クリックで戻す';li.onclick=()=>nxtCheck(id);doneList.appendChild(li)})}else{doneCard.style.display='none';doneList.innerHTML=''}}
+const PREP_IDS={
+  beatrains:["prep-bt-meishi","prep-bt-itaku","prep-bt-mail","prep-bt-menu","prep-bt-chat","prep-bt-shiryou","prep-bt-roi","prep-bt-crm","prep-bt-flow","prep-bt-report","prep-bt-kickoff"],
+  queens:["prep-qb-meishi","prep-qb-itaku","prep-qb-mail","prep-qb-menu","prep-qb-chat","prep-qb-shiryou","prep-qb-roi","prep-qb-crm","prep-qb-flow","prep-qb-report","prep-qb-kickoff"],
+  sunrise:["prep-sr-meishi","prep-sr-itaku","prep-sr-mail","prep-sr-menu","prep-sr-chat","prep-sr-shiryou","prep-sr-roi","prep-sr-crm","prep-sr-flow","prep-sr-report","prep-sr-kickoff"],
+  common:["prep-common-pc","prep-common-meishi-app","prep-common-contract","prep-common-traffic","prep-common-mental","prep-common-review"]
+};
+function updatePrepProgress(){
+  ["beatrains","queens","sunrise"].forEach(function(club){
+    var ids=PREP_IDS[club];
+    var done=ids.filter(function(id){var el=document.getElementById(id);return el&&el.classList.contains("done")}).length;
+    var common=PREP_IDS.common.filter(function(id){var el=document.getElementById(id);return el&&el.classList.contains("done")}).length;
+    var allDone=done+common;
+    var allTotal=ids.length+PREP_IDS.common.length;
+    var prog=document.getElementById("prog-"+club);
+    var bar=document.getElementById("bar-"+club);
+    if(prog)prog.textContent=allDone+"/"+allTotal;
+    if(bar)bar.style.width=Math.round(allDone/allTotal*100)+"%";
+  });
+}
+function prepCheck(id){
+  var el=document.getElementById(id);
+  if(!el)return;
+  var isDone=!el.classList.contains("done");
+  el.classList.toggle("done",isDone);
+  el.querySelector("input[type=checkbox]").checked=isDone;
+  if(window._fbPrepCheck)window._fbPrepCheck(id,isDone);
+  updatePrepProgress();
+}
 function nxtCheck(id){const el=document.getElementById(id);if(!el)return;const isDone=!el.classList.contains('done');el.classList.toggle('done',isDone);el.querySelector('input[type=checkbox]').checked=isDone;if(window._fbNxtCheck)window._fbNxtCheck(id,isDone);renderNxt()}
 window._smTmr={};
 function sm(id){const el=document.getElementById(id);if(!el)return;clearTimeout(window._smTmr[id]);window._smTmr[id]=setTimeout(()=>{if(window._fbSm)window._fbSm(id,el.value);const s=document.getElementById('s'+id.replace('m',''));if(s){s.style.display='block';setTimeout(()=>s.style.display='none',1400)}},600)}
@@ -1724,7 +1845,9 @@ const ROOT="terminal/v1";
 function fbSet(path,value){set(ref(db,ROOT+"/"+path),value).catch(e=>console.error("fbSet",e))}
 window._fbSm=function(id,value){fbSet("fields/"+id,value)}
 window._fbNxtCheck=function(id,isDone){fbSet("nxt/"+id,isDone)}
+window._fbPrepCheck=function(id,isDone){fbSet("prep/"+id,isDone)}
 const FIELDS=['m1','club-queens-drive','club-queens-stats','club-queens-plan','club-sunrise-drive','club-sunrise-stats','club-sunrise-plan','club-beatrains-drive','club-beatrains-stats','club-beatrains-plan'];
 onValue(ref(db,ROOT+"/fields"),snap=>{const data=snap.val()||{};FIELDS.forEach(id=>{const el=document.getElementById(id);if(el&&data[id]!==undefined&&document.activeElement!==el)el.value=data[id]})});
 onValue(ref(db,ROOT+"/nxt"),snap=>{const data=snap.val()||{};const NXT_LABELS=window.NXT_LABELS||{};Object.keys({'nxt-queens-contract':1,'nxt-queens-approach':1,'nxt-queens-first':1,'nxt-queens-report':1,'nxt-sunrise-contract':1,'nxt-sunrise-approach':1,'nxt-sunrise-first':1,'nxt-sunrise-report':1,'nxt-beatrains-contract':1,'nxt-beatrains-approach':1,'nxt-beatrains-first':1,'nxt-beatrains-report':1,'nxt-100':1,'nxt-found':1,'nxt-loan':1}).forEach(id=>{const el=document.getElementById(id);if(!el)return;const isDone=!!data[id];el.classList.toggle('done',isDone);const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=isDone});if(window.renderNxt)window.renderNxt()});
+onValue(ref(db,ROOT+"/prep"),snap=>{const data=snap.val()||{};const ALL=["prep-bt-meishi","prep-bt-itaku","prep-bt-mail","prep-bt-menu","prep-bt-chat","prep-bt-shiryou","prep-bt-roi","prep-bt-crm","prep-bt-flow","prep-bt-report","prep-bt-kickoff","prep-qb-meishi","prep-qb-itaku","prep-qb-mail","prep-qb-menu","prep-qb-chat","prep-qb-shiryou","prep-qb-roi","prep-qb-crm","prep-qb-flow","prep-qb-report","prep-qb-kickoff","prep-sr-meishi","prep-sr-itaku","prep-sr-mail","prep-sr-menu","prep-sr-chat","prep-sr-shiryou","prep-sr-roi","prep-sr-crm","prep-sr-flow","prep-sr-report","prep-sr-kickoff","prep-common-pc","prep-common-meishi-app","prep-common-contract","prep-common-traffic","prep-common-mental","prep-common-review"];ALL.forEach(id=>{const el=document.getElementById(id);if(!el)return;const isDone=!!data[id];el.classList.toggle("done",isDone);const cb=el.querySelector("input[type=checkbox]");if(cb)cb.checked=isDone});if(window.updatePrepProgress)window.updatePrepProgress()});
 </script>
