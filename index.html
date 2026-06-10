@@ -204,6 +204,7 @@ table tr:hover td{background:var(--bg3)}
     <div class="nlogo"><div class="nmark"><i class="ti ti-basketball" aria-hidden="true"></i></div><div><div class="ntitle">知変創造</div><div class="nsub" id="nd"></div></div></div>
     <div class="nb">
       <div class="ng">ホーム</div><div class="ni on" onclick="go('home')"><i class="ti ti-home" aria-hidden="true"></i>ホーム</div>
+      <div class="ng">ビジョン</div><div class="ni" onclick="go('vision')"><i class="ti ti-eye" aria-hidden="true"></i>会社のビジョン</div>
       <div class="ng">企業基盤</div><div class="ni" onclick="go('hojin')"><i class="ti ti-flag" aria-hidden="true"></i>法人化条件</div><div class="ni" onclick="go('roles')"><i class="ti ti-users" aria-hidden="true"></i>役割・体制・ルール</div>
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
       <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div>
@@ -1681,6 +1682,134 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
     </div></div>
 
+
+    <!-- 会社のビジョン -->
+    <div id="p-vision" class="pg"><div class="scr">
+      <div class="ph"><h2>会社のビジョン</h2><p>私たちがなぜ存在し、どこへ向かうのか</p></div>
+
+      <!-- アイデンティティ -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-1')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">01</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">弊社のアイデンティティ</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-1-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-1" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <p style="line-height:1.9;color:var(--text2)">私の父は、山梨県で小さなネジ会社を営んでいる。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">採用ができない。認知が広がらない。営業の仕組みもない。だから売上が立たない。良いものを作っているのに、それだけで経営が苦しくなる現実を、私は子どもの頃からずっと隣で見てきた。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">地方の中小企業のほとんどが、同じ課題を抱えている。原因は能力でも、熱意でもない。仕組みが届いていないだけだ。</p>
+          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">だから私たちは、その仕組みを届けることを存在意義とする。</p>
+        </div>
+      </div>
+
+      <!-- なぜスポンサー営業から -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-2')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">02</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">なぜスポンサー営業から始めるのか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-2-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-2" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <p style="line-height:1.9;color:var(--text2)">地方中小企業の経営者に会うことは、思っている以上に難しい。テレアポは受付で止まる。飛び込みは門前払い。メールは読まれない。どれだけ良い提案を持っていても、経営者本人に届かなければ意味がない。</p>
+          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">スポンサー営業は、この構造を根本から変える。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">「地域のバスケチームを応援しませんか」という文脈は、単なる営業ではなく地域貢献の文脈だ。経営者はこの種の話に対して、自ら出てくる。受付を通さず、社長・役員クラスと直接話せる。これは他のどんな営業手法でも再現できない。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">さらに重要なのは、経営者がスポンサーを検討するとき、頭の中で同時に複数の課題を考えているという事実だ。「社員のモチベーションが上がるか」「採用に使えるか」「地域での認知が上がるか」。これらはすべて、私たちが解決できる課題と完全に一致する。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">スポンサー営業は売上を作りながら、同時に次の提案のニーズを経営者自身の口から引き出す構造になっている。<strong style="color:var(--text)">売上事業であり、リード獲得チャネルであり、ヒアリングの場でもある。</strong>一つの活動で三つの役割を果たす。これがスポンサー営業から始める理由だ。</p>
+        </div>
+      </div>
+
+      <!-- 信頼を作ってから -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-3')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">03</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">信頼を作ってから、課題を解決する</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-3-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-3" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <p style="line-height:1.9;color:var(--text2)">経営者は、初対面の相手に本当の課題を話さない。表面的な話で終わり、「検討します」で終わる。</p>
+          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">スポンサー契約は、この壁を壊す。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">経営者がスポンサー料を払い、クラブとの関係が始まり、実際に効果が出る。その過程で「この人たちは約束を守る」「地域のことを本気で考えている」という信頼が積み上がる。一度この信頼が生まれると、経営者は本音を話し始める。</p>
+          <div class="albl" style="border-left:3px solid var(--blue);padding:12px 16px;margin:16px 0;background:rgba(26,111,204,.06);border-radius:0 8px 8px 0">
+            <p style="line-height:1.9;color:var(--text2);font-style:italic">「実は採用が全然うまくいっていない」「営業の仕組みが何もない」「補助金を使いたいが何から手をつければいいかわからない」</p>
+          </div>
+          <p style="line-height:1.9;color:var(--text2)">これらは飛び込みやテレアポでは絶対に出てこない言葉だ。信頼がある関係だから出てくる。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">私たちには、その課題を解決する手段がすでにある。採用は私と野村のキャリアがある。営業コンサルは自分たちが実際にやってきた。補助金は信頼できる外部パートナーに橋渡しできる。</p>
+          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">課題が出てきたときに、すでに解決策を持っている状態で待っている。これが私たちの営業構造の本質だ。</p>
+        </div>
+      </div>
+
+      <!-- 4つの事業 -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-4')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">04</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">4つの事業と展開順序</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-4-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-4" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <div style="display:flex;flex-direction:column;gap:10px">
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--blue)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bblu" style="font-size:10px">今</span><strong style="color:var(--text)">① スポンサー営業（自社実行）</strong></div>
+              <p style="font-size:13px;line-height:1.7;color:var(--text2)">バスケクラブのスポンサー獲得代行。経営者との接点を作りながら、収益を上げる。</p>
+            </div>
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--green)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg btea" style="font-size:10px">次</span><strong style="color:var(--text)">② 人材・RPO（自社実行）</strong></div>
+              <p style="font-size:13px;line-height:1.7;color:var(--text2)">私と野村がすでにキャリアを持つ領域。スポンサーで信頼を作った経営者の採用課題を解決する。自社で動けるため、利益率が高い。</p>
+            </div>
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--accent)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bamb" style="font-size:10px">次</span><strong style="color:var(--text)">③ 営業コンサル（自社実行）</strong></div>
+              <p style="font-size:13px;line-height:1.7;color:var(--text2)">CRM導入・営業先リスト整備・営業フロー設計。経営者が「営業の仕組みがない」と言い出したタイミングで提案できる。</p>
+            </div>
+            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--text3)">
+              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bgrn" style="font-size:10px">将来</span><strong style="color:var(--text)">④ 補助金支援（仲介→内製化）</strong></div>
+              <p style="font-size:13px;line-height:1.7;color:var(--text2)">設備投資・IT導入・雇用関係の補助金。最初は信頼できる外部パートナーに橋渡しし、自社で専門人材を採用できたタイミングで内製化する。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ロールモデル -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-5')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">05</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">ロールモデル：株式会社ブリッジワン</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-5-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-5" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <p style="line-height:1.9;color:var(--text2)">建設業を中心に不動産・製造など複数の中小企業支援事業を持ち、経営者との長期的な関係を軸に成長してきた会社だ。私たちが目指す姿はここにある。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">ただし入口の設計は私たちの方が鋭いと思っている。ブリッジワンは最初から複数事業で入る。私たちはスポンサーという一点突破で経営者の信頼を獲得してから広げる。より深い関係から事業が始まる分、長期的な顧客になりやすい。</p>
+        </div>
+      </div>
+
+      <!-- 3年後のイメージ -->
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('vis-6')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px">
+            <span class="bdg bblu" style="font-size:11px">06</span>
+            <span style="font-weight:600;font-size:15px;color:var(--text)">3年後のイメージ</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="vis-6-icon" style="color:var(--text3);font-size:16px"></i>
+        </div>
+        <div id="vis-6" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
+          <p style="line-height:1.9;color:var(--text2)">全国に50名の組織を作る。地方都市ごとに担当者を置き、その地域の経営者と長期的な関係を持つ体制にする。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">売上規模は30億を目指す。50名で30億なら、一人当たり6,000万の売上計算だ。スポンサー営業・人材・営業コンサル・補助金の4事業が有機的に回り、一人の経営者から複数の事業で継続的に収益が生まれる構造を作る。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">取引先は累計1,000社。そのほとんどが地方の中小企業だ。入口はスポンサーだったが、今では採用も、営業の仕組みも、補助金も、私たちに任せてもらえる関係になっている。経営者にとって「何かあればまずここに電話する」存在になっていたい。</p>
+          <p style="line-height:1.9;color:var(--text2);margin-top:12px">バスケだけではない。サッカー、野球、バレー。地方のスポーツクラブとのネットワークを全国に広げ、そのすべてを地域経営者へのアクセスチャネルにする。スポーツと経営支援が一体化した、私たちにしかできないモデルを完成させる。</p>
+          <p style="line-height:1.9;color:var(--text);margin-top:16px;font-weight:600">そして私の地元である山梨県に、男子Bリーグのチームを誕生させる。その設立に、私たちが深く関わっている。それが3年後に実現していたい姿だ。</p>
+        </div>
+      </div>
+
+    </div></div>
+
     <!-- 営業準備チェック -->
     <div id="p-prep" class="pg"><div class="scr">
       <div class="ph"><h2>営業準備チェック</h2><p>クラブ別に進捗管理 — チェックはFirebaseに自動保存</p></div>
@@ -1785,7 +1914,7 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo'];
+const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function acToggle(id){
   const el=document.getElementById(id);
