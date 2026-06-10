@@ -1685,9 +1685,8 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
     <!-- 会社のビジョン -->
     <div id="p-vision" class="pg"><div class="scr">
-      <div class="ph"><h2>会社のビジョン</h2><p>私たちがなぜ存在し、どこへ向かうのか</p></div>
+      <div class="ph"><h2>会社のビジョン</h2><p>私たちがなぜ存在し、どこへ向かうのか — 自由に編集・保存できます</p></div>
 
-      <!-- アイデンティティ -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-1')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1697,14 +1696,19 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-1-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-1" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <p style="line-height:1.9;color:var(--text2)">私の父は、山梨県で小さなネジ会社を営んでいる。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">採用ができない。認知が広がらない。営業の仕組みもない。だから売上が立たない。良いものを作っているのに、それだけで経営が苦しくなる現実を、私は子どもの頃からずっと隣で見てきた。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">地方の中小企業のほとんどが、同じ課題を抱えている。原因は能力でも、熱意でもない。仕組みが届いていないだけだ。</p>
-          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">だから私たちは、その仕組みを届けることを存在意義とする。</p>
+          <textarea id="vis-1-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-1-ta')">私の父は、山梨県で小さなネジ会社を営んでいる。
+
+採用ができない。認知が広がらない。営業の仕組みもない。だから売上が立たない。良いものを作っているのに、それだけで経営が苦しくなる現実を、私は子どもの頃からずっと隣で見てきた。
+
+地方の中小企業のほとんどが、同じ課題を抱えている。原因は能力でも、熱意でもない。仕組みが届いていないだけだ。
+
+だから私たちは、その仕組みを届けることを存在意義とする。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-1-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
+          </div>
         </div>
       </div>
 
-      <!-- なぜスポンサー営業から -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-2')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1714,15 +1718,19 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-2-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-2" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <p style="line-height:1.9;color:var(--text2)">地方中小企業の経営者に会うことは、思っている以上に難しい。テレアポは受付で止まる。飛び込みは門前払い。メールは読まれない。どれだけ良い提案を持っていても、経営者本人に届かなければ意味がない。</p>
-          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">スポンサー営業は、この構造を根本から変える。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">「地域のバスケチームを応援しませんか」という文脈は、単なる営業ではなく地域貢献の文脈だ。経営者はこの種の話に対して、自ら出てくる。受付を通さず、社長・役員クラスと直接話せる。これは他のどんな営業手法でも再現できない。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">さらに重要なのは、経営者がスポンサーを検討するとき、頭の中で同時に複数の課題を考えているという事実だ。「社員のモチベーションが上がるか」「採用に使えるか」「地域での認知が上がるか」。これらはすべて、私たちが解決できる課題と完全に一致する。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">スポンサー営業は売上を作りながら、同時に次の提案のニーズを経営者自身の口から引き出す構造になっている。<strong style="color:var(--text)">売上事業であり、リード獲得チャネルであり、ヒアリングの場でもある。</strong>一つの活動で三つの役割を果たす。これがスポンサー営業から始める理由だ。</p>
+          <textarea id="vis-2-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-2-ta')">地方中小企業の経営者に会うことは、思っている以上に難しい。テレアポは受付で止まる。飛び込みは門前払い。メールは読まれない。どれだけ良い提案を持っていても、経営者本人に届かなければ意味がない。
+
+スポンサー営業は、この構造を根本から変える。
+
+「地域のバスケチームを応援しませんか」という文脈は、単なる営業ではなく地域貢献の文脈だ。経営者はこの種の話に対して、自ら出てくる。受付を通さず、社長・役員クラスと直接話せる。これは他のどんな営業手法でも再現できない。
+
+スポンサー営業は売上を作りながら、同時に次の提案のニーズを経営者自身の口から引き出す構造になっている。売上事業であり、リード獲得チャネルであり、ヒアリングの場でもある。一つの活動で三つの役割を果たす。これがスポンサー営業から始める理由だ。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-2-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
+          </div>
         </div>
       </div>
 
-      <!-- 信頼を作ってから -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-3')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1732,19 +1740,21 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-3-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-3" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <p style="line-height:1.9;color:var(--text2)">経営者は、初対面の相手に本当の課題を話さない。表面的な話で終わり、「検討します」で終わる。</p>
-          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">スポンサー契約は、この壁を壊す。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">経営者がスポンサー料を払い、クラブとの関係が始まり、実際に効果が出る。その過程で「この人たちは約束を守る」「地域のことを本気で考えている」という信頼が積み上がる。一度この信頼が生まれると、経営者は本音を話し始める。</p>
-          <div class="albl" style="border-left:3px solid var(--blue);padding:12px 16px;margin:16px 0;background:rgba(26,111,204,.06);border-radius:0 8px 8px 0">
-            <p style="line-height:1.9;color:var(--text2);font-style:italic">「実は採用が全然うまくいっていない」「営業の仕組みが何もない」「補助金を使いたいが何から手をつければいいかわからない」</p>
+          <textarea id="vis-3-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-3-ta')">経営者は、初対面の相手に本当の課題を話さない。表面的な話で終わり、「検討します」で終わる。
+
+スポンサー契約は、この壁を壊す。
+
+経営者がスポンサー料を払い、クラブとの関係が始まり、実際に効果が出る。その過程で「この人たちは約束を守る」「地域のことを本気で考えている」という信頼が積み上がる。一度この信頼が生まれると、経営者は本音を話し始める。
+
+私たちには、その課題を解決する手段がすでにある。採用は私と野村のキャリアがある。営業コンサルは自分たちが実際にやってきた。補助金は信頼できる外部パートナーに橋渡しできる。
+
+課題が出てきたときに、すでに解決策を持っている状態で待っている。これが私たちの営業構造の本質だ。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-3-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
           </div>
-          <p style="line-height:1.9;color:var(--text2)">これらは飛び込みやテレアポでは絶対に出てこない言葉だ。信頼がある関係だから出てくる。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">私たちには、その課題を解決する手段がすでにある。採用は私と野村のキャリアがある。営業コンサルは自分たちが実際にやってきた。補助金は信頼できる外部パートナーに橋渡しできる。</p>
-          <p style="line-height:1.9;color:var(--text);margin-top:12px;font-weight:600">課題が出てきたときに、すでに解決策を持っている状態で待っている。これが私たちの営業構造の本質だ。</p>
         </div>
       </div>
 
-      <!-- 4つの事業 -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-4')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1754,28 +1764,23 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-4-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-4" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <div style="display:flex;flex-direction:column;gap:10px">
-            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--blue)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bblu" style="font-size:10px">今</span><strong style="color:var(--text)">① スポンサー営業（自社実行）</strong></div>
-              <p style="font-size:13px;line-height:1.7;color:var(--text2)">バスケクラブのスポンサー獲得代行。経営者との接点を作りながら、収益を上げる。</p>
-            </div>
-            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--green)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg btea" style="font-size:10px">次</span><strong style="color:var(--text)">② 人材・RPO（自社実行）</strong></div>
-              <p style="font-size:13px;line-height:1.7;color:var(--text2)">私と野村がすでにキャリアを持つ領域。スポンサーで信頼を作った経営者の採用課題を解決する。自社で動けるため、利益率が高い。</p>
-            </div>
-            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--accent)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bamb" style="font-size:10px">次</span><strong style="color:var(--text)">③ 営業コンサル（自社実行）</strong></div>
-              <p style="font-size:13px;line-height:1.7;color:var(--text2)">CRM導入・営業先リスト整備・営業フロー設計。経営者が「営業の仕組みがない」と言い出したタイミングで提案できる。</p>
-            </div>
-            <div style="padding:14px 16px;background:var(--bg2);border-radius:10px;border-left:3px solid var(--text3)">
-              <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px"><span class="bdg bgrn" style="font-size:10px">将来</span><strong style="color:var(--text)">④ 補助金支援（仲介→内製化）</strong></div>
-              <p style="font-size:13px;line-height:1.7;color:var(--text2)">設備投資・IT導入・雇用関係の補助金。最初は信頼できる外部パートナーに橋渡しし、自社で専門人材を採用できたタイミングで内製化する。</p>
-            </div>
+          <textarea id="vis-4-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-4-ta')">① スポンサー営業（今・自社実行）
+バスケクラブのスポンサー獲得代行。経営者との接点を作りながら、収益を上げる。
+
+② 人材・RPO（次・自社実行）
+私と野村がすでにキャリアを持つ領域。スポンサーで信頼を作った経営者の採用課題を解決する。自社で動けるため、利益率が高い。
+
+③ 営業コンサル（次・自社実行）
+CRM導入・営業先リスト整備・営業フロー設計。経営者が「営業の仕組みがない」と言い出したタイミングで提案できる。
+
+④ 補助金支援（将来・まず仲介→内製化）
+設備投資・IT導入・雇用関係の補助金。最初は信頼できる外部パートナーに橋渡しし、自社で専門人材を採用できたタイミングで内製化する。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-4-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
           </div>
         </div>
       </div>
 
-      <!-- ロールモデル -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-5')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1785,12 +1790,15 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-5-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-5" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <p style="line-height:1.9;color:var(--text2)">建設業を中心に不動産・製造など複数の中小企業支援事業を持ち、経営者との長期的な関係を軸に成長してきた会社だ。私たちが目指す姿はここにある。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">ただし入口の設計は私たちの方が鋭いと思っている。ブリッジワンは最初から複数事業で入る。私たちはスポンサーという一点突破で経営者の信頼を獲得してから広げる。より深い関係から事業が始まる分、長期的な顧客になりやすい。</p>
+          <textarea id="vis-5-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-5-ta')">建設業を中心に不動産・製造など複数の中小企業支援事業を持ち、経営者との長期的な関係を軸に成長してきた会社だ。私たちが目指す姿はここにある。
+
+ただし入口の設計は私たちの方が鋭いと思っている。ブリッジワンは最初から複数事業で入る。私たちはスポンサーという一点突破で経営者の信頼を獲得してから広げる。より深い関係から事業が始まる分、長期的な顧客になりやすい。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-5-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
+          </div>
         </div>
       </div>
 
-      <!-- 3年後のイメージ -->
       <div class="card" style="margin-bottom:10px">
         <div onclick="acToggle('vis-6')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
           <div style="display:flex;align-items:center;gap:10px">
@@ -1800,11 +1808,18 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
           <i class="ti ti-chevron-down ac-icon" id="vis-6-icon" style="color:var(--text3);font-size:16px"></i>
         </div>
         <div id="vis-6" style="display:none;margin-top:16px;padding-top:16px;border-top:1px solid var(--border)">
-          <p style="line-height:1.9;color:var(--text2)">全国に50名の組織を作る。地方都市ごとに担当者を置き、その地域の経営者と長期的な関係を持つ体制にする。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">売上規模は30億を目指す。50名で30億なら、一人当たり6,000万の売上計算だ。スポンサー営業・人材・営業コンサル・補助金の4事業が有機的に回り、一人の経営者から複数の事業で継続的に収益が生まれる構造を作る。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">取引先は累計1,000社。そのほとんどが地方の中小企業だ。入口はスポンサーだったが、今では採用も、営業の仕組みも、補助金も、私たちに任せてもらえる関係になっている。経営者にとって「何かあればまずここに電話する」存在になっていたい。</p>
-          <p style="line-height:1.9;color:var(--text2);margin-top:12px">バスケだけではない。サッカー、野球、バレー。地方のスポーツクラブとのネットワークを全国に広げ、そのすべてを地域経営者へのアクセスチャネルにする。スポーツと経営支援が一体化した、私たちにしかできないモデルを完成させる。</p>
-          <p style="line-height:1.9;color:var(--text);margin-top:16px;font-weight:600">そして私の地元である山梨県に、男子Bリーグのチームを誕生させる。その設立に、私たちが深く関わっている。それが3年後に実現していたい姿だ。</p>
+          <textarea id="vis-6-ta" style="width:100%;min-height:220px;background:var(--bg2);border:1px solid var(--border);border-radius:10px;padding:14px;font-size:14px;line-height:1.85;color:var(--text);resize:vertical;font-family:'DM Sans',sans-serif;box-sizing:border-box" placeholder="ここに入力..." oninput="visAutoSave('vis-6-ta')">全国に50名の組織を作る。地方都市ごとに担当者を置き、その地域の経営者と長期的な関係を持つ体制にする。
+
+売上規模は30億を目指す。50名で30億なら、一人当たり6,000万の売上計算だ。スポンサー営業・人材・営業コンサル・補助金の4事業が有機的に回り、一人の経営者から複数の事業で継続的に収益が生まれる構造を作る。
+
+取引先は累計1,000社。そのほとんどが地方の中小企業だ。入口はスポンサーだったが、今では採用も、営業の仕組みも、補助金も、私たちに任せてもらえる関係になっている。経営者にとって「何かあればまずここに電話する」存在になっていたい。
+
+バスケだけではない。サッカー、野球、バレー。地方のスポーツクラブとのネットワークを全国に広げ、そのすべてを地域経営者へのアクセスチャネルにする。スポーツと経営支援が一体化した、私たちにしかできないモデルを完成させる。
+
+そして私の地元である山梨県に、男子Bリーグのチームを誕生させる。その設立に、私たちが深く関わっている。それが3年後に実現していたい姿だ。</textarea>
+          <div style="display:flex;align-items:center;justify-content:flex-end;gap:8px;margin-top:8px">
+            <span id="vis-6-saved" style="font-size:11px;color:var(--green);display:none">✓ 保存しました</span>
+          </div>
         </div>
       </div>
 
@@ -1956,6 +1971,19 @@ function prepCheck(id){
   if(window._fbPrepCheck)window._fbPrepCheck(id,isDone);
   updatePrepProgress();
 }
+const VIS_IDS=['vis-1-ta','vis-2-ta','vis-3-ta','vis-4-ta','vis-5-ta','vis-6-ta'];
+var _visTmr={};
+function visAutoSave(id){
+  clearTimeout(_visTmr[id]);
+  _visTmr[id]=setTimeout(function(){
+    var el=document.getElementById(id);
+    if(!el)return;
+    if(window._fbVisSet)window._fbVisSet(id,el.value);
+    var key=id.replace('-ta','-saved');
+    var sv=document.getElementById(key);
+    if(sv){sv.style.display='inline';setTimeout(function(){sv.style.display='none'},1800)}
+  },700);
+}
 function nxtCheck(id){const el=document.getElementById(id);if(!el)return;const isDone=!el.classList.contains('done');el.classList.toggle('done',isDone);el.querySelector('input[type=checkbox]').checked=isDone;if(window._fbNxtCheck)window._fbNxtCheck(id,isDone);renderNxt()}
 window._smTmr={};
 function sm(id){const el=document.getElementById(id);if(!el)return;clearTimeout(window._smTmr[id]);window._smTmr[id]=setTimeout(()=>{if(window._fbSm)window._fbSm(id,el.value);const s=document.getElementById('s'+id.replace('m',''));if(s){s.style.display='block';setTimeout(()=>s.style.display='none',1400)}},600)}
@@ -1975,8 +2003,10 @@ function fbSet(path,value){set(ref(db,ROOT+"/"+path),value).catch(e=>console.err
 window._fbSm=function(id,value){fbSet("fields/"+id,value)}
 window._fbNxtCheck=function(id,isDone){fbSet("nxt/"+id,isDone)}
 window._fbPrepCheck=function(id,isDone){fbSet("prep/"+id,isDone)}
+window._fbVisSet=function(id,value){fbSet("vision/"+id,value)}
 const FIELDS=['m1','club-queens-drive','club-queens-stats','club-queens-plan','club-sunrise-drive','club-sunrise-stats','club-sunrise-plan','club-beatrains-drive','club-beatrains-stats','club-beatrains-plan'];
 onValue(ref(db,ROOT+"/fields"),snap=>{const data=snap.val()||{};FIELDS.forEach(id=>{const el=document.getElementById(id);if(el&&data[id]!==undefined&&document.activeElement!==el)el.value=data[id]})});
 onValue(ref(db,ROOT+"/nxt"),snap=>{const data=snap.val()||{};const NXT_LABELS=window.NXT_LABELS||{};Object.keys({'nxt-queens-contract':1,'nxt-queens-approach':1,'nxt-queens-first':1,'nxt-queens-report':1,'nxt-sunrise-contract':1,'nxt-sunrise-approach':1,'nxt-sunrise-first':1,'nxt-sunrise-report':1,'nxt-beatrains-contract':1,'nxt-beatrains-approach':1,'nxt-beatrains-first':1,'nxt-beatrains-report':1,'nxt-100':1,'nxt-found':1,'nxt-loan':1}).forEach(id=>{const el=document.getElementById(id);if(!el)return;const isDone=!!data[id];el.classList.toggle('done',isDone);const cb=el.querySelector('input[type=checkbox]');if(cb)cb.checked=isDone});if(window.renderNxt)window.renderNxt()});
 onValue(ref(db,ROOT+"/prep"),snap=>{const data=snap.val()||{};const ALL=["prep-bt-meishi","prep-bt-itaku","prep-bt-mail","prep-bt-menu","prep-bt-chat","prep-bt-shiryou","prep-bt-roi","prep-bt-crm","prep-bt-flow","prep-bt-report","prep-bt-kickoff","prep-qb-meishi","prep-qb-itaku","prep-qb-mail","prep-qb-menu","prep-qb-chat","prep-qb-shiryou","prep-qb-roi","prep-qb-crm","prep-qb-flow","prep-qb-report","prep-qb-kickoff","prep-sr-meishi","prep-sr-itaku","prep-sr-mail","prep-sr-menu","prep-sr-chat","prep-sr-shiryou","prep-sr-roi","prep-sr-crm","prep-sr-flow","prep-sr-report","prep-sr-kickoff","prep-common-pc","prep-common-meishi-app","prep-common-contract","prep-common-traffic","prep-common-mental","prep-common-review"];ALL.forEach(id=>{const el=document.getElementById(id);if(!el)return;const isDone=!!data[id];el.classList.toggle("done",isDone);const cb=el.querySelector("input[type=checkbox]");if(cb)cb.checked=isDone});if(window.updatePrepProgress)window.updatePrepProgress()});
+onValue(ref(db,ROOT+"/vision"),snap=>{const data=snap.val()||{};['vis-1-ta','vis-2-ta','vis-3-ta','vis-4-ta','vis-5-ta','vis-6-ta'].forEach(id=>{const el=document.getElementById(id);if(el&&data[id]!==undefined&&document.activeElement!==el)el.value=data[id]})});
 </script>
