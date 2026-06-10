@@ -209,7 +209,7 @@ table tr:hover td{background:var(--bg3)}
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
       <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div>
       <div class="ng">戦略</div><div class="ni" onclick="go('sales')"><i class="ti ti-target" aria-hidden="true"></i>営業戦略</div><div class="ni" onclick="go('mktg')"><i class="ti ti-speakerphone" aria-hidden="true"></i>マーケティング戦略</div>
-      <div class="ng">ツール</div><div class="ni" onclick="go('roi')"><i class="ti ti-chart-bar" aria-hidden="true"></i>ROIシミュレーター</div><div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
+      <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
       <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
       <div class="ng">メモ</div><div class="ni" onclick="go('memo')"><i class="ti ti-notes" aria-hidden="true"></i>メモ帳</div>
     </div>
@@ -1918,10 +1918,7 @@ CRM導入・営業先リスト整備・営業フロー設計。経営者が「�
       </div>
     </div></div>
 
-    <!-- ROIシミュレーター -->
-    <div id="p-roi" class="pg" style="height:calc(100vh);overflow:hidden;">
-      <iframe src="roi.html" style="width:100%;height:100%;border:none;display:block;" title="ROIシミュレーター"></iframe>
-    </div><!-- メモ -->
+    <!-- メモ -->
     <div id="p-memo" class="pg"><div class="scr">
       <div class="ph"><h2>メモ帳</h2><p>入力内容はブラウザに自動保存されます</p></div>
       <div class="card"><div class="mlbl"><i class="ti ti-notes" style="font-size:15px" aria-hidden="true"></i>自由メモ</div><textarea class="memo-ta" id="m1" placeholder="アイデア、気づき、商談メモ、改善案、懸念事項など..." oninput="sm('m1')"></textarea><div class="sv" id="s1">保存しました</div></div>
@@ -1931,7 +1928,8 @@ CRM導入・営業先リスト整備・営業フロー設計。経営者が「�
 </div>
 
 <script>
-// ナビ・BMC・チェック（グローバル関数）const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo','roi'];
+// ナビ・BMC・チェック（グローバル関数）
+const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function acToggle(id){
   const el=document.getElementById(id);
