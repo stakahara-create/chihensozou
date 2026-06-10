@@ -209,7 +209,7 @@ table tr:hover td{background:var(--bg3)}
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
       <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div>
       <div class="ng">戦略</div><div class="ni" onclick="go('sales')"><i class="ti ti-target" aria-hidden="true"></i>営業戦略</div><div class="ni" onclick="go('mktg')"><i class="ti ti-speakerphone" aria-hidden="true"></i>マーケティング戦略</div>
-      <div class="ng">クラブ資料</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
+      <div class="ng">ツール</div><div class="ni" onclick="go('tools')"><i class="ti ti-tools" aria-hidden="true"></i>営業ツール</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
       <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
       <div class="ng">メモ</div><div class="ni" onclick="go('memo')"><i class="ti ti-notes" aria-hidden="true"></i>メモ帳</div>
     </div>
@@ -1445,6 +1445,122 @@ OK：「求人広告1本○万円と比べて年間○万円のコスト削減�
 
     </div></div>
 
+    <!-- 営業ツール -->
+    <div id="p-tools" class="pg"><div class="scr">
+      <div class="ph"><h2>営業ツール</h2><p>使うツールのURLをまとめて管理。ワンクリックで即アクセス。</p></div>
+
+      <!-- CRM -->
+      <div class="card" style="margin-bottom:10px">
+        <span class="bdg bblu" style="margin-bottom:12px;display:inline-block">📊 CRM（商談管理）</span>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 八王子ビートレインズ CRM</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-crm-beatrains" placeholder="URLを貼り付け..." oninput="sm('tool-crm-beatrains')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-crm-beatrains')" style="padding:8px 14px;background:#C02080;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 山梨クィーンビーズ CRM</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-crm-queens" placeholder="URLを貼り付け..." oninput="sm('tool-crm-queens')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-crm-queens')" style="padding:8px 14px;background:#0D4FA0;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 上野原サンライズ CRM</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-crm-sunrise" placeholder="URLを貼り付け..." oninput="sm('tool-crm-sunrise')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-crm-sunrise')" style="padding:8px 14px;background:#E05A1A;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ROIシミュレーター -->
+      <div class="card" style="margin-bottom:10px">
+        <span class="bdg bgrn" style="margin-bottom:12px;display:inline-block">📈 ROIシミュレーター</span>
+        <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">スポンサーROI試算ツール</div>
+          <div style="display:flex;gap:8px;align-items:flex-start">
+            <textarea class="memo-ta" id="tool-roi" placeholder="URLを貼り付け..." oninput="sm('tool-roi')" style="min-height:44px;flex:1"></textarea>
+            <button onclick="openUrl('tool-roi')" style="padding:8px 14px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 提案資料 -->
+      <div class="card" style="margin-bottom:10px">
+        <span class="bdg bamb" style="margin-bottom:12px;display:inline-block">📄 提案資料（スライド）</span>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 八王子ビートレインズ 提案書</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-deck-beatrains" placeholder="Google SlidesまたはDriveのURLを貼り付け..." oninput="sm('tool-deck-beatrains')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-deck-beatrains')" style="padding:8px 14px;background:#C02080;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 山梨クィーンビーズ 提案書</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-deck-queens" placeholder="Google SlidesまたはDriveのURLを貼り付け..." oninput="sm('tool-deck-queens')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-deck-queens')" style="padding:8px 14px;background:#0D4FA0;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">🏀 上野原サンライズ 提案書</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-deck-sunrise" placeholder="Google SlidesまたはDriveのURLを貼り付け..." oninput="sm('tool-deck-sunrise')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-deck-sunrise')" style="padding:8px 14px;background:#E05A1A;color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 契約書 -->
+      <div class="card" style="margin-bottom:10px">
+        <span class="bdg bpnk" style="margin-bottom:12px;display:inline-block">📝 契約書ひな形</span>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">業務委託契約書（共通ひな形）</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-contract" placeholder="URLを貼り付け..." oninput="sm('tool-contract')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-contract')" style="padding:8px 14px;background:var(--text2);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- その他 -->
+      <div class="card">
+        <span class="bdg bgry" style="margin-bottom:12px;display:inline-block">🔗 その他リンク</span>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">カンパニーターミナル（このシステム）</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-terminal" placeholder="URLを貼り付け..." oninput="sm('tool-terminal')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-terminal')" style="padding:8px 14px;background:var(--blue);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">その他ツール①</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-other1" placeholder="ツール名・URLを入力..." oninput="sm('tool-other1')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-other1')" style="padding:8px 14px;background:var(--text3);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+          <div style="border:1.5px dashed var(--border);border-radius:10px;padding:14px 16px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:8px">その他ツール②</div>
+            <div style="display:flex;gap:8px;align-items:flex-start">
+              <textarea class="memo-ta" id="tool-other2" placeholder="ツール名・URLを入力..." oninput="sm('tool-other2')" style="min-height:44px;flex:1"></textarea>
+              <button onclick="openUrl('tool-other2')" style="padding:8px 14px;background:var(--text3);color:#fff;border:none;border-radius:8px;font-size:12px;cursor:pointer;white-space:nowrap;min-width:64px">開く</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div></div>
+
     <!-- クラブ資料 -->
     <div id="p-club" class="pg"><div class="scr">
       <div class="ph"><h2>各クラブ資料</h2><p>資料が届いたらURLを貼って「開く」ボタンで即アクセス</p></div>
@@ -1929,7 +2045,7 @@ CRM導入・営業先リスト整備・営業フロー設計。経営者が「�
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','club','roadmap','memo'];
+const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','tools','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function acToggle(id){
   const el=document.getElementById(id);
