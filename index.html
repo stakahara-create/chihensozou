@@ -207,7 +207,7 @@ table tr:hover td{background:var(--bg3)}
       <div class="ng">ビジョン</div><div class="ni" onclick="go('vision')"><i class="ti ti-eye" aria-hidden="true"></i>会社のビジョン</div>
       <div class="ng">企業基盤</div><div class="ni" onclick="go('hojin')"><i class="ti ti-flag" aria-hidden="true"></i>法人化条件</div><div class="ni" onclick="go('roles')"><i class="ti ti-users" aria-hidden="true"></i>役割・体制・ルール</div>
       <div class="ng">ビジネスモデル</div><div class="ni" onclick="go('bmc')"><i class="ti ti-layout-grid" aria-hidden="true"></i>BMC 9ブロック</div><div class="ni" onclick="go('flow')"><i class="ti ti-arrow-right" aria-hidden="true"></i>価値の流れ</div>
-      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div>
+      <div class="ng">実行</div><div class="ni" onclick="go('next')"><i class="ti ti-list-check" aria-hidden="true"></i>ネクストアクション</div><div class="ni" onclick="go('prep')"><i class="ti ti-checklist" aria-hidden="true"></i>営業準備チェック</div><div class="ni" onclick="go('hypo')"><i class="ti ti-flask" aria-hidden="true"></i>1ヶ月目の仮説</div>
       <div class="ng">戦略</div><div class="ni" onclick="go('sales')"><i class="ti ti-target" aria-hidden="true"></i>営業戦略</div><div class="ni" onclick="go('mktg')"><i class="ti ti-speakerphone" aria-hidden="true"></i>マーケティング戦略</div>
       <div class="ng">ツール</div><div class="ni" onclick="go('tools')"><i class="ti ti-tools" aria-hidden="true"></i>営業ツール</div><div class="ni" onclick="go('club')"><i class="ti ti-folder" aria-hidden="true"></i>各クラブ資料</div>
       <div class="ng">ロードマップ</div><div class="ni" onclick="go('roadmap')"><i class="ti ti-map" aria-hidden="true"></i>売上1億への道</div>
@@ -1941,6 +1941,435 @@ CRM導入・営業先リスト整備・営業フロー設計。経営者が「�
 
     </div></div>
 
+    <!-- 1ヶ月目の仮説 -->
+    <div id="p-hypo" class="pg"><div class="scr">
+      <div class="ph"><h2>1ヶ月目の仮説</h2><p>ただ動くだけだと再現性がない。最初の1ヶ月で立証すべき10の仮説。</p></div>
+
+      <div class="card" style="margin-bottom:16px;background:rgba(204,102,0,.06);border:1px solid rgba(204,102,0,.2)">
+        <div style="display:flex;gap:10px;align-items:flex-start">
+          <i class="ti ti-alert-triangle" style="color:var(--orange);font-size:18px;flex-shrink:0;margin-top:2px"></i>
+          <div>
+            <div style="font-weight:700;color:var(--text);margin-bottom:6px">前提：再現性のある営業モデルを作るために</div>
+            <p style="font-size:13px;line-height:1.8;color:var(--text2)">「とにかく動く」だけでは何社取れても理由がわからない。なぜ取れたのか、なぜ断られたのかが分からなければ、次の月に再現できない。1ヶ月目は売上と同時に<strong style="color:var(--text)">データを取ることが仕事</strong>。この10の仮説を検証することで、2ヶ月目以降の営業戦略を数字で再設計できる。</p>
+          </div>
+        </div>
+      </div>
+
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-1')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">01</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">月8社の新規契約が取れるか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-1-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-1" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">法人化に必要な売上ペースの根幹。これが成立しないとモデルが崩れる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">アポ率の実測</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">何件アタックで何件アポが取れるか。母数と結果を毎回記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">クロージング率の実測</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">何件アポで何件成約できるか。断られた件数も含めて記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">月8社に必要な総アクション数</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">アポ率×クロージング率から逆算。現実的な数字を1ヶ月目で把握する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-1-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-1-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-2')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">02</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">企業は年間契約を希望するか、月単位を希望するか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-2-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-2" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">単発・月次では売上が安定しない。年間契約が7割以上でないとストックモデルが機能しない。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">企業側の希望を毎回記録</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">年間・月次・単発のどれを希望するか、必ず確認して記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">年間を渋る場合の理由を把握</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">「予算」「効果が見えない」「稟議が通らない」など理由をパターン化する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">月次希望を年間に切り替えられるか</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">切り替えトークの有効性を検証する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-2-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-2-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-3')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">03</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">年間100万を出す企業はどこか、なぜか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-3-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-3" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">最初からそこだけ狙えれば営業効率が根本から変わる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">属性データの記録</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">従業員規模・年商・業界のどの層が100万を出すかを記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">目的の分類</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">採用目的か、集客か、社長の想いか、節税か。目的ごとに分類する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">金額×目的の組み合わせを特定</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">100・200・300・400・500万の刻みでデータを取り、最頻出の組み合わせを狙い撃ちする。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-3-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-3-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-4')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">04</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">契約が2年目も継続するか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-4-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-4" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">ストックモデルの命。1年で全部解約されたらゼロリセットになる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">継続・解約の分岐点を把握</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">継続する企業としない企業の違いを記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">継続率を高める提供価値の特定</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">何を提供すれば継続につながるかを検証する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-4-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-4-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-5')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">05</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">入金タイミングと稟議の実態</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-5-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-5" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">キャッシュフローに直結する。想定外の入金遅延は資金繰りを壊す。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">稟議が通りやすい企業の特定</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">規模・業種・組織構造のどの条件で稟議が速く通るかを記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">稟議なし即決の企業は存在するか</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">オーナー社長・小規模企業に多いか検証する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">契約から入金までの平均日数</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">毎回記録して平均を把握する。資金計画に反映する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-5-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-5-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-6')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">06</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">成約が集中する業種はどこか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-6-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-6" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">どの業種が一番乗るかが分かれば営業リストの精度が上がる。効率が2〜3倍変わる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">業種別の成約率を記録</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">アプローチ・アポ・成約を業種ごとに分けて記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">反応が良い業種・悪い業種を分類</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">10社程度データが溜まった時点で分類する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">狙うべき業種トップ3を特定</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">最終的にリストをこの3業種に絞り込み、効率を最大化する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-6-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-6-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-7')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">07</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">断られる理由は3パターンに収束するか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-7-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-7" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">理由が分かれば対策が打てる。トークスクリプトの精度が上がり成約率が上がる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">断られた理由を毎回記録</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">「予算」「タイミング」「必要性を感じない」など言葉そのままで記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">パターンが収束したら切り返しトークを開発</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">上位3パターンへの切り返しを作り、次のアプローチで検証する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-7-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-7-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-8')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">08</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">契約後に別の依頼が発生するか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-8-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-8" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">採用・集客・SNSなど何かが出てくれば、我々の幅が広がる。ワンデスクソリューションへの発展根拠になる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">成約後に必ず「他に困っていることはあるか」を聞く</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">毎回必ず聞いてそのまま記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">頻出テーマを次のサービスにする</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">3件以上同じ課題が出たら、サービス化を検討する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-8-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-8-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-9')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">09</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">紹介は発生するか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-9-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-9" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">1社から1社紹介が出れば営業コストが半減する。スケールの鍵。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">成約後に必ず「同じような会社を知らないか」を聞く</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">毎回必ず聞く。聞いたか・紹介が出たかを記録する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">10社中何社から紹介が出るかを測る</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">紹介率を把握して、紹介が出やすい条件を特定する。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-9-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-9-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:10px">
+        <div onclick="acToggle('hypo-10')" style="display:flex;align-items:center;justify-content:space-between;cursor:pointer;padding:4px 0">
+          <div style="display:flex;align-items:center;gap:10px;flex:1;min-width:0">
+            <span class="bdg bblu" style="font-size:11px;flex-shrink:0">10</span>
+            <span style="font-weight:600;font-size:14px;color:var(--text);line-height:1.4">スポンサー料金の平均単価はいくらになるか</span>
+          </div>
+          <i class="ti ti-chevron-down ac-icon" id="hypo-10-icon" style="color:var(--text3);font-size:16px;flex-shrink:0;margin-left:8px"></i>
+        </div>
+        <div id="hypo-10" style="display:none;margin-top:14px;padding-top:14px;border-top:1px solid var(--border)">
+          <div style="background:rgba(26,111,204,.06);border-left:3px solid var(--blue);border-radius:0 8px 8px 0;padding:10px 14px;margin-bottom:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:4px">なぜ立証が必要か</div>
+            <p style="font-size:13px;line-height:1.7;color:var(--text2)">単価×成約率×月アクション数で、現実的な月次売上の上限が見える。全戦略の精度がここで決まる。</p>
+          </div>
+          <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px;letter-spacing:.06em">検証すること</div>
+          <div style="border-top:1px solid var(--border)">
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">成約ごとに金額を記録</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">100万刻みで分布を把握する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">平均単価が分かれば法人化後の売上シミュレーション精度が上がる</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">目標売上÷平均単価＝必要成約数。逆算で戦略を再構築する。</div>
+              </div>
+            </div>
+            <div style="display:flex;gap:10px;align-items:flex-start;padding:10px 0;border-bottom:1px solid var(--border)">
+              <i class="ti ti-arrow-right" style="color:var(--blue);font-size:14px;margin-top:3px;flex-shrink:0"></i>
+              <div>
+                <div style="font-size:13px;font-weight:600;color:var(--text);margin-bottom:3px">単価・成約率・月アクション数の三角形を把握</div>
+                <div style="font-size:12px;line-height:1.7;color:var(--text2)">この3変数が揃えば月次売上の上限が計算できる。</div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:14px">
+            <div style="font-size:11px;font-weight:600;color:var(--text3);margin-bottom:6px">📝 メモ・気づき</div>
+            <textarea class="memo-ta" id="hypo-10-memo" placeholder="実際に動いて気づいたことを書く..." oninput="sm('hypo-10-memo')" style="min-height:80px;width:100%;box-sizing:border-box"></textarea>
+          </div>
+        </div>
+      </div>
+
+    </div></div>
+
     <!-- 営業準備チェック -->
     <div id="p-prep" class="pg"><div class="scr">
       <div class="ph"><h2>営業準備チェック</h2><p>クラブ別に進捗管理 — チェックはFirebaseに自動保存</p></div>
@@ -2045,7 +2474,7 @@ CRM導入・営業先リスト整備・営業フロー設計。経営者が「�
 
 <script>
 // ナビ・BMC・チェック（グローバル関数）
-const AP=['home','vision','hojin','roles','bmc','flow','next','prep','sales','mktg','tools','club','roadmap','memo'];
+const AP=['home','vision','hojin','roles','bmc','flow','next','hypo','prep','sales','mktg','tools','club','roadmap','memo'];
 function go(id){AP.forEach(p=>document.getElementById('p-'+p).classList.toggle('on',p===id));document.querySelectorAll('.ni').forEach(el=>el.classList.toggle('on',el.getAttribute('onclick')==="go('"+id+"')"))}
 function acToggle(id){
   const el=document.getElementById(id);
