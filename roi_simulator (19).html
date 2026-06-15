@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>スポンサーROIシミュレーター | 株式会社高原</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@2.44.0/tabler-icons.min.css">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:'Noto Sans JP',sans-serif;background:#F7F8FA;color:#1A1A1A;height:100vh;overflow:hidden}
+.app{display:flex;height:100vh}
+
+/* SIDEBAR */
+.sidebar{width:240px;flex-shrink:0;background:#fff;border-right:1px solid #E5E7EB;display:flex;flex-direction:column;height:100vh;overflow-y:auto}
+.sidebar-header{padding:16px;border-bottom:1px solid #E5E7EB}
+.logo{display:flex;align-items:center;gap:10px}
+.logo-mark{width:34px;height:34px;border-radius:8px;background:#1A1A1A;display:flex;align-items:center;justify-content:center}
+.logo-mark i{font-size:17px;color:#F5C842}
+.logo-name{font-size:13px;font-weight:700;color:#1A1A1A}
+.logo-sub{font-size:10px;color:#9CA3AF;margin-top:1px}
+.sidebar-body{flex:1;padding:8px 0}
+.club-section{margin-bottom:2px}
+.club-header{display:flex;align-items:center;gap:8px;padding:9px 14px;cursor:pointer;background:#fff;transition:background .1s}
+.club-header:hover{background:#F9FAFB}
+.club-icon{width:22px;height:22px;border-radius:5px;background:#FEF3C7;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.club-icon i{font-size:11px;color:#D97706}
+.club-name{font-size:11px;font-weight:600;color:#374151;flex:1;line-height:1.3}
+.club-toggle{font-size:11px;color:#9CA3AF;transition:transform .2s}
+.club-toggle.open{transform:rotate(180deg)}
+.club-companies{display:none;background:#F9FAFB}
+.club-companies.open{display:block}
+.company-item{display:flex;align-items:center;gap:8px;padding:8px 14px 8px 38px;cursor:pointer;transition:background .1s;border-left:3px solid transparent}
+.company-item:hover{background:#F3F4F6}
+.company-item.active{background:#FFFBEB;border-left-color:#F5C842}
+.company-item-name{font-size:12px;color:#4B5563;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.company-item.active .company-item-name{color:#92400E;font-weight:600}
+.add-btn{display:flex;align-items:center;gap:6px;padding:7px 14px 7px 38px;cursor:pointer;font-size:11px;color:#9CA3AF;transition:color .1s}
+.add-btn:hover{color:#F5C842}
+.add-btn i{font-size:12px}
+
+/* MAIN */
+.main{flex:1;height:100vh;overflow-y:auto;background:#F7F8FA}
+.topbar{background:#fff;border-bottom:1px solid #E5E7EB;padding:12px 28px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:10}
+.topbar-left h2{font-size:15px;font-weight:700;color:#1A1A1A}
+.topbar-left p{font-size:11px;color:#9CA3AF;margin-top:2px}
+.topbar-badge{font-size:10px;font-weight:700;color:#92400E;background:#FEF3C7;border:1px solid #FDE68A;padding:4px 12px;border-radius:4px}
+
+/* EMPTY */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;height:calc(100vh - 53px);gap:14px;color:#9CA3AF}
+.empty i{font-size:48px;opacity:.3}
+.empty h3{font-size:17px;font-weight:700;color:#6B7280}
+.empty p{font-size:13px;text-align:center;line-height:1.7}
+
+/* CONTENT */
+.content{padding:24px 28px 64px}
+
+/* COMPANY HEAD */
+.co-head{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:20px 24px;margin-bottom:16px;display:flex;align-items:flex-start;justify-content:space-between;gap:12px}
+.co-head h1{font-size:20px;font-weight:700;color:#1A1A1A;margin-bottom:6px}
+.co-meta{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.mtag{display:inline-flex;align-items:center;gap:4px;font-size:11px;color:#6B7280;background:#F3F4F6;border-radius:4px;padding:3px 8px}
+.mtag i{font-size:11px}
+.st-badge{display:inline-flex;font-size:11px;font-weight:600;padding:3px 10px;border-radius:4px;margin-right:6px}
+.issue-tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px}
+.itag{font-size:11px;color:#1D4ED8;background:#EFF6FF;border:1px solid #BFDBFE;padding:3px 8px;border-radius:4px}
+.co-actions{display:flex;gap:8px;flex-shrink:0}
+
+/* BUTTONS */
+.btn{border:none;border-radius:6px;padding:8px 14px;font-size:12px;cursor:pointer;display:inline-flex;align-items:center;gap:5px;font-family:'Noto Sans JP',sans-serif;font-weight:500;transition:opacity .12s}
+.btn:hover{opacity:.8}
+.btn-primary{background:#1A1A1A;color:#fff}
+.btn-outline{background:#fff;color:#374151;border:1px solid #D1D5DB}
+.btn-danger{background:#FEF2F2;color:#DC2626;border:1px solid #FECACA}
+.btn-yellow{background:#F5C842;color:#1A1A1A}
+
+/* KPI */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:16px}
+.kpi{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:16px 18px;cursor:pointer;transition:border-color .15s;position:relative}
+.kpi:hover{border-color:#F5C842}
+.kpi::after{content:"?";position:absolute;top:10px;right:12px;font-size:10px;color:#D1D5DB;font-weight:700}
+.kpi-label{font-size:10px;font-weight:600;color:#9CA3AF;letter-spacing:.06em;text-transform:uppercase;margin-bottom:8px}
+.kpi-value{font-size:24px;font-weight:700;color:#1A1A1A;line-height:1}
+.kpi-value.yellow{color:#D97706}
+.kpi-value.green{color:#059669}
+.kpi-value.blue{color:#2563EB}
+.kpi-value.purple{color:#7C3AED}
+.kpi-sub{font-size:10px;color:#9CA3AF;margin-top:4px;line-height:1.4}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:16px}
+
+/* CARD */
+.card{background:#fff;border:1px solid #E5E7EB;border-radius:10px;padding:20px 22px;margin-bottom:16px}
+.card-title{font-size:12px;font-weight:700;color:#374151;margin-bottom:14px;display:flex;align-items:center;gap:6px;letter-spacing:.04em}
+.card-title i{font-size:14px;color:#D97706}
+
+/* SECTION DIVIDER */
+.section-label{font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;text-transform:uppercase;margin:20px 0 10px;display:flex;align-items:center;gap:6px}
+.section-label::after{content:'';flex:1;height:1px;background:#E5E7EB}
+
+/* COMPARISON */
+.comp-row{display:flex;align-items:center;margin-bottom:12px}
+.comp-row:last-child{margin-bottom:0}
+.comp-name{font-size:12px;color:#4B5563;width:110px;flex-shrink:0}
+.comp-bar-wrap{flex:1;height:8px;background:#F3F4F6;border-radius:4px;overflow:hidden;margin:0 10px}
+.comp-bar{height:100%;border-radius:4px;transition:width .8s ease}
+.comp-num{font-size:12px;font-weight:600;color:#1A1A1A;width:70px;text-align:right;flex-shrink:0;cursor:pointer}
+.comp-num:hover{color:#D97706;text-decoration:underline}
+.comp-note{font-size:10px;color:#9CA3AF;width:80px;flex-shrink:0;text-align:right}
+
+/* EFFECT */
+.effect-item{display:flex;gap:10px;padding:10px 0;border-bottom:1px solid #F3F4F6}
+.effect-item:last-child{border-bottom:none}
+.effect-icon{width:28px;height:28px;border-radius:6px;background:#FFFBEB;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.effect-icon i{font-size:13px;color:#D97706}
+.effect-title{font-size:12px;font-weight:600;color:#1A1A1A;margin-bottom:2px}
+.effect-text{font-size:11px;color:#6B7280;line-height:1.6}
+
+/* ISSUE EFFECT */
+.issue-effect{background:#EFF6FF;border:1px solid #BFDBFE;border-radius:8px;padding:12px 14px;margin-bottom:8px}
+.issue-effect-title{font-size:11px;font-weight:700;color:#1D4ED8;margin-bottom:4px;display:flex;align-items:center;gap:5px}
+.issue-effect-text{font-size:12px;color:#1E40AF;line-height:1.7}
+
+/* RECOMMEND */
+.recommend{background:#FFFBEB;border:1px solid #FDE68A;border-radius:10px;padding:18px 20px}
+.rec-badge{font-size:9px;font-weight:700;color:#92400E;letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.rec-plan{font-size:16px;font-weight:700;color:#1A1A1A;margin-bottom:6px}
+.rec-desc{font-size:12px;color:#4B5563;line-height:1.7;margin-bottom:10px}
+.rec-tags{display:flex;flex-wrap:wrap;gap:6px}
+.rec-tag{font-size:10px;font-weight:700;color:#92400E;background:#FEF3C7;padding:3px 10px;border-radius:4px}
+
+/* ROI SCORE */
+.score-wrap{text-align:center;padding:8px 0 16px}
+.score-num{font-size:52px;font-weight:700;line-height:1}
+.score-label{font-size:12px;color:#6B7280;margin-top:4px}
+.score-bar{height:10px;background:#F3F4F6;border-radius:5px;overflow:hidden;margin:12px 0 6px}
+.score-fill{height:100%;border-radius:5px;transition:width .8s ease}
+.score-marks{display:flex;justify-content:space-between;font-size:10px;color:#9CA3AF}
+
+/* TOOLTIP MODAL */
+.tip-overlay{position:fixed;inset:0;background:rgba(0,0,0,.4);z-index:200;display:none;align-items:center;justify-content:center;padding:20px}
+.tip-overlay.open{display:flex}
+.tip-box{background:#fff;border-radius:12px;padding:28px;max-width:480px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.15)}
+.tip-title{font-size:16px;font-weight:700;color:#1A1A1A;margin-bottom:6px}
+.tip-formula{background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:14px 16px;margin:12px 0;font-family:monospace;font-size:13px;color:#374151;line-height:1.8}
+.tip-def{font-size:13px;color:#4B5563;line-height:1.8;margin-bottom:14px}
+.tip-result{background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:12px 14px;font-size:13px;color:#92400E;line-height:1.8}
+.tip-close{width:100%;background:#1A1A1A;color:#fff;border:none;border-radius:7px;padding:10px;font-size:13px;font-weight:600;cursor:pointer;margin-top:14px;font-family:'Noto Sans JP',sans-serif}
+
+/* MODAL */
+.modal-overlay{position:fixed;inset:0;background:rgba(0,0,0,.5);z-index:100;display:none;align-items:center;justify-content:center;padding:20px}
+.modal-overlay.open{display:flex}
+.modal{background:#fff;border-radius:12px;width:100%;max-width:600px;max-height:90vh;overflow-y:auto;box-shadow:0 20px 60px rgba(0,0,0,.2)}
+.modal-header{padding:18px 24px;border-bottom:1px solid #E5E7EB;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;background:#fff;z-index:1}
+.modal-title{font-size:15px;font-weight:700;color:#1A1A1A}
+.modal-close{background:none;border:none;color:#9CA3AF;cursor:pointer;font-size:20px;padding:2px}
+.modal-body{padding:22px}
+.modal-footer{padding:14px 22px;border-top:1px solid #E5E7EB;display:flex;justify-content:flex-end;gap:8px;position:sticky;bottom:0;background:#fff}
+
+/* FORM */
+.fs-title{font-size:11px;font-weight:700;color:#9CA3AF;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid #E5E7EB}
+.fg{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:16px}
+.ff{margin-bottom:10px}
+.fl{font-size:11px;font-weight:600;color:#374151;margin-bottom:5px;display:block}
+.fi{width:100%;background:#fff;border:1px solid #D1D5DB;border-radius:6px;padding:9px 11px;font-size:13px;color:#1A1A1A;font-family:'Noto Sans JP',sans-serif;outline:none;transition:border-color .12s}
+.fi:focus{border-color:#F5C842}
+.fsel{width:100%;background:#fff;border:1px solid #D1D5DB;border-radius:6px;padding:9px 11px;font-size:13px;color:#1A1A1A;font-family:'Noto Sans JP',sans-serif;outline:none;cursor:pointer;appearance:none}
+.fsel:focus{border-color:#F5C842}
+.fta{width:100%;background:#fff;border:1px solid #D1D5DB;border-radius:6px;padding:9px 11px;font-size:13px;color:#1A1A1A;font-family:'Noto Sans JP',sans-serif;outline:none;resize:vertical;min-height:72px}
+.fta:focus{border-color:#F5C842}
+.check-group{display:flex;flex-wrap:wrap;gap:7px}
+.ci{display:flex;align-items:center;gap:5px;font-size:12px;color:#4B5563;cursor:pointer;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:5px;padding:5px 9px;transition:all .1s}
+.ci:hover{border-color:#D1D5DB}
+.ci input{accent-color:#F5C842;width:13px;height:13px}
+.ci.checked{border-color:#F5C842;color:#92400E;background:#FFFBEB}
+
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:#E5E7EB;border-radius:3px}
+@media print{.sidebar,.topbar,.co-actions,.modal-overlay,.tip-overlay{display:none!important}.main{height:auto;overflow:visible}.content{padding:16px}}
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo">
+      <div class="logo-mark"><i class="ti ti-basketball"></i></div>
+      <div>
+        <div class="logo-name">株式会社高原</div>
+        <div class="logo-sub">スポンサーROIシミュレーター</div>
+      </div>
+    </div>
+  </div>
+  <div class="sidebar-body" id="sidebar-body"></div>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h2 id="top-title">スポンサーROIシミュレーター</h2>
+      <p id="top-sub">左のサイドバーから企業を選択してください</p>
+    </div>
+    <div class="topbar-badge">株式会社高原</div>
+  </div>
+  <div id="main-content">
+    <div class="empty">
+      <i class="ti ti-chart-bar"></i>
+      <h3>企業を選択してください</h3>
+      <p>左のサイドバーからクラブを選び<br>企業をタップするとROIが表示されます</p>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ツールチップモーダル -->
+<div class="tip-overlay" id="tip-overlay" onclick="if(event.target===this)closeTip()">
+  <div class="tip-box">
+    <div class="tip-title" id="tip-title"></div>
+    <div class="tip-def" id="tip-def"></div>
+    <div class="tip-formula" id="tip-formula"></div>
+    <div class="tip-result" id="tip-result"></div>
+    <button class="tip-close" onclick="closeTip()">閉じる</button>
+  </div>
+</div>
+
+<!-- 企業追加・編集モーダル -->
+<div class="modal-overlay" id="modal" onclick="if(event.target===this)closeModal()">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title" id="modal-title">企業を追加</div>
+      <button class="modal-close" onclick="closeModal()"><i class="ti ti-x"></i></button>
+    </div>
+    <div class="modal-body">
+      <input type="hidden" id="edit-id">
+      <input type="hidden" id="edit-club">
+
+      <div class="fs-title" style="margin-bottom:10px">基本情報</div>
+      <div class="fg">
+        <div class="ff" style="grid-column:1/-1"><label class="fl">企業名 *</label><input class="fi" id="f-name" placeholder="株式会社○○"></div>
+        <div class="ff"><label class="fl">業種 *</label>
+          <select class="fsel" id="f-industry">
+            <option value="realestate">不動産・建設</option>
+            <option value="food">飲食・カフェ</option>
+            <option value="retail">小売・ショップ</option>
+            <option value="recruit">採用・HR系</option>
+            <option value="lawyer">士業</option>
+            <option value="beauty">美容・健康</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+        <div class="ff"><label class="fl">担当者名</label><input class="fi" id="f-contact" placeholder="山田 太郎"></div>
+        <div class="ff"><label class="fl">電話番号</label><input class="fi" id="f-tel" placeholder="000-0000-0000"></div>
+        <div class="ff"><label class="fl">メールアドレス</label><input class="fi" id="f-email" placeholder="info@example.com"></div>
+      </div>
+
+      <div class="fs-title" style="margin-bottom:10px">財務・規模情報</div>
+      <div class="fg">
+        <div class="ff"><label class="fl">年間スポンサー金額（万円）*</label><input class="fi" id="f-budget" type="number" placeholder="100" min="10"></div>
+        <div class="ff"><label class="fl">現在の月間広告費（万円）</label><input class="fi" id="f-adcost" type="number" placeholder="30"></div>
+        <div class="ff"><label class="fl">従業員数</label>
+          <select class="fsel" id="f-employees">
+            <option value="">選択してください</option>
+            <option value="1〜10名">1〜10名</option>
+            <option value="11〜30名">11〜30名</option>
+            <option value="31〜100名">31〜100名</option>
+            <option value="101〜300名">101〜300名</option>
+            <option value="300名以上">300名以上</option>
+          </select>
+        </div>
+        <div class="ff"><label class="fl">年間売上規模</label>
+          <select class="fsel" id="f-sales">
+            <option value="">選択してください</option>
+            <option value="〜1億円">〜1億円</option>
+            <option value="1〜3億円">1〜3億円</option>
+            <option value="3〜10億円">3〜10億円</option>
+            <option value="10〜30億円">10〜30億円</option>
+            <option value="30億円以上">30億円以上</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="fs-title" style="margin-bottom:10px">課題・ニーズ</div>
+      <div class="ff" style="margin-bottom:12px">
+        <label class="fl">主な課題（複数選択可）</label>
+        <div class="check-group" id="issues-check">
+          <label class="ci"><input type="checkbox" value="集客・新規顧客">集客・新規顧客</label>
+          <label class="ci"><input type="checkbox" value="採用">採用</label>
+          <label class="ci"><input type="checkbox" value="地域認知">地域認知</label>
+          <label class="ci"><input type="checkbox" value="ブランディング">ブランディング</label>
+          <label class="ci"><input type="checkbox" value="競合差別化">競合差別化</label>
+          <label class="ci"><input type="checkbox" value="SNS強化">SNS強化</label>
+          <label class="ci"><input type="checkbox" value="従業員モチベ">従業員モチベ</label>
+          <label class="ci"><input type="checkbox" value="CSR・社会貢献">CSR・社会貢献</label>
+        </div>
+      </div>
+      <div class="fg" style="margin-bottom:12px">
+        <div class="ff">
+          <label class="fl">現在の主な広告手段</label>
+          <select class="fsel" id="f-ad-method">
+            <option value="">使っていない／不明</option>
+            <option value="折込チラシ">折込チラシ</option>
+            <option value="新聞広告">新聞広告</option>
+            <option value="看板・屋外広告">看板・屋外広告</option>
+            <option value="Instagram広告">Instagram広告</option>
+            <option value="Facebook広告">Facebook広告</option>
+            <option value="Google広告">Google広告</option>
+            <option value="YouTube広告">YouTube広告</option>
+            <option value="DM・ダイレクトメール">DM・ダイレクトメール</option>
+            <option value="フリーペーパー">フリーペーパー</option>
+            <option value="地域情報誌">地域情報誌</option>
+            <option value="テレビCM">テレビCM</option>
+            <option value="ラジオ広告">ラジオ広告</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label class="fl">広告費（月額・万円）</label>
+          <input class="fi" id="f-ad-cost" type="number" placeholder="例）15" min="0">
+        </div>
+        <div class="ff">
+          <label class="fl">現在の主な採用手段</label>
+          <select class="fsel" id="f-recruit-method">
+            <option value="">使っていない／不明</option>
+            <option value="Indeed">Indeed</option>
+            <option value="リクナビNEXT">リクナビNEXT</option>
+            <option value="マイナビ転職">マイナビ転職</option>
+            <option value="doda">doda</option>
+            <option value="ハローワーク">ハローワーク</option>
+            <option value="求人ボックス">求人ボックス</option>
+            <option value="エン転職">エン転職</option>
+            <option value="LinkedIn">LinkedIn</option>
+            <option value="人材紹介会社">人材紹介会社（成功報酬）</option>
+            <option value="リファラル採用（紹介）">リファラル採用（紹介）</option>
+            <option value="採用サイト自社運営">採用サイト自社運営</option>
+            <option value="SNS採用">SNS採用</option>
+            <option value="人材派遣会社">人材派遣会社</option>
+          </select>
+        </div>
+        <div class="ff">
+          <label class="fl">採用費（月額・万円）</label>
+          <input class="fi" id="f-recruit-cost" type="number" placeholder="例）30" min="0">
+        </div>
+      </div>
+      <div class="ff" style="margin-bottom:16px"><label class="fl">メモ・特記事項</label><textarea class="fta" id="f-memo" placeholder="商談メモ、担当者の反応、懸念点など..."></textarea></div>
+
+      <div class="fs-title" style="margin-bottom:10px">契約情報</div>
+      <div class="fg">
+        <div class="ff"><label class="fl">契約プラン</label>
+          <select class="fsel" id="f-plan">
+            <option value="">未選択</option>
+            <option value="platinum">プラチナ（500万〜）</option>
+            <option value="gold">ゴールド（300万〜）</option>
+            <option value="silver">シルバー（100万〜）</option>
+            <option value="bronze">ブロンズ（30万〜）</option>
+          </select>
+        </div>
+        <div class="ff"><label class="fl">ステータス</label>
+          <select class="fsel" id="f-status">
+            <option value="prospecting">初回接触</option>
+            <option value="proposal">提案済</option>
+            <option value="negotiation">検討中</option>
+            <option value="won">契約済</option>
+          </select>
+        </div>
+        <div class="ff"><label class="fl">契約開始日</label><input class="fi" id="f-start" type="date"></div>
+        <div class="ff"><label class="fl">次回フォロー日</label><input class="fi" id="f-followup" type="date"></div>
+        <div class="ff"><label class="fl">担当者の熱量</label>
+          <select class="fsel" id="f-enthusiasm">
+            <option value="high">🔥 高（前向き）</option>
+            <option value="mid">💬 中（検討中）</option>
+            <option value="low">❄️ 低（消極的）</option>
+          </select>
+        </div>
+        <div class="ff"><label class="fl">紹介元</label><input class="fi" id="f-referral" placeholder="例）○○社 山田様の紹介"></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-outline" onclick="closeModal()">キャンセル</button>
+      <button class="btn btn-primary" onclick="saveCompany()"><i class="ti ti-check"></i>保存する</button>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.22.0/firebase-database-compat.js"></script>
+<script>
+firebase.initializeApp({
+  apiKey:"AIzaSyBFyrA9EUtOd5YmafuKPhj96rbLCyMvmlE",
+  authDomain:"roi-efb27.firebaseapp.com",
+  databaseURL:"https://roi-efb27-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:"roi-efb27",
+  storageBucket:"roi-efb27.firebasestorage.app",
+  messagingSenderId:"29054586340",
+  appId:"1:29054586340:web:f17adf43e20bbeedabcbf1"
+});
+const db = firebase.database();
+const ROOT = "roi/v2";
+
+
+// 広告・採用手法別コスト目安（月額万円）
+const AD_COSTS = {
+  '折込チラシ':{monthly:15,reach:30000,unit:'配布枚数3万枚',type:'ad'},
+  '新聞広告':{monthly:30,reach:50000,unit:'掲載1回5万部',type:'ad'},
+  '看板・屋外広告':{monthly:10,reach:20000,unit:'通行人2万人/月',type:'ad'},
+  'Instagram広告':{monthly:10,reach:50000,unit:'インプレッション5万回',type:'ad'},
+  'Facebook広告':{monthly:10,reach:30000,unit:'インプレッション3万回',type:'ad'},
+  'Google広告':{monthly:20,reach:10000,unit:'クリック500回程度',type:'ad'},
+  'YouTube広告':{monthly:15,reach:20000,unit:'視聴3万回程度',type:'ad'},
+  'DM・ダイレクトメール':{monthly:10,reach:2000,unit:'送付2,000通',type:'ad'},
+  'フリーペーパー':{monthly:5,reach:15000,unit:'配布1.5万部',type:'ad'},
+  '地域情報誌':{monthly:8,reach:20000,unit:'発行2万部',type:'ad'},
+  'テレビCM':{monthly:100,reach:200000,unit:'視聴20万人',type:'ad'},
+  'ラジオ広告':{monthly:20,reach:50000,unit:'聴取5万人',type:'ad'},
+  'Indeed':{monthly:20,reach:500,unit:'応募5〜10件程度',type:'recruit'},
+  'リクナビNEXT':{monthly:30,reach:300,unit:'閲覧300人程度',type:'recruit'},
+  'マイナビ転職':{monthly:30,reach:300,unit:'閲覧300人程度',type:'recruit'},
+  'doda':{monthly:25,reach:400,unit:'閲覧400人程度',type:'recruit'},
+  'ハローワーク':{monthly:0,reach:200,unit:'無料（工数コスト除く）',type:'recruit'},
+  '求人ボックス':{monthly:5,reach:600,unit:'閲覧600人程度',type:'recruit'},
+  'エン転職':{monthly:20,reach:350,unit:'閲覧350人程度',type:'recruit'},
+  'LinkedIn':{monthly:15,reach:200,unit:'リーチ200人程度',type:'recruit'},
+  'リファラル採用（紹介）':{monthly:3,reach:50,unit:'紹介候補50人程度',type:'recruit'},
+  '採用サイト自社運営':{monthly:5,reach:300,unit:'訪問300人程度',type:'recruit'},
+  'SNS採用':{monthly:3,reach:1000,unit:'リーチ1,000人程度',type:'recruit'},
+  '人材紹介会社':{monthly:50,reach:30,unit:'候補者紹介3〜5人/月（成功報酬 年収35%〜）',type:'recruit'},
+  '人材派遣会社':{monthly:50,reach:100,unit:'候補者100人',type:'recruit'}
+};
+// ====== クラブデータ（実数字） ======
+const CLUBS = {
+  queens:{
+    name:"山梨クィーンビーズ", area:"山梨県全域",
+    homeGames:14, homeAudience:1200,
+    awayGames:14, awayRatio:0.5,
+    snsFol:5000, snsPost:208,
+    note:"Wリーグ所属。近年のホーム観客数は1,000〜1,400人前後で推移。中央値1,200人を使用。アウェー観客はホームの50%で推計。"
+  },
+  beatrains:{
+    name:"八王子ビートレインズ", area:"東京西部",
+    homeGames:26, homeAudience:1710,
+    awayGames:26, awayRatio:0.5,
+    snsFol:11000, snsPost:208,
+    note:"B3リーグ所属。2024-25シーズン実績：ホーム平均1,710人。アウェー観客はホームの50%で推計。"
+  },
+  sunrise:{
+    name:"上野原サンライズ", area:"山梨・相模原",
+    homeGames:24, homeAudience:300,
+    awayGames:0, awayRatio:0,
+    snsFol:4000, snsPost:208,
+    note:"3×3男女プロチーム。男女各約12大会×平均300人。アウェー概念なし（大会形式）。"
+  }
+};
+
+// ====== 業種データ ======
+const INDUSTRIES = {
+  realestate:{name:"不動産・建設",icon:"ti-building",
+    effects:[
+      {icon:"ti-map-pin",title:"物件検討時の第一想起",text:"年間を通じて地域住民に繰り返し御社の名前が届きます。試合会場・SNSで何度も目にした会社名を、物件探しのときに最初に思い出してもらえます。「知っている会社＝安心できる会社」という心理が働きます。"},
+      {icon:"ti-users",title:"競合他社に先行できる",text:"同業他社がまだスポンサーに入っていなければ先行者優位を確立できます。「同業種1社限定」の設計を活用し、競合が後から入れない状態を作ることも可能です。"},
+      {icon:"ti-shield-check",title:"紹介・口コミの増加",text:"地域スポーツを支援している会社は「地域に根ざした信頼できる会社」として認識されます。見込み客からの初回接触ハードルが下がり、既存顧客からの紹介・口コミが生まれやすくなります。"}
+    ],
+    plan:"ゴールドプラン（ユニフォーム胸ロゴ推奨）",
+    planDesc:"地域認知が直接売上に直結する不動産業は、試合・SNS双方で継続露出できるゴールドプランが最も費用対効果が高い。",
+    tags:["地域認知","差別化","信頼構築"],cpaTarget:50,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が思うように来ない。広告費はかけているのに…」
+その悩み、よくわかります。
+
+実は、不動産で新規顧客が来ない本当の理由は「知られていないから」ではなく「記憶に残っていないから」です。
+折込チラシを見ても、翌日には忘れています。人は平均7回接触して初めて行動に移します。
+
+スポンサーシップなら、試合会場で何度も御社の名前を目にした地域の方が、いざ物件を探し始めたとき「そういえばあの会社…」と思い出します。
+年間で御社の名前が地域の方々に届く回数は、試合＋SNSで{contacts}回。
+1回で終わるチラシとは、記憶への刷り込み方が根本的に違います。`,
+      "地域認知":`「地域でもっと知ってもらいたいのに、なかなか広がらない…」
+その焦りは当然です。
+
+チラシは配った瞬間だけ。看板は通行人だけ。どれも「一瞬」で終わります。
+地域認知を本当に上げるには「繰り返し、同じ人に届ける」ことが必要です。
+
+スポンサーなら、ホーム試合{home_games}回×{home_audience}人、アウェー試合{away_games}回、SNS{sns_post}回投稿で、年間合計{contacts}回、地域の同じ方々に御社の名前が届き続けます。
+「なんかよく見る会社だな」という感覚が積み重なり、物件を探したとき自然に選ばれる会社になります。`,
+      "ブランディング":`「他の不動産会社と何が違うの？と言われると…正直、答えに詰まる」
+多くの不動産会社が抱える悩みです。
+
+価格でも立地でも差別化できない。そのとき唯一できることは「印象で選ばれること」です。
+「地域のバスケチームを応援している不動産会社」——これは競合には絶対に真似できないポジションです。
+
+「広告を出している会社」ではなく「地域を応援している会社」として認知されると、お客様の心理が変わります。
+同じ条件なら「応援している会社に頼みたい」と思うのが人間の自然な感情です。
+このポジションを今すぐ取れるのは、御社が先に動くかどうかだけです。`,
+      "競合差別化":`「競合他社と何が違うか、うまく伝えられない…」
+そのもどかしさは多くの不動産会社が感じています。
+
+スポンサーシップは、競合との差別化において非常に強力な武器になります。
+同業他社がまだスポンサーに入っていなければ、今すぐ「地域スポーツを支援している唯一の不動産会社」というポジションを確立できます。
+
+もし競合がすでに入っているなら、逆に考えてください。
+毎試合・毎SNS投稿で競合の名前だけが地域に届き続けている状況です。
+このまま差がつくのを見ているより、一緒に入ることで「あのエリアの不動産といえばこの2社」として市場を二分する戦略も取れます。`,
+      "SNS強化":`「SNSをやっているけど、フォロワーが増えない。投稿しても反応がない…」
+自社だけで発信し続けることの限界を感じていませんか？
+
+SNSで一番難しいのは「最初のリーチ」です。自社のフォロワー以外に届かない。
+でもクラブのSNS（フォロワー{sns_fol}人）が御社を紹介する投稿をすれば、今まで御社のことを知らなかった{sns_fol}人に一気に届きます。
+
+「○○不動産がスポンサーとして応援してくれています！」という投稿は、ファンからシェア・保存される確率が高く、フォロワー外にも拡散します。
+自社SNSだけでは絶対にたどり着けない層に、クラブの力で届けることができます。`,
+      "採用":`「若い人材が来ない。求人を出しても応募がない…」
+採用難の本質は「知られていないこと」と「選ばれない理由があること」の2つです。
+
+求人広告は「今すぐ転職したい人」にしか届きません。
+でも実際に採用したい20〜30代の多くは、「まだ転職を考えていない」潜在層です。
+
+スポンサーシップなら、バスケ観戦に来る20〜30代に年間{contacts}回、御社の名前が届きます。
+「スポーツを支援している会社」は「活気がある・働きやすそう」というイメージを自然に形成します。
+いざ転職を考えたとき、知っている会社に応募する確率は格段に上がります。
+採用媒体1回30〜50万円を使い続けるより、365日露出し続ける選択肢があります。`,
+      "従業員モチベ":`「社員の離職率が高い。モチベーションが上がらない…」
+社員が「この会社で働いていることが誇り」と感じるかどうかで、定着率は大きく変わります。
+
+試合観戦への社員招待。選手との交流イベント。「自分の会社がプロチームを支援している」という事実。
+これらは給与では作れない「誇り」と「帰属意識」を生み出します。
+
+「うちの会社、バスケチームのスポンサーなんだよ」と社員が自慢できる会社になると、SNSで発信されます。
+それが採用ブランドにもなり、「この会社で働きたい」という応募動機にもつながります。
+離職率を1人分でも改善できれば、採用・育成コストの節約になります。`,
+      "CSR・社会貢献":`「社会貢献がしたい。でも具体的に何をすれば…」
+多くの企業がCSRの重要性を感じながら、何をすればいいかわからず動けていません。
+
+地域スポーツへのスポンサーシップは、最もシンプルで効果的なCSR活動のひとつです。
+「地域のプロチームを支援している不動産会社」——これは地域住民、地域自治体、取引先すべてに対して強いメッセージになります。
+
+年次報告書・会社案内・採用サイトに「地域貢献活動」として掲載でき、企業としての社会的評価が向上します。
+CSRは「コスト」ではなく「投資」です。地域からの信頼が、長期的な顧客獲得・採用・取引先開拓につながります。`
+    }
+  },
+  food:{name:"飲食・カフェ",icon:"ti-tools-kitchen-2",
+    effects:[
+      {icon:"ti-walk",title:"試合後の来客導線を設計",text:"試合終了後、会場周辺に空腹の観客が動きます。ホーム試合で年間16,800人（14試合×1,200人）が潜在的な来店候補。クーポン配布で「試合観戦→御社来店」の導線を直接設計できます。クーポン持参率3%でも年間500人超の新規来店チャンスです。"},
+      {icon:"ti-social",title:"クラブSNSによる拡散",text:"クラブSNS（フォロワー5,000人）で御社を紹介する投稿が年間複数回行われます。「バスケ観戦後はここ！」という文脈はシェア・保存されやすく、フォロワー外にも拡散します。通常の広告では届かない層にリーチできます。"},
+      {icon:"ti-repeat",title:"ファンのリピーター化",text:"シーズン中、同じ観客が何度も試合に来るたびに御社の存在を目にします。「試合＝あの店」という連想が定着し、試合観戦のたびに来店するリピーターが生まれます。"}
+    ],
+    plan:"シルバープラン（会場内広告＋クーポン配布権）",
+    planDesc:"試合後の来客導線とSNS露出の組み合わせが最も効果的。クーポン配布で来客数を可視化・検証できる。",
+    tags:["来客増","SNS拡散","リピーター"],cpaTarget:30,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が来ない。広告を出しても費用対効果が見えない…」
+その悩み、正直しんどいですよね。
+
+飲食の新規集客で一番難しいのは「来店のきっかけを作ること」です。
+Googleマップは検索した人にしか届かない。チラシは見てもすぐ忘れられる。
+
+スポンサーなら、ホーム試合{home_games}回×平均{home_audience}人の観客が試合後に食事を求めて動きます。
+その方々に会場内でクーポンを配れば、「試合観戦→御社来店」という導線を直接設計できます。
+クーポン持参率をわずか3%と仮定しても、ホームだけで年間{coupon_est}人以上の新規来店チャンスです。
+
+「試合当日、近くにお腹を空かせたお客様が大勢います。その方々にクーポンを渡せる権利、使わない理由がありますか？」`,
+      "地域認知":`「地域のお客様にもっと知ってもらいたいのに、なかなか広がらない…」
+新しいお店を知ってもらうことの難しさは、飲食業界では特に深刻です。
+
+チラシは翌日捨てられます。SNS広告はスクロールでスキップされます。
+でも「あのバスケチームを応援しているお店」というイメージは、試合のたびに記憶に刷り込まれます。
+
+クラブのSNS（フォロワー{sns_fol}人）が御社のお店を紹介する投稿を年間複数回行います。
+ホーム試合{home_games}回、アウェー試合{away_games}回、SNS{sns_post}回——年間{contacts}回、地域の方々に御社の名前が届きます。
+「なんかよく聞くお店だな」という感覚が来店動機になります。`,
+      "ブランディング":`「近くに競合店が増えて、差別化できていない気がする…」
+価格でも立地でも戦えないとき、頼れるのは「イメージ」しかありません。
+
+「地域スポーツを応援しているお店」——これは競合店には絶対に真似できないポジションです。
+人は「好きなチームを応援しているお店」に感情的な親近感を持ちます。
+
+「広告を出しているお店」ではなく「地域の仲間を応援しているお店」として認知されると、選ばれる理由が変わります。
+同じような料理、同じような価格帯でも、「あそこは応援しているから行こう」という選択が生まれます。`,
+      "競合差別化":`「近隣に似たような飲食店が増えて、どう差別化するか悩んでいる…」
+価格でも立地でも勝てない状況は、多くの飲食店が直面している現実です。
+
+スポンサーシップは、飲食業界において最も強力な差別化手段のひとつです。
+「試合後はあの店」という定番ポジションを先に取った店が圧倒的に有利になります。
+
+同業他社がスポンサーに入っていなければ、今すぐ「地域スポーツを支援している唯一の飲食店」になれます。
+もし入られてしまったら、その店が毎試合・毎SNSで「ここに来てください」と宣伝し続けることになります。
+先に動いた方が勝ちです。`,
+      "SNS強化":`「SNSをやっているけど、なかなかフォロワーが増えない。投稿しても反応が薄い…」
+自社発信だけで集客しようとすることの限界を感じていませんか？
+
+SNSで最大の壁は「自社のフォロワー以外に届かない」ことです。
+でもクラブのSNS（フォロワー{sns_fol}人）が御社を紹介すれば、今まで御社を知らなかった{sns_fol}人に一気に届きます。
+
+「試合後はここ！」「選手も通うお店！」という投稿は、ファンからシェア・保存される確率が高く、フォロワー外にも拡散します。
+自社SNSだけでは絶対にたどり着けない層に、クラブの力を借りて届けることができます。`,
+      "採用":`「スタッフが採用できない。特に若い人材が来ない…」
+飲食業の採用難は深刻です。でも根本的な原因は「知られていないこと」かもしれません。
+
+求人広告に出しても「この店、知らないな」と思われたら、応募してもらえません。
+バスケ観戦層の中心は20〜30代。「スポーツを応援している飲食店」は、若い世代に「活気がある・楽しそう」というイメージを与えます。
+
+「あのスポーツチームを応援している店で働きたい」という動機は、求人広告には書けない強力な訴求力です。
+採用サイトに「スポンサー活動」を掲載し、試合観戦を社員イベントにすることで、スタッフの定着率も上がります。`,
+      "従業員モチベ":`「スタッフがすぐ辞める。モチベーションを維持するのが難しい…」
+飲食業の離職率の高さは業界全体の課題です。
+
+でも「この店で働いていることが誇り」と感じているスタッフは辞めません。
+試合観戦への招待、選手来店の機会、「うちのお店がプロチームのスポンサーなんだよ」と自慢できる事実——これらはお金では買えない「誇り」を生み出します。
+
+スタッフがSNSで「自分の職場がスポンサーです！」と発信してくれれば、それが最高の採用PRにもなります。
+1人の離職を防ぐだけで、採用・育成コストの節約につながります。`,
+      "CSR・社会貢献":`「地域への貢献をしたい。でも具体的に何をすれば伝わるか…」
+地域に根ざした飲食店だからこそ、地域貢献への想いは特に強いはずです。
+
+「地域スポーツを応援している飲食店」——これは地域住民に対して最もシンプルで伝わるCSRメッセージです。
+試合会場で御社の名前を見た地域の方が「地域のために活動している店だな」と感じ、来店動機になります。
+
+地域自治体・商工会との関係強化にもつながり、地域の催しへの参加機会も生まれます。
+CSRは「コスト」ではなく、長期的な顧客・ファン獲得への「投資」です。`
+    }
+  },
+  retail:{name:"小売・ショップ",icon:"ti-shopping-bag",
+    effects:[
+      {icon:"ti-eye",title:"チラシと違う「消えない露出」",text:"折込チラシは翌日捨てられます。ユニフォームのロゴは1年間消えません。試合・SNS・グッズで御社の名前が繰り返し目に入り続けます。1回の配布で終わる広告と、365日継続する露出の差は圧倒的です。"},
+      {icon:"ti-users-group",title:"ECに勝てる認知を作る",text:"ECに客を取られる最大の理由は「リアル店舗の認知不足」です。バスケ観戦層（20〜30代）への継続露出で「地域にある実店舗」の認知を積み上げ、リアルで買う理由を作ります。"},
+      {icon:"ti-map-pin",title:"地域No.1のポジション確立",text:"「地域スポーツを支えているお店」として地域住民からの支持が生まれます。価格ではなく「ここで買いたい」という感情的な選択を促す、EC対抗の最強ブランディングです。"}
+    ],
+    plan:"シルバープラン（ユニフォームロゴ＋会場内POP）",
+    planDesc:"継続的なロゴ露出と若者層へのリーチを両立。EC競合対策として地域認知を積み上げる。",
+    tags:["継続露出","若者層","地域ブランド"],cpaTarget:40,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が来ない。ECに客を取られている気がする…」
+リアル店舗の苦境は、今や業界全体の問題です。
+
+ECに勝てない理由は価格だけではありません。「知られていないから検索されない」のが根本原因です。
+スポンサーなら、バスケ観戦層（20〜30代）という御社のターゲット層に年間{contacts}回、御社の名前が届きます。
+
+試合会場でのサンプル配布・クーポン配布で「観戦→来店」の導線を直接設計できます。
+「なんかよく見るお店だな」という記憶が、いざ購入を検討したとき「まずあの店に行ってみよう」という行動につながります。`,
+      "地域認知":`「チラシを出しても反応が薄い。もっと地域に知ってもらいたい…」
+チラシを出し続けているのに、なかなか結果が出ない——その理由は「チラシは翌日捨てられる」からです。
+
+人は繰り返し見たものを記憶します。1回見ただけでは行動しません。
+スポンサーなら、ユニフォームのロゴが1年間消えません。試合のたびに、SNSのたびに、御社の名前が地域住民の目に入り続けます。
+
+年間{contacts}回の継続露出が「なんかよく見るお店」という認知を積み上げ、来店のきっかけになります。
+チラシとスポンサーは、「1回で終わる」か「1年間続く」かの根本的な違いがあります。`,
+      "ブランディング":`「ECと価格で勝負できない。何かブランドとして差別化したい…」
+価格競争に巻き込まれたら、リアル店舗は勝てません。だからこそブランドが必要です。
+
+「地域スポーツを支えているお店」というポジションは、ECには絶対に真似できません。
+「好きなチームを応援しているお店」は、感情的な選択理由を生み出します。
+
+同じ商品、同じ価格でも、「あそこはバスケチームを応援しているから買いに行こう」という選択が生まれます。
+これが「ブランド」の力です。価格以外で選ばれる理由を、スポンサーシップで作ることができます。`,
+      "競合差別化":`「近くに競合店が増えて、何で差別化すればいいかわからない…」
+競合が増えるほど、「なぜうちを選ぶのか」の答えが重要になります。
+
+スポンサーシップは、小売業における最も強力な差別化手段のひとつです。
+「地域スポーツを応援しているお店」というポジションを先に取った店が、そのエリアで圧倒的な存在感を持ちます。
+
+同業他社がスポンサー未加入なら、今すぐ先行者優位を確立できます。
+入られてしまったら、競合が毎試合・毎SNSで地域住民に名前を刷り込み続けることになります。
+動くなら今です。`,
+      "SNS強化":`「SNSをやっているけど、なかなかフォロワーが増えない…」
+自社SNSだけで集客を増やそうとすることには、越えられない壁があります。
+
+その壁は「自社のフォロワー以外に届かない」こと。
+クラブのSNS（フォロワー{sns_fol}人）が御社を紹介する投稿をすれば、今まで御社を知らなかった{sns_fol}人に一気に届きます。
+
+「○○ショップがスポンサーです！」という投稿はシェアされやすく、フォロワー外にも拡散します。
+選手・ファンに御社商品を使ってもらうコラボ投稿で、商品への信頼感も生まれます。`,
+      "採用":`「若い人材が来ない。スタッフの定着率が悪い…」
+小売業の採用難は深刻ですが、根本原因は「御社が知られていないこと」かもしれません。
+
+「スポーツを応援している会社」は、若い世代に「活気がある・楽しそう」というイメージを与えます。
+バスケ観戦層（20〜30代）への年間{contacts}回の露出で、「いつか働きたい会社」として記憶されます。
+
+採用サイトに「スポンサー活動」を掲載し、試合観戦を社員イベントにすることで定着率も改善します。
+「自分の会社がプロチームを応援している」という誇りは、給与では買えない帰属意識を生み出します。`,
+      "従業員モチベ":`「スタッフのモチベーションが上がらない。すぐ辞めてしまう…」
+モチベーションが低い根本原因のひとつは「この会社で働いている誇りが持てない」ことです。
+
+「うちの会社、バスケチームのスポンサーなんだよ」——これを誇らしげに言えるスタッフは辞めません。
+試合観戦招待、選手来店、社内での応援文化——これらはお金では作れない「誇り」と「一体感」を生み出します。
+
+スタッフが自社SNSで「職場がスポンサーです！」と発信してくれれば、採用PRにもなります。
+1人の離職を防ぐことで、採用・育成コストの節約になります。`,
+      "CSR・社会貢献":`「地域への貢献をしたい。でも何をすれば伝わるか…」
+地域に根ざしたお店だからこそ、地域貢献への想いは特に強いはずです。
+
+「地域スポーツを支えているお店」——これは地域住民に最もシンプルで伝わるCSRメッセージです。
+会社案内・採用サイトに「地域貢献活動」として掲載することで企業イメージが向上します。
+
+地域自治体・商工会との関係強化にもつながります。
+CSRは「コスト」ではなく、地域からの信頼という長期的な資産への「投資」です。`
+    }
+  },
+  recruit:{name:"採用・HR系",icon:"ti-user-check",
+    effects:[
+      {icon:"ti-coins",title:"潜在層へのリーチで採用コスト削減",text:"求人広告は「今すぐ転職したい人」にしか届きません。スポンサーは「まだ転職を考えていない20〜30代」に年間を通じて御社を認知させます。いざ転職を考えたとき、知っている会社に応募する確率が上がり、採用コストを下げられます。"},
+      {icon:"ti-star",title:"「働きたい会社」というブランド",text:"「スポーツを支援している会社」は「活気がある・社員を大切にしている」というイメージを自然に形成します。採用サイトに「スポンサー活動」を掲載することで応募動機になり、競合他社との差別化ができます。"},
+      {icon:"ti-building-community",title:"福利厚生＋定着率向上",text:"社員を試合観戦に招待する、選手と交流するなど通常の福利厚生にない体験が提供できます。「この会社に属している誇り」が社員のエンゲージメントを高め、離職率の改善につながります。"}
+    ],
+    plan:"ゴールドプラン（ユニフォーム胸ロゴ＋選手コラボ）",
+    planDesc:"採用ブランド向上には最大限の露出が必要。選手コラボでSNS拡散を狙えるゴールドプランが最適。",
+    tags:["採用コスト削減","採用ブランド","定着率"],cpaTarget:80,
+    issueMessages:{
+      "集客・新規顧客":`「新規クライアントの獲得が難しい。なかなか認知されない…」
+HR・採用系サービスは、発注側が「課題を感じたとき」にしか問い合わせません。
+
+だからこそ、「困ったときに最初に思い出してもらえるか」が全てです。
+スポンサーなら、地域企業の経営者・人事担当者に年間{contacts}回、御社の名前が届きます。
+
+「あのバスケチームを支援しているHR会社だな」という記憶が、採用課題を感じたときの「まず問い合わせる」につながります。
+競合より先に記憶に刷り込まれることが、受注の最短ルートです。`,
+      "地域認知":`「地域の企業に認知されていない。指名で問い合わせが来ない…」
+HR・採用サービスで指名が来ない最大の理由は「知られていないこと」です。
+
+広告を出しても「どこの会社？」と思われたら終わりです。
+スポンサーなら、試合会場・SNS・ユニフォームで年間{contacts}回、地域企業の経営者・担当者に御社の名前が届きます。
+
+「なんかよく聞くHR会社だな」という認知が積み重なると、いざ採用課題が発生したとき「あそこに相談しよう」という行動につながります。`,
+      "ブランディング":`「競合のHR会社・採用媒体と何が違うか、うまく伝えられない…」
+HR業界は競合が多く、差別化が難しい領域です。
+
+「地域スポーツを支援しているHR会社・採用支援会社」——これは競合には絶対に真似できないポジションです。
+「採用を手伝う会社」から「地域の発展を一緒に支える会社」へ。
+この文脈の変化が、クライアントからの信頼感を根本的に変えます。
+
+「地域を大切にしている会社に採用をお願いしたい」という選択が生まれます。`,
+      "競合差別化":`「競合のHR会社・媒体に勝てる差別化が見つからない…」
+HR業界は機能・価格での差別化が難しく、最終的には「信頼できるか」で選ばれます。
+
+「地域スポーツを支援しているHR会社」というポジションは、信頼感を数字以外で示す最も強力な方法のひとつです。
+同業他社がスポンサー未加入なら、今すぐ「地域に根ざした唯一のHR会社」になれます。
+
+「御社に頼みたい」という指名受注を増やすためには、機能以外の理由で覚えてもらうことが必要です。`,
+      "SNS強化":`「採用SNSを運用しているが、なかなか若者に届かない…」
+採用SNSで最大の課題は「転職を考えていない若者には届かない」ことです。
+
+クラブのSNS（フォロワー{sns_fol}人）の中心は20〜30代。
+「○○社がスポンサーです！」という投稿が届くのは、まさに御社のターゲット層です。
+
+試合観戦・選手交流の様子をSNSで発信することで「楽しそうな会社」として採用ブランドが形成されます。
+「転職を考えていない」若者に先に認知されることが、将来の採用につながります。`,
+      "採用":`「若い人材が集まらない。求人を出しても応募が来ない…」
+採用難の本質は「今すぐ転職したい人」だけにアプローチしていることです。
+
+求人広告は「今すぐ転職したい人」にしか届きません。
+でも採用で本当に欲しいのは「優秀な潜在層」——まだ転職を考えていない若者です。
+
+スポンサーなら、バスケ観戦に来る20〜30代に年間{contacts}回、御社の名前が届きます。
+「スポーツを支援している会社＝活気がある・働きやすい」というイメージが自然に形成されます。
+いざ転職を考えたとき、知っている会社に応募する確率は格段に上がります。
+採用媒体1回30〜50万円を使い続けるより、365日露出し続ける選択肢があります。`,
+      "従業員モチベ":`「社員の定着率が悪い。モチベーションを維持するのが難しい…」
+定着率が低い根本原因のひとつは「この会社に属していることへの誇りがない」ことです。
+
+「うちの会社、バスケチームのスポンサーなんだよ」——これを誇らしく言える社員は辞めにくくなります。
+試合観戦への社員招待、選手との交流イベント、応援文化——これらはお金では作れない「誇り」と「一体感」を生み出します。
+
+社員が自社SNSで「職場がスポンサーです！」と発信してくれれば、採用PRにもなります。
+1人の離職を防ぐことで、採用・育成コストの節約になります。`,
+      "CSR・社会貢献":`「会社としての社会貢献を示したい。具体的な取り組みが見つからない…」
+HR・採用業界に携わる会社だからこそ、地域の雇用・人材に関する社会貢献は特に意味を持ちます。
+
+「地域のスポーツチームを支援し、地域の活性化に貢献している」——これは御社の事業価値とも一致するCSRメッセージです。
+年次報告書・採用サイトに「地域貢献活動」として掲載することで企業イメージが向上します。
+
+地域企業・自治体との関係強化にもなり、新規クライアント開拓のきっかけにもなります。`
+    }
+  },
+  lawyer:{name:"士業",icon:"ti-scale",
+    effects:[
+      {icon:"ti-shield-check",title:"信頼・権威性の向上",text:"地域スポーツを支援しているポジションはどんな広告よりも信頼を作る。新規顧客獲得の土台になる。"},
+      {icon:"ti-network",title:"経営者ネットワーク",text:"スポンサー仲間＝経営者との横のつながりが生まれる。紹介の連鎖が期待できる。"},
+      {icon:"ti-presentation",title:"セミナー・PR機会",text:"試合会場でのブース出展・セミナー登壇の機会が生まれる。直接顧客と接点を持てる。"}
+    ],
+    plan:"シルバープラン（会場内ブース＋ロゴ掲載）",
+    planDesc:"信頼構築と経営者ネットワーク形成が目的。ブース出展で直接接点を作れるシルバープランが最適。",
+    tags:["信頼構築","経営者ネットワーク","PR機会"],cpaTarget:60,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が紹介以外から来ない。認知を広げたいが方法がわからない…」
+士業の新規顧客は「信頼がないと来ない」——これが業界の根本的な難しさです。
+
+広告を出しても「知らない先生に頼むのは不安」と思われたら意味がありません。
+スポンサーなら、地域住民に年間{contacts}回、御社の名前が自然に届きます。
+
+「なんかよく見る事務所だな」という記憶が積み重なると、いざ相談が必要になったとき「あの先生に聞いてみよう」という行動につながります。
+知ってもらうことが、士業における新規顧客獲得の第一歩です。`,
+      "地域認知":`「地域での知名度が低く、指名で問い合わせが来ない…」
+士業は「知られているかどうか」が受任率を大きく左右します。
+
+広告を出しても「どこの先生？」と思われたら終わりです。
+スポンサーなら、試合会場・SNS・ユニフォームで年間{contacts}回、地域住民に御事務所名が届きます。
+
+「なんかよく聞く先生だな」という認知が積み重なると、困ったときに「まずあそこに相談しよう」という行動につながります。
+士業の新規顧客獲得において、「知られていること」は最大の武器です。`,
+      "ブランディング":`「他の事務所と何が違うか、伝えるのが難しい…」
+士業はサービスの差別化が難しく、最終的には「この先生を信頼できるか」で選ばれます。
+
+「地域スポーツを支援している事務所」——これは競合には真似できないポジションです。
+「地域のために活動している先生」という印象は、どんな広告よりも強い信頼感を生み出します。
+
+「仕事ができそうな先生」より「地域を大切にしている先生」——この差が、長期的な顧客関係と口コミにつながります。`,
+      "競合差別化":`「近隣に同じような事務所が増えて、差別化できていない…」
+士業の差別化において最も難しいのは「専門性以外の理由で選ばれること」です。
+
+「地域スポーツを支援している事務所」というポジションは、専門性とは別の次元での差別化を実現します。
+同業他士業がスポンサー未加入なら、今すぐ「地域に根ざした唯一の事務所」になれます。
+
+「あの先生、地域を大切にしているな」という印象が、信頼感の土台になります。
+価格・専門性以外の理由で選ばれる事務所になることが、長期的な差別化戦略です。`,
+      "SNS強化":`「SNSで発信しているが、見てもらえない。フォロワーが増えない…」
+士業のSNS運用の難しさは「自分のフォロワーにしか届かない」ことです。
+
+クラブのSNS（フォロワー{sns_fol}人）が御事務所を紹介すれば、今まで御社を知らなかった{sns_fol}人に届きます。
+セミナー開催時にクラブSNSで告知してもらうことで、普段リーチできない層への集客につながります。
+
+「○○先生がスポンサーとして地域を支援しています！」という投稿は、信頼感を伴った認知を生み出します。
+自社SNSだけでは越えられない壁を、クラブの力で突破できます。`,
+      "採用":`「若い優秀なスタッフが採用できない。事務所の認知度が低くて…」
+士業事務所の採用難は「知られていないこと」が最大の原因のひとつです。
+
+「地域スポーツを支援している事務所」——これは若い士業希望者に「活気がある・社会貢献できる職場」というイメージを与えます。
+バスケ観戦層（20〜30代）への年間{contacts}回の露出で、「働きたい事務所」として記憶されます。
+
+採用サイトに「スポンサー活動」を掲載し、試合観戦を職員イベントにすることで定着率も改善します。
+「この事務所で働いていることが誇り」と感じる職員は辞めません。`,
+      "従業員モチベ":`「職員のモチベーションが低い。離職が続いている…」
+士業事務所における離職の根本原因のひとつは「働いていることへの誇りが持てない」ことです。
+
+「うちの事務所、バスケチームのスポンサーなんだよ」——これを誇らしく言える職員は辞めにくくなります。
+試合観戦招待、選手との交流、地域貢献活動への参加——これらはお金では作れない「誇り」と「帰属意識」を生み出します。
+
+職員が「地域に貢献している職場で働いている」と感じることで、仕事へのモチベーションも上がります。`,
+      "CSR・社会貢献":`「地域への貢献をしたい。でも何をすれば伝わるか…」
+士業は地域社会を支える存在だからこそ、CSRへの期待は特に高いです。
+
+「地域スポーツを支援している事務所」——これは地域住民・行政・取引先すべてに対して強いCSRメッセージです。
+地域自治体・商工会との関係強化にもつながり、新規相談者開拓のきっかけにもなります。
+
+事務所通信・ホームページに「地域貢献活動」として掲載し、地域の守り手としての存在感を示せます。
+CSRは「コスト」ではなく、地域からの信頼という長期的な資産への「投資」です。`
+    }
+  },
+  beauty:{name:"美容・健康",icon:"ti-heart",
+    effects:[
+      {icon:"ti-girl",title:"ターゲット層と完全一致",text:"女子バスケの観客層（20〜30代女性）と御社のターゲットは完全一致。SNS広告より効率的にリーチできる。"},
+      {icon:"ti-camera",title:"選手とのコラボ機会",text:"選手とのコラボSNS投稿で拡散が狙える。「アスリートも通うサロン・ジム」としてのブランドを構築。"},
+      {icon:"ti-ticket",title:"体験・サンプル配布",text:"試合会場でのサンプル配布・体験イベントで直接接点を作れる。"}
+    ],
+    plan:"シルバープラン（選手コラボ＋会場配布権）",
+    planDesc:"ターゲット完全一致の観客層への直接アプローチ。選手コラボとサンプル配布の組み合わせが最も効果的。",
+    tags:["ターゲット一致","コラボ機会","体験配布"],cpaTarget:25,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が来ない。SNS広告を出しても費用対効果が出ない…」
+美容・健康サービスの集客で一番難しいのは「信頼がない相手に試してもらうこと」です。
+
+SNS広告は「広告」として認識されスキップされます。でも「アスリートも通っているサロン」という文脈は違います。
+試合会場でのサンプル配布・体験イベントで、御社のサービスを直接体験してもらえます。
+
+女子バスケの観客層（20〜30代女性）は、御社のターゲット層と完全に一致します。
+「試してみたら良かった」という体験が、最も強力な集客ツールになります。`,
+      "地域認知":`「地域の方にもっと知ってもらいたいのに、なかなか広がらない…」
+美容・健康サービスは「知ってもらう→信頼してもらう→来店してもらう」という段階が必要です。
+
+チラシは翌日捨てられます。SNS広告はスクロールでスキップされます。
+でも「あのバスケチームを応援しているサロン・ジム」というイメージは、試合のたびに記憶に刷り込まれます。
+
+クラブのSNS（フォロワー{sns_fol}人）が御社を紹介する投稿で、年間{contacts}回、地域の20〜30代女性に御社の名前が届きます。
+「なんかよく聞くサロンだな」という認知が、来店動機になります。`,
+      "ブランディング":`「競合サロン・ジムが増えて、差別化できていない気がする…」
+美容・健康業界は競合が多く、価格でも立地でも差別化できないとき、頼れるのは「イメージ」です。
+
+「アスリートも通っているサロン・ジム」——これは競合には絶対に真似できないポジションです。
+「スポーツ×美容・健康」の掛け合わせで「アクティブ・健康的なブランド」というイメージが自然に形成されます。
+
+選手推薦という事実は「結果が出るサロン・ジム」という信頼感を生み出し、来店動機になります。`,
+      "競合差別化":`「近くに競合サロン・ジムが増えて、何で差別化すればいいか…」
+価格でも立地でも戦えないとき、差別化できるのは「ここでしか体験できない価値」です。
+
+「スポーツチームの公式スポンサーサロン・ジム」——これは競合には絶対に真似できません。
+「アスリートも通う信頼できるサロン・ジム」というポジションを先に取った方が、そのエリアで圧倒的な存在感を持ちます。
+
+同業他社がスポンサー未加入なら、今すぐ先行者優位を確立できます。
+動くなら今です。`,
+      "SNS強化":`「Instagramをやっているが、フォロワーが増えない。投稿のリーチが伸びない…」
+美容・健康サービスにとってInstagramは最重要チャネルですが、自社発信だけでは限界があります。
+
+選手とのコラボ投稿（施術後・トレーニング後など）は、フォロワー外への拡散が狙えます。
+「アスリートが通っているサロン・ジム」という文脈は、Instagramで特に「保存」「シェア」されやすいコンテンツです。
+
+クラブのSNS（フォロワー{sns_fol}人）が御社を紹介する投稿で、今まで届かなかった20〜30代女性に一気にリーチできます。
+自社SNSだけでは越えられない壁を、クラブの力で突破できます。`,
+      "採用":`「スタッフの採用が難しい。特に若い技術者・トレーナーが来ない…」
+美容・健康業界の採用難の根本原因は「どこで働くか」を選ぶ若者に「この店を選ぶ理由」が伝わっていないことです。
+
+「スポーツチームと連携しているサロン・ジム」——これは若いスタッフに「かっこいい・特別な経験ができる」というイメージを与えます。
+選手担当という特別な経験が求人の差別化になります。
+
+採用サイトに「スポンサー活動」を掲載し、試合観戦を社員イベントにすることで定着率も改善します。`,
+      "従業員モチベ":`「スタッフが辞めてしまう。モチベーションの維持が難しい…」
+美容・健康業界の離職率の高さは業界全体の課題です。
+
+でも「この職場で働いていることが誇り」と感じているスタッフは辞めません。
+「アスリートを担当している」「スポーツチームのスポンサー企業のスタッフ」——これはお金では買えない「特別感」と「誇り」を生み出します。
+
+選手来店の機会が生まれ、スタッフのモチベーション向上につながります。
+「うちの職場、バスケチームのスポンサーなんだよ」と自慢できる職場が、定着率を上げます。`,
+      "CSR・社会貢献":`「健康・スポーツ文化を広げたい。社会貢献につながる活動をしたい…」
+美容・健康サービスを提供する会社だからこそ、スポーツへの支援は事業の使命とも一致します。
+
+「健康・スポーツ文化を地域に広げる」という使命と「地域スポーツチームへの支援」は、完全に整合しています。
+「健康を大切にしている企業が、スポーツチームを応援している」——このメッセージは地域住民に強く響きます。
+
+地域スポーツ支援を発信することでブランドの社会的意義が高まり、来店動機にもなります。`
+    }
+  },
+  other:{name:"その他",icon:"ti-briefcase",
+    effects:[
+      {icon:"ti-eye",title:"地域認知の向上",text:"地域の方に御社の名前を継続的に届けることができる。"},
+      {icon:"ti-users",title:"コミュニティへの貢献",text:"地域スポーツを支援する企業として、地域コミュニティに貢献できる。"},
+      {icon:"ti-trending-up",title:"ブランドイメージ向上",text:"「応援している会社」というポジティブなイメージで認知される。"}
+    ],
+    plan:"シルバープラン（ロゴ掲載）",
+    planDesc:"まずはシルバープランで効果を確認。実績が出たらアップグレードを検討。",
+    tags:["地域認知","ブランド","貢献"],cpaTarget:50,
+    issueMessages:{
+      "集客・新規顧客":`「新規のお客様が思うように来ない。広告を出しても効果が見えない…」
+認知されていないものは選ばれません。選ばれないものは売れません。
+
+スポンサーなら、年間{contacts}回、地域の方々に御社の名前が届き続けます。
+「なんかよく見る会社だな」という記憶が、問い合わせ・来店のきっかけになります。
+
+1回で終わるチラシと、365日続く継続露出——どちらが記憶に残るか、明らかです。`,
+      "地域認知":`「地域にもっと知ってもらいたいのに、なかなか広がらない…」
+地域認知を上げるには「繰り返し、同じ人に届ける」ことが必要です。
+
+スポンサーなら、試合会場・SNS・ユニフォームで年間{contacts}回、地域住民に御社の名前が届き続けます。
+チラシは翌日捨てられますが、スポンサーの露出は1年間消えません。
+
+「なんかよく見る会社だな」という感覚が積み重なり、「知っている会社＝信頼できる会社」として選ばれます。`,
+      "ブランディング":`「競合と何が違うか、うまく伝えられない…」
+差別化できないものは価格で選ばれます。価格で選ばれる会社は苦しくなります。
+
+「地域スポーツを応援している会社」というポジションは、競合には真似できません。
+「選ばれる理由」を価格以外に作ることができます。
+
+「広告を出している会社」ではなく「地域を応援している会社」として認知されると、感情的な選択理由が生まれます。`,
+      "競合差別化":`「競合との差別化が難しい。何で選んでもらえばいいか…」
+差別化の本質は「なぜうちを選ぶのか」の答えを持つことです。
+
+「地域スポーツを支援している会社」——これは競合には真似できないポジションです。
+同業他社がスポンサー未加入なら、今すぐ先行者優位を確立できます。
+
+「御社が入らないと、競合の名前だけが地域に届き続けます」——これが現実です。`,
+      "SNS強化":`「SNSをやっているが、なかなかフォロワーが増えない。反応が薄い…」
+自社発信だけのSNSには「自社のフォロワー以外に届かない」という壁があります。
+
+クラブのSNS（フォロワー{sns_fol}人）が御社を紹介すれば、今まで届かなかった{sns_fol}人に一気にリーチできます。
+「○○社がスポンサーです！」という投稿はシェアされやすく、フォロワー外にも拡散します。
+
+自社SNSだけでは越えられない壁を、クラブの力で突破できます。`,
+      "採用":`「若い人材が集まらない。採用コストが高くなっている…」
+採用難の本質は「知られていないこと」と「選ばれない理由があること」の2つです。
+
+スポンサーなら、バスケ観戦に来る20〜30代に年間{contacts}回、御社の名前が届きます。
+「スポーツを支援している会社」は「活気がある・働きやすい」というイメージを自然に形成します。
+
+採用媒体1回のコストと、365日露出し続けるスポンサーのコスト——費用対効果を比較してみてください。`,
+      "従業員モチベ":`「社員の定着率が悪い。モチベーションを維持するのが難しい…」
+定着率が低い根本原因は「この会社に属していることへの誇りがない」ことかもしれません。
+
+「うちの会社、バスケチームのスポンサーなんだよ」——これを誇らしく言える社員は辞めにくくなります。
+試合観戦招待、選手との交流——これらはお金では作れない「誇り」と「一体感」を生み出します。
+
+1人の離職を防ぐことで、採用・育成コストの大幅な節約になります。`,
+      "CSR・社会貢献":`「地域への貢献をしたい。でも具体的に何をすれば伝わるか…」
+地域スポーツへのスポンサーシップは、最もシンプルで効果的なCSR活動のひとつです。
+
+「地域のチームを支援している会社」——これは地域住民、自治体、取引先すべてに対して強いメッセージです。
+年次報告書・会社案内・採用サイトに「地域貢献活動」として掲載できます。
+
+CSRは「コスト」ではなく、地域からの信頼という長期的な資産への「投資」です。`
+    }
+  }
+};
+
+const STATUS = {
+  prospecting:{label:"初回接触",bg:"#F3F4F6",color:"#6B7280"},
+  proposal:{label:"提案済",bg:"#EFF6FF",color:"#2563EB"},
+  negotiation:{label:"検討中",bg:"#FFF7ED",color:"#D97706"},
+  won:{label:"契約済",bg:"#F0FDF4",color:"#059669"}
+};
+const PLANS = {platinum:"プラチナ",gold:"ゴールド",silver:"シルバー",bronze:"ブロンズ","":" 未選択"};
+
+let companies = {};
+let currentClub = null;
+let currentCompanyId = null;
+let openClubs = {queens:true,beatrains:true,sunrise:true};
+let lastCalc = {};
+
+// ====== サイドバー ======
+function renderSidebar(){
+  const body = document.getElementById('sidebar-body');
+  if(!body) return;
+  body.innerHTML = Object.entries(CLUBS).map(([key,club])=>{
+    const list = Object.entries(companies[key]||{});
+    const isOpen = openClubs[key];
+    return `<div class="club-section">
+      <div class="club-header" onclick="toggleClub('${key}')">
+        <div class="club-icon"><i class="ti ti-basketball"></i></div>
+        <div class="club-name">${club.name}</div>
+        <i class="ti ti-chevron-down club-toggle ${isOpen?'open':''}"></i>
+      </div>
+      <div class="club-companies ${isOpen?'open':''}">
+        ${list.map(([id,c])=>`
+          <div class="company-item ${currentCompanyId===id?'active':''}" onclick="selectCompany('${key}','${id}')">
+            <div class="company-item-name">${c.name}</div>
+          </div>`).join('')}
+        <div class="add-btn" onclick="openModal('${key}')">
+          <i class="ti ti-plus"></i>企業を追加
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+renderSidebar();
+
+db.ref(ROOT+"/companies").on('value', snap=>{
+  companies = snap.val()||{};
+  renderSidebar();
+  if(currentClub && currentCompanyId){
+    const c = companies[currentClub]?.[currentCompanyId];
+    if(c) renderROI(currentClub, currentCompanyId, c);
+  }
+});
+
+function toggleClub(key){ openClubs[key]=!openClubs[key]; renderSidebar(); }
+function selectCompany(clubKey,id){
+  currentClub=clubKey; currentCompanyId=id;
+  const c = companies[clubKey]?.[id];
+  if(c) renderROI(clubKey,id,c);
+  renderSidebar();
+}
+
+// ====== ROI計算 ======
+function calcROI(clubKey, c){
+  const club = CLUBS[clubKey];
+  const budget = parseInt(c.budget)||0;
+  const budgetYen = budget * 10000;
+
+  // 観客リーチ
+  const homeReach = club.homeGames * club.homeAudience;
+  const awayReach = Math.round(club.awayGames * club.homeAudience * club.awayRatio);
+  const audienceReach = homeReach + awayReach;
+
+  // SNSリーチ（フォロワー数＝ユニーク上限）
+  const snsReach = club.snsFol;
+
+  // ユニークリーチ（重複10%除外）
+  const overlap = Math.round((audienceReach + snsReach) * 0.1);
+  const uniqueReach = audienceReach + snsReach - overlap;
+
+  // SNS累積インプレッション（フォロワー数×投稿数×リーチ率15%）
+  const snsImpressions = Math.round(club.snsFol * club.snsPost * 0.15);
+
+  // 1人あたりコスト
+  const cpa = budget > 0 ? Math.round(budgetYen / uniqueReach) : 0;
+  const monthly = Math.round(budget / 12 * 10) / 10;
+
+  // 投資効果スコア（継続接触回数ベース：スポンサーが最も優位な軸）
+  const ind = INDUSTRIES[c.industry]||INDUSTRIES.other;
+  const totalContacts = club.homeGames + club.awayGames + club.snsPost;
+  const roiScore = Math.min(100, Math.round(Math.log(totalContacts+1) / Math.log(250+1) * 100));
+
+  // 競合比較（ユニークリーチ参考値）
+  const flyerUnique = Math.round(budgetYen / 5);
+  const snsAdUnique = Math.round(budgetYen / 1.5 / 3);
+  const recruitUnique = Math.round(budgetYen / 120 / 0.03);
+
+  // CPA比較（1人に届けるコスト）
+  const flyerCPA = 5;          // 折込チラシ：1枚5円だが1回限り
+  const snsAdCPA = Math.round(budgetYen / snsAdUnique);  // SNS広告CPA
+  const recruitCPA = Math.round(budgetYen / recruitUnique); // 求人広告CPA
+  const maxCPA = Math.max(cpa, flyerCPA, snsAdCPA, recruitCPA, 1);
+
+  return { homeReach, awayReach, audienceReach, snsReach, overlap, uniqueReach,
+           snsImpressions, cpa, monthly, roiScore, budgetYen, totalContacts,
+           flyerUnique, snsAdUnique, recruitUnique,
+           flyerCPA, snsAdCPA, recruitCPA, maxCPA,
+           budget, club, ind };
+}
+
+// ====== ツールチップ ======
+function showTip(key, calc){
+  const tips = {
+    uniqueReach:{
+      title:"年間ユニークリーチ人数とは",
+      def:"スポンサー活動を通じて、年間で何人の異なる人に御社の名前・ロゴが届くかを示す指標です。同じ人に複数回届いた場合も1人として数えます（重複除外）。",
+      formula:`【計算式】
+ホーム観客 = ${calc.club.homeGames}試合 × ${calc.club.homeAudience.toLocaleString()}人 = ${calc.homeReach.toLocaleString()}人
+アウェー観客 = ${calc.club.awayGames}試合 × ${Math.round(calc.club.homeAudience * calc.club.awayRatio).toLocaleString()}人 = ${calc.awayReach.toLocaleString()}人
+SNSフォロワー = ${calc.snsReach.toLocaleString()}人
+重複除外（10%）= -${calc.overlap.toLocaleString()}人
+─────────────────
+ユニークリーチ = ${calc.uniqueReach.toLocaleString()}人`,
+      result:`この数字の意味：年間を通じて約${(calc.uniqueReach/10000).toFixed(1)}万人の異なる方に御社の名前が届きます。`
+    },
+    cpa:{
+      title:"1人あたりコスト（CPA）とは",
+      def:"スポンサー費用を年間ユニークリーチ人数で割った値。1人の潜在顧客に御社の名前を届けるためにかかるコストです。数値が低いほど効率的です。",
+      formula:`【計算式】
+スポンサー金額 = ${calc.budget}万円（${calc.budgetYen.toLocaleString()}円）
+ユニークリーチ = ${calc.uniqueReach.toLocaleString()}人
+─────────────────
+1人あたりコスト = ${calc.budgetYen.toLocaleString()}円 ÷ ${calc.uniqueReach.toLocaleString()}人 = ${calc.cpa}円`,
+      result:`この数字の意味：${calc.cpa}円で1人に届けられます。業種目標値は${calc.ind.cpaTarget}円以下です。`
+    },
+    exposures:{
+      title:"年間継続接触回数とは",
+      def:"スポンサー活動を通じて、1年間で御社の名前・ロゴが露出する機会の総数です。試合（ホーム＋アウェー）とSNS投稿を合わせた回数です。",
+      formula:`【計算式】
+ホーム試合 = ${calc.club.homeGames}回
+アウェー試合 = ${calc.club.awayGames}回（ユニフォームロゴが相手会場でも露出）
+SNS投稿 = ${calc.club.snsPost}回（週4回×52週の推計値）
+─────────────────
+年間継続接触回数 = ${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}回
+
+【競合との比較】
+折込チラシ：1回配布で終わり
+SNS広告：3〜5回程度（予算を使い切ったら終わり）
+スポンサー：${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}回（契約期間中ずっと継続）`,
+      result:`折込チラシの${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}倍の接触機会があります。同じ人に繰り返し届くことで「知っている会社」として記憶に定着します。`
+    },
+    snsImpressions:{
+      title:"SNS累積インプレッションとは",
+      def:"クラブのSNS投稿を通じて、年間で御社のスポンサー表示が何回表示されるかの推計値です。同じ人に複数回届く延べ数です。",
+      formula:`【計算式】
+SNSフォロワー数 = ${calc.club.snsFol.toLocaleString()}人
+年間SNS投稿数 = ${calc.club.snsPost}回（週4回×52週の推計値）
+リーチ率 = 15%（Instagramの業界平均。投稿1回あたりフォロワーの15%に届く）
+─────────────────
+SNS累積インプレッション
+= ${calc.club.snsFol.toLocaleString()}人 × ${calc.club.snsPost}回 × 15%
+= ${calc.snsImpressions.toLocaleString()}回
+
+【リーチ率15%の根拠】
+Instagramはアルゴリズムにより全フォロワーに
+投稿が届くわけではありません。
+エンゲージメントが高いアカウント：20〜30%
+一般的なアカウント：10〜15%
+本シミュレーターでは保守的な15%を使用。
+実際のクラブのインサイトデータが取得でき次第更新予定。`,
+      result:`年間${calc.snsImpressions.toLocaleString()}回、クラブのSNS投稿を通じて御社の名前が表示されます。これはユニークリーチ（人数）ではなく延べ表示回数です。実際のリーチ人数はSNSフォロワー${calc.club.snsFol.toLocaleString()}人を上限として計算しています。`
+    },
+    monthly:{
+      title:"月額換算コストとは",
+      def:"年間スポンサー金額を12ヶ月で割った1ヶ月あたりのコストです。他の広告費との比較に使います。",
+      formula:`【計算式】
+年間スポンサー金額 = ${calc.budget}万円
+─────────────────
+月額換算 = ${calc.budget}万円 ÷ 12ヶ月 = ${calc.monthly}万円/月`,
+      result:`この数字の意味：月${calc.monthly}万円で継続的な地域露出が可能です。`
+    },
+    roiScore:{
+      title:"投資効果スコアとは",
+      def:"1人あたりコスト（CPA）が業種ごとの目標値に対してどの程度達成できているかを0〜100点で表した指標です。100点に近いほど効率的な投資です。",
+      formula:`【計算式】
+算出CPA = ${calc.cpa}円/人
+業種目標CPA = ${calc.ind.cpaTarget}円/人（${calc.ind.name}の目安）
+─────────────────
+スコア = (目標CPA ÷ 実際CPA) × 50 + 50
+      = (${calc.ind.cpaTarget} ÷ ${calc.cpa}) × 50 + 50
+      = ${calc.roiScore}点（上限100点）`,
+      result:`${calc.roiScore}点の意味：${calc.roiScore>=80?'非常に高い費用対効果です。業種目標を大幅に上回っています。':calc.roiScore>=60?'良好な費用対効果です。業種平均を上回っています。':calc.roiScore>=40?'標準的な費用対効果です。':calc.cpa>0?'スポンサー金額を調整するとスコアが改善します。':'スポンサー金額を入力するとスコアが計算されます。'}`
+    },
+    flyer:{
+      title:"折込チラシとの比較",
+      def:"スポンサーと折込チラシの最大の違いは「接触回数」です。チラシは配布した瞬間のみ有効ですが、スポンサーは年間を通じて同じ人に何度も届き続けます。",
+      formula:`【接触回数の比較（同じ人への届き方）】
+スポンサー：年間${calc.totalExposures}回露出 ÷ ${calc.uniqueReach.toLocaleString()}人 = 1人に年間約${calc.sponsorFreq}回届く
+折込チラシ：配布1回で終わり = 1人に1回だけ
+
+【同予算でのリーチ参考値】
+折込チラシ単価：約5円/枚（印刷＋折込配布）
+配布可能枚数 = ${calc.budgetYen.toLocaleString()}円 ÷ 5円 = ${calc.flyerUnique.toLocaleString()}枚
+※ただし1回限り。翌日には捨てられる。`,
+      result:`スポンサーは同じ${calc.uniqueReach.toLocaleString()}人に年間${calc.sponsorFreq}回届き続けます。チラシは${calc.flyerUnique.toLocaleString()}人に1回だけ。継続露出によるブランド定着効果が圧倒的に異なります。`
+    },
+    snsAd:{
+      title:"SNS広告との比較",
+      def:"SNS広告は短期間に多くの人にリーチできますが、広告を止めると即ゼロになります。スポンサーは契約期間中ずっと露出が続き「応援している会社」というブランド価値も生まれます。",
+      formula:`【接触回数の比較】
+スポンサー：1人に年間約${calc.sponsorFreq}回届く（継続・自然な形で）
+SNS広告：同一ユーザーへの平均接触回数 約4回（業界平均）
+         ただし「広告」として認識され、スキップされやすい
+
+【同予算での参考値】
+SNS広告インプレッション単価：約1.5円
+総インプレッション = ${calc.budgetYen.toLocaleString()}円 ÷ 1.5円 = ${(calc.budgetYen/1.5).toFixed(0)}回
+ユニーク換算（同一ユーザー3回重複）= ${calc.snsAdUnique.toLocaleString()}人`,
+      result:`SNS広告は数字上のリーチは大きいですが「広告」として認識されます。スポンサーは「応援している会社」として自然に認知され、信頼感・好意度が異なります。`
+    },
+    recruitAd:{
+      title:"求人広告との比較",
+      def:"求人広告は「今まさに転職を考えている人」にしか届きません。スポンサーは潜在的な求職者（まだ転職を考えていない若者）も含め年間を通じて届き続けます。",
+      formula:`【接触回数の比較】
+スポンサー：1人に年間約${calc.sponsorFreq}回届く（求職者・非求職者問わず）
+求人広告：掲載期間中に1〜2回閲覧（積極的求職者のみ）
+
+【同予算での参考値】
+求人広告クリック単価：約120円（Indeed等の目安）
+クリック数 = ${calc.budgetYen.toLocaleString()}円 ÷ 120円 = ${Math.round(calc.budgetYen/120).toLocaleString()}クリック
+閲覧ユニーク（CTR3%）= ${calc.recruitUnique.toLocaleString()}人`,
+      result:`求人広告は「今すぐ転職したい人」にしか届きません。スポンサーは「まだ転職を考えていない若者」にも御社のブランドを届け、将来の採用候補を育てます。`
+    }
+  };
+  const t = tips[key];
+  if(!t) return;
+  document.getElementById('tip-title').textContent = t.title;
+  document.getElementById('tip-def').textContent = t.def;
+  document.getElementById('tip-formula').textContent = t.formula;
+  document.getElementById('tip-result').textContent = t.result;
+  document.getElementById('tip-overlay').classList.add('open');
+}
+
+function closeTip(){
+  document.getElementById('tip-overlay').classList.remove('open');
+}
+
+// ====== ROI描画 ======
+function fmt(n){
+  if(n>=10000) return (n/10000).toFixed(1)+'万';
+  if(n>=1000) return (n/1000).toFixed(1)+'千';
+  return Math.round(n).toLocaleString();
+}
+
+
+
+function buildStepFigures(issues, ind, calc){
+  const STEPS = {
+    "集客・新規顧客":{
+      issue:"新規顧客が来ない・広告費をかけても効果が見えない",
+      cause:"「知られていない」のではなく「記憶に残っていない」が根本原因。1回の広告は翌日忘れられる",
+      solution:"試合・SNSで年間"+(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)+"回、同じ人に繰り返し届ける。「なんかよく見る会社」として記憶に刷り込む",
+      effect:"年間"+calc.uniqueReach.toLocaleString()+"人の地域住民に継続露出。物件探し・来店・問い合わせのとき「あの会社」として思い出される"
+    },
+    "地域認知":{
+      issue:"地域にもっと知ってもらいたいが、なかなか広がらない",
+      cause:"チラシは翌日捨てられ、SNS広告はスキップされる。1回の露出では記憶に残らない",
+      solution:"ホーム"+calc.club.homeGames+"試合×"+calc.club.homeAudience.toLocaleString()+"人、アウェー"+calc.club.awayGames+"試合、SNS"+calc.club.snsPost+"投稿で年間"+(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)+"回届け続ける",
+      effect:"「なんかよく見る会社だな」という感覚が積み重なり、選ばれる会社として地域に定着する"
+    },
+    "ブランディング":{
+      issue:"競合と何が違うか伝えられない。価格以外の選ばれる理由がない",
+      cause:"機能・価格での差別化には限界がある。感情的な選択理由を持っていない",
+      solution:"「地域スポーツを応援している会社」というポジションを確立。競合には真似できない唯一の立場を作る",
+      effect:"「好きなチームを応援している会社」として感情的な支持を獲得。価格以外の理由で選ばれる会社になる"
+    },
+    "競合差別化":{
+      issue:"競合他社との差別化ができていない。同業他社に勝てない",
+      cause:"機能・価格は競合も同じ。「なぜうちを選ぶのか」の答えを持っていない",
+      solution:"同業種1社限定でスポンサーに入り、先行者優位を確立。競合が後から入れない状態を作る",
+      effect:"「地域スポーツを支援している唯一の会社」として、競合に絶対真似できないポジションを獲得"
+    },
+    "SNS強化":{
+      issue:"SNSをやっているがフォロワーが増えない。投稿しても反応が薄い",
+      cause:"自社発信だけでは「自社のフォロワー以外に届かない」という壁を越えられない",
+      solution:"クラブSNS（フォロワー"+calc.club.snsFol.toLocaleString()+"人）が御社を紹介。年間"+calc.club.snsPost+"回の投稿で累積"+calc.snsImpressions.toLocaleString()+"回のインプレッション",
+      effect:"自社SNSだけでは届かない新規層に一気にリーチ。シェア・保存でフォロワー外にも拡散"
+    },
+    "採用":{
+      issue:"若い人材が集まらない。求人を出しても応募が来ない",
+      cause:"求人広告は「今すぐ転職したい人」にしか届かない。潜在的な優秀な若者層に接触できていない",
+      solution:"バスケ観戦層（20〜30代）に年間"+(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)+"回露出。「スポーツを支援している会社＝活気がある・働きやすい」イメージを植え付ける",
+      effect:"転職を考えた瞬間に「あの会社に応募しよう」と思い出される。採用媒体コストを削減しながら応募率が向上"
+    },
+    "従業員モチベ":{
+      issue:"社員の定着率が悪い。モチベーションを維持するのが難しい",
+      cause:"「この会社に属していることへの誇り」が足りない。給与以外の帰属意識が生まれていない",
+      solution:"試合観戦招待・選手交流イベントで「自社がプロチームのスポンサー」という誇りを体験で作る",
+      effect:"「うちの会社、バスケチームを応援してるんだよ」と自慢できる社員が増加。帰属意識向上→離職率改善"
+    },
+    "CSR・社会貢献":{
+      issue:"地域への貢献をしたい。具体的に何をすれば伝わるかわからない",
+      cause:"CSRの取り組みが見えにくい・伝わっていない。地域からの評価につながっていない",
+      solution:"地域スポーツチームへのスポンサーシップで「地域に根ざした会社」として可視化。年次報告書・採用サイトにも掲載",
+      effect:"地域住民・自治体・取引先からの評価向上。長期的な顧客獲得・採用・取引先開拓に波及"
+    }
+  };
+
+  const validIssues = issues.filter(i => STEPS[i]);
+  if(validIssues.length === 0) return '';
+
+  let html = '';
+  validIssues.forEach(issue => {
+    const s = STEPS[issue];
+    html += '<div style="background:#fff;border:1px solid #E5E7EB;border-radius:10px;overflow:hidden;margin-bottom:14px">'
+      // ヘッダー
+      +'<div style="background:#1A1A1A;padding:12px 18px;display:flex;align-items:center;gap:8px">'
+        +'<span style="background:#F5C842;color:#000;font-size:10px;font-weight:700;padding:3px 8px;border-radius:4px">課題</span>'
+        +'<span style="font-size:13px;font-weight:700;color:#fff">'+issue+'</span>'
+      +'</div>'
+      // ステップ4段
+      +'<div style="display:grid;grid-template-columns:repeat(4,1fr)">'
+        // STEP1 課題
+        +'<div style="padding:14px 14px;border-right:1px solid #E5E7EB">'
+          +'<div style="font-size:9px;font-weight:700;color:#DC2626;letter-spacing:.08em;margin-bottom:6px">STEP 1　課題</div>'
+          +'<div style="font-size:11px;color:#1A1A1A;line-height:1.6;font-weight:500">'+s.issue+'</div>'
+        +'</div>'
+        // STEP2 原因
+        +'<div style="padding:14px 14px;border-right:1px solid #E5E7EB;background:#FAFAFA">'
+          +'<div style="font-size:9px;font-weight:700;color:#D97706;letter-spacing:.08em;margin-bottom:6px">STEP 2　原因</div>'
+          +'<div style="font-size:11px;color:#374151;line-height:1.6">'+s.cause+'</div>'
+        +'</div>'
+        // STEP3 解決策
+        +'<div style="padding:14px 14px;border-right:1px solid #E5E7EB;background:#FFFBEB">'
+          +'<div style="font-size:9px;font-weight:700;color:#059669;letter-spacing:.08em;margin-bottom:6px">STEP 3　解決策</div>'
+          +'<div style="font-size:11px;color:#374151;line-height:1.6">'+s.solution+'</div>'
+        +'</div>'
+        // STEP4 効果
+        +'<div style="padding:14px 14px;background:#F0FDF4">'
+          +'<div style="font-size:9px;font-weight:700;color:#2563EB;letter-spacing:.08em;margin-bottom:6px">STEP 4　効果</div>'
+          +'<div style="font-size:11px;color:#1A1A1A;line-height:1.6;font-weight:500">'+s.effect+'</div>'
+        +'</div>'
+      +'</div>'
+      // セールストーク（展開式）
+      +'<div style="border-top:1px solid #E5E7EB">'
+        +'<div onclick="const b=this.nextElementSibling;b.style.display=b.style.display===\'none\'?\'block\':\'none\'"'
+          +' style="padding:10px 18px;cursor:pointer;display:flex;align-items:center;justify-content:space-between;background:#F9FAFB">'
+          +'<span style="font-size:12px;color:#6B7280">💬 この課題へのセールストーク</span>'
+          +'<span style="font-size:14px;color:#9CA3AF">＋</span>'
+        +'</div>'
+        +'<div style="display:none;padding:14px 18px;background:#F9FAFB;border-top:1px solid #E5E7EB">'
+          +'<div style="font-size:13px;color:#374151;line-height:1.9;white-space:pre-wrap">'
+          + (ind.issueMessages?.[issue] || '')
+              .replace(/`/g,'')
+              .replace(/\{contacts\}/g, (calc.club.homeGames+calc.club.awayGames+calc.club.snsPost))
+              .replace(/\{home_games\}/g, calc.club.homeGames)
+              .replace(/\{away_games\}/g, calc.club.awayGames)
+              .replace(/\{home_audience\}/g, calc.club.homeAudience.toLocaleString())
+              .replace(/\{sns_fol\}/g, calc.club.snsFol.toLocaleString())
+              .replace(/\{sns_post\}/g, calc.club.snsPost)
+              .replace(/\{unique_reach\}/g, calc.uniqueReach.toLocaleString())
+              .replace(/\{coupon_est\}/g, Math.round(calc.club.homeGames * calc.club.homeAudience * 0.03).toLocaleString())
+              .replace(/\{monthly\}/g, calc.monthly)
+          +'</div>'
+        +'</div>'
+      +'</div>'
+    +'</div>';
+  });
+  return html;
+}
+
+function buildAdCompare(c, calc){
+  if(!c.adMethod && !c.recruitMethod) return '';
+  const rows = [
+    {key:'adMethod',costKey:'adCostInput',label:'広告手段'},
+    {key:'recruitMethod',costKey:'recruitCostInput',label:'採用手段'}
+  ];
+  let html = '<div class="card"><div class="card-title"><i class="ti ti-ad"></i>現在の広告・採用投資 vs スポンサー比較</div>';
+  rows.forEach(({key,costKey,label})=>{
+    const method = c[key];
+    if(!method) return;
+    const data = AD_COSTS[method];
+    const monthlyInput = parseInt(c[costKey])||0;
+    // 人材紹介会社は成果報酬なので月額換算しない
+    const isSuccessFee = method === '人材紹介会社';
+    const monthly = monthlyInput > 0 ? monthlyInput : (data ? data.monthly : 0);
+    const annualCost = isSuccessFee && monthlyInput > 0 ? monthlyInput : monthly * 12;
+    const sponsorAnnual = calc.budget;
+    const diff = Math.abs(annualCost - sponsorAnnual);
+    const isCheaper = annualCost > sponsorAnnual;
+    const reach = data ? data.reach : 0;
+    const unit = data ? data.unit : '';
+    const ratio = reach > 0 ? Math.round(calc.uniqueReach/(reach*12)*10)/10 : 0;
+    const resultMsg = annualCost === 0
+      ? '💡 月額費用を入力すると比較できます'
+      : isCheaper
+        ? '✅ スポンサーに切り替えると年間'+diff+'万円コスト削減＋継続露出が得られます'
+        : annualCost === sponsorAnnual
+          ? '✅ 現在と同額でスポンサーの継続露出・ブランド価値が得られます'
+          : '💡 年間'+diff+'万円の追加投資で'+calc.uniqueReach.toLocaleString()+'人への年間継続露出が得られます';
+    const resultStyle = isCheaper
+      ? 'background:#F0FDF4;color:#065F46'
+      : 'background:#FFF7ED;color:#92400E';
+    html += '<div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:14px 16px;margin-bottom:12px">'
+      +'<div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:10px">'+label+'：'+method+(isSuccessFee&&monthlyInput>0?' ／ 成果報酬'+monthlyInput+'万円（入力値）':monthlyInput>0?' ／ 月'+monthlyInput+'万円（入力値）':monthly>0?' ／ 月'+monthly+'万円（目安）':'')+'</div>'
+      +'<div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px">'
+        +'<div style="background:#fff;border:1px solid #E5E7EB;border-radius:6px;padding:10px;text-align:center">'
+          +'<div style="font-size:10px;color:#9CA3AF;margin-bottom:4px">現在の年間コスト</div>'
+          +'<div style="font-size:18px;font-weight:700;color:#1A1A1A">'+(annualCost>0?annualCost+'万円':'未入力')+'</div>'
+          +'<div style="font-size:10px;color:#9CA3AF">'+(isSuccessFee&&monthlyInput>0?'成果報酬（入力値）':monthly>0?'月'+monthly+'万円×12':'金額を入力してください')+'</div>'
+        +'</div>'
+        +'<div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:6px;padding:10px;text-align:center">'
+          +'<div style="font-size:10px;color:#92400E;margin-bottom:4px">スポンサー年間費用</div>'
+          +'<div style="font-size:18px;font-weight:700;color:#D97706">'+sponsorAnnual+'万円</div>'
+          +'<div style="font-size:10px;color:#92400E">月'+calc.monthly+'万円×12</div>'
+        +'</div>'
+      +'</div>'
+      +'<div style="font-size:11px;color:#4B5563;line-height:1.7;margin-bottom:8px">'
+        +(isSuccessFee
+          ? '現在：'+method+'は採用が決まった時だけコスト発生。ブランド認知は一切積み上がらない。<br>'
+          : reach>0?'現在：'+method+'（月約'+reach.toLocaleString()+'人）は<strong style="color:#DC2626">単発リーチ</strong>。配布・掲載が終われば即ゼロ。<br>':'')
+        +'スポンサー：<strong style="color:#D97706">'+calc.uniqueReach.toLocaleString()+'人に年間'+(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)+'回</strong>届き続ける。契約期間中は消えない。<br>'
+        +'"広告"ではなく「応援している会社」として自然に記憶に残る。'
+      +'</div>'
+      +'<div style="padding:8px 12px;border-radius:6px;font-size:12px;font-weight:600;'+resultStyle+'">'+resultMsg+'</div>'
+    +'</div>';
+  });
+  html += '</div>';
+  return html;
+}
+
+function renderROI(clubKey, id, c){
+  const calc = calcROI(clubKey, c);
+  lastCalc = calc;
+  const ind = calc.ind;
+  const st = STATUS[c.status]||STATUS.prospecting;
+  const issues = Array.isArray(c.issues)?c.issues:[];
+  const maxComp = Math.max(calc.uniqueReach, calc.flyerUnique, calc.snsAdUnique, calc.recruitUnique, 1);
+
+  document.getElementById('top-title').textContent = c.name;
+  document.getElementById('top-sub').textContent = `${calc.club.name} ／ ${ind.name}`;
+
+  // 課題別メッセージ
+  // issueEffects removed
+
+  document.getElementById('main-content').innerHTML = `
+  <div class="content">
+
+    <!-- 企業ヘッダー -->
+    <div class="co-head">
+      <div>
+        <h1>${c.name}</h1>
+        <div style="display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap">
+          <span class="st-badge" style="background:${st.bg};color:${st.color}">${st.label}</span>
+          ${c.plan?`<span class="st-badge" style="background:#FFFBEB;color:#92400E">${PLANS[c.plan]||''}</span>`:''}
+          ${c.enthusiasm==='high'?'<span style="font-size:12px">🔥 前向き</span>':c.enthusiasm==='mid'?'<span style="font-size:12px">💬 検討中</span>':'<span style="font-size:12px">❄️ 消極的</span>'}
+        </div>
+        <div class="co-meta">
+          <span class="mtag"><i class="ti ti-basketball"></i>${calc.club.name}</span>
+          <span class="mtag"><i class="ti ${ind.icon}"></i>${ind.name}</span>
+          ${c.employees?`<span class="mtag"><i class="ti ti-users"></i>${c.employees}</span>`:''}
+          ${c.sales?`<span class="mtag"><i class="ti ti-chart-bar"></i>${c.sales}</span>`:''}
+          ${c.referral?`<span class="mtag"><i class="ti ti-arrow-right"></i>紹介：${c.referral}</span>`:''}
+        </div>
+        ${issues.length>0?`<div class="issue-tags">${issues.map(i=>`<span class="itag">${i}</span>`).join('')}</div>`:''}
+      </div>
+      <div class="co-actions">
+        <button class="btn btn-outline" onclick="openModal('${clubKey}','${id}')"><i class="ti ti-edit"></i>編集</button>
+        <button class="btn btn-danger" onclick="deleteCompany('${clubKey}','${id}')"><i class="ti ti-trash"></i>削除</button>
+        <button class="btn btn-primary" onclick="window.print()"><i class="ti ti-printer"></i>印刷</button>
+      </div>
+    </div>
+
+    <!-- KPI（タップで計算式表示） -->
+    <div class="kpi-grid">
+      <div class="kpi" onclick="showTip('uniqueReach',lastCalc)" title="タップで計算式を確認">
+        <div class="kpi-label">年間ユニークリーチ</div>
+        <div class="kpi-value yellow">${fmt(calc.uniqueReach)}人</div>
+        <div class="kpi-sub">観客${fmt(calc.audienceReach)}人＋SNS${fmt(calc.snsReach)}人（重複除外済）</div>
+      </div>
+      <div class="kpi" onclick="showTip('exposures',lastCalc)" title="タップで詳細確認">
+        <div class="kpi-label">年間継続接触回数</div>
+        <div class="kpi-value green">${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}回</div>
+        <div class="kpi-sub">試合${calc.club.homeGames+calc.club.awayGames}回＋SNS${calc.club.snsPost}回　チラシは1回で終わり</div>
+      </div>
+      <div class="kpi" onclick="showTip('monthly',lastCalc)" title="タップで詳細確認">
+        <div class="kpi-label">月額換算コスト</div>
+        <div class="kpi-value blue">${calc.monthly}万円</div>
+        <div class="kpi-sub">年間${calc.budget}万円÷12ヶ月　継続露出が続く</div>
+      </div>
+      <div class="kpi" onclick="showTip('snsImpressions',lastCalc)" title="タップで計算式を確認">
+        <div class="kpi-label">SNS累積インプレッション</div>
+        <div class="kpi-value purple">${fmt(calc.snsImpressions)}回</div>
+        <div class="kpi-sub">フォロワー${fmt(calc.snsReach)}人×${calc.club.snsPost}投稿×15%</div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <!-- ROIスコア -->
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-pie"></i>継続露出スコア</div>
+        <div class="score-wrap">
+          <div class="score-num" style="color:${calc.roiScore>=70?'#059669':calc.roiScore>=50?'#D97706':'#DC2626'}">${calc.roiScore}<span style="font-size:22px">pt</span></div>
+          <div class="score-label">${calc.roiScore>=80?'🔥 継続露出が非常に充実しています':calc.roiScore>=60?'✅ 継続露出として良好です':calc.roiScore>=40?'💬 標準的な継続露出です':'⚠️ クラブの試合数が少ないシーズンです'}</div>
+        </div>
+        <div style="margin:10px 0 6px;font-size:11px;color:#6B7280;line-height:1.8">
+          年間継続接触回数：<strong style="color:#059669">${calc.totalContacts}回</strong><br>
+          折込チラシ：1回　SNS広告：3〜5回<br>
+          <strong>スポンサーは${calc.totalContacts}倍の接触機会があります</strong>
+        </div>
+        <div class="score-bar"><div class="score-fill" style="width:${calc.roiScore}%;background:${calc.roiScore>=70?'#059669':calc.roiScore>=50?'#F5C842':'#DC2626'}"></div></div>
+        <div class="score-marks"><span>0</span><span>50</span><span>100</span></div>
+        ${c.adcost&&parseInt(c.adcost)>0?`<div style="margin-top:14px;padding:10px 12px;background:#F0FDF4;border-radius:8px;font-size:12px;color:#065F46;line-height:1.8">
+          現在の月間広告費 ${c.adcost}万円 × 12ヶ月 = 年間${parseInt(c.adcost)*12}万円<br>
+          スポンサー年間費用 = ${calc.budget}万円<br>
+          差額 = ${Math.abs(parseInt(c.adcost)*12 - calc.budget)}万円<br>
+          ${parseInt(c.adcost)*12 > calc.budget
+            ? `→ <strong>年間${parseInt(c.adcost)*12 - calc.budget}万円のコスト削減</strong>で、より広い継続露出が得られます`
+            : parseInt(c.adcost)*12 === calc.budget
+            ? `→ 現在の広告費と<strong>同額</strong>で、継続露出・ブランド価値・SNS掲載に切り替えられます`
+            : `→ 現在の広告費より年間<strong>${calc.budget - parseInt(c.adcost)*12}万円多い投資</strong>になりますが、継続露出・ブランド価値・SNS掲載がセットでつきます`}
+        </div>`:''}
+      </div>
+
+      <!-- 継続接触回数×信頼度 2軸比較 -->
+      <div class="card">
+        <div class="card-title"><i class="ti ti-chart-bar"></i>広告手法の比較</div>
+
+        <!-- 軸①：継続接触回数 -->
+        <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:8px;display:flex;align-items:center;gap:5px">
+          <span style="background:#FEF3C7;color:#92400E;padding:2px 8px;border-radius:4px;font-size:10px">軸① 継続接触回数</span>
+          <span style="font-size:10px;color:#9CA3AF">同じ人に年間何回届くか（多いほど良い）</span>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name" style="color:#D97706;font-weight:600">本スポンサー</div>
+          <div class="comp-bar-wrap"><div class="comp-bar" style="width:100%;background:#F5C842"></div></div>
+          <div class="comp-num" style="color:#D97706;font-weight:700;cursor:pointer" onclick="showTip('exposures',lastCalc)">${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}回/年</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">SNS広告</div>
+          <div class="comp-bar-wrap"><div class="comp-bar" style="width:${Math.min(3/(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)*100,100)}%;background:#9CA3AF"></div></div>
+          <div class="comp-num">3〜5回/年</div>
+        </div>
+        <div class="comp-row">
+          <div class="comp-name">折込チラシ</div>
+          <div class="comp-bar-wrap"><div class="comp-bar" style="width:${1/(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)*100}%;background:#9CA3AF"></div></div>
+          <div class="comp-num">1回のみ</div>
+        </div>
+        <div class="comp-row" style="margin-bottom:16px">
+          <div class="comp-name">求人広告</div>
+          <div class="comp-bar-wrap"><div class="comp-bar" style="width:${1/(calc.club.homeGames+calc.club.awayGames+calc.club.snsPost)*100}%;background:#9CA3AF"></div></div>
+          <div class="comp-num">1〜2回のみ</div>
+        </div>
+
+        <!-- 軸②：信頼度・ブランド効果 -->
+        <div style="font-size:11px;font-weight:700;color:#374151;margin-bottom:8px;display:flex;align-items:center;gap:5px">
+          <span style="background:#DBEAFE;color:#1E40AF;padding:2px 8px;border-radius:4px;font-size:10px">軸② 信頼度・ブランド効果</span>
+          <span style="font-size:10px;color:#9CA3AF">受け取り側の心理的な印象</span>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:12px">
+          <div style="background:#FFFBEB;border:1px solid #FDE68A;border-radius:8px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#92400E;margin-bottom:4px">🏆 本スポンサー</div>
+            <div style="font-size:11px;color:#78350F;line-height:1.6">「応援している会社」として自然に認知される。広告と気づかれず、ブランドへの好意が生まれる。</div>
+          </div>
+          <div style="background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;padding:10px 12px">
+            <div style="font-size:11px;font-weight:700;color:#6B7280;margin-bottom:4px">その他の広告</div>
+            <div style="font-size:11px;color:#6B7280;line-height:1.6">「広告」として認識される。スキップ・無視されやすく、信頼感の積み上げが難しい。</div>
+          </div>
+        </div>
+
+        <div style="padding:10px 12px;background:#F0FDF4;border-radius:8px;font-size:11px;color:#065F46;line-height:1.8">
+          ✅ スポンサーは<strong>年間${calc.club.homeGames+calc.club.awayGames+calc.club.snsPost}回</strong>同じ人に届き続けます<br>
+          折込チラシは翌日捨てられ、SNS広告はスキップされます<br>
+          スポンサーは「応援している会社」として記憶に残ります<br>
+          <span style="color:#9CA3AF;font-size:10px">※接触回数タップで計算根拠を確認できます</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="grid2">
+      <!-- 業種別効果 -->
+      <div class="card">
+        <div class="card-title"><i class="ti ti-bulb"></i>${ind.name}への期待効果</div>
+        ${ind.effects.map(e=>`
+          <div class="effect-item">
+            <div class="effect-icon"><i class="ti ${e.icon}"></i></div>
+            <div><div class="effect-title">${e.title}</div><div class="effect-text">${e.text}</div></div>
+          </div>`).join('')}
+      </div>
+
+      <!-- おすすめプラン＋フォロー -->
+      <div>
+        <div class="recommend" style="margin-bottom:14px">
+          <div class="rec-badge">おすすめプラン</div>
+          <div class="rec-plan">${ind.plan}</div>
+          <div class="rec-desc">${ind.planDesc}</div>
+          <div class="rec-tags">${ind.tags.map(t=>`<span class="rec-tag">${t}</span>`).join('')}</div>
+        </div>
+        ${c.followup?`<div class="card" style="margin-bottom:0">
+          <div class="card-title" style="margin-bottom:8px"><i class="ti ti-calendar" style="color:#2563EB"></i>次回フォロー</div>
+          <div style="font-size:18px;font-weight:700;color:#2563EB">${c.followup}</div>
+        </div>`:''}
+      </div>
+    </div>
+
+    ${c.memo?`<div class="card"><div class="card-title"><i class="ti ti-notes"></i>商談メモ</div><div style="font-size:13px;color:#4B5563;line-height:1.8;white-space:pre-wrap">${c.memo}</div></div>`:''}
+    ${buildAdCompare(c, calc)}
+
+    <!-- 課題別ステップ図 -->
+    <div class="section-label"><i class="ti ti-layout-list" style="color:#D97706"></i>課題への解決プロセス</div>
+    ${buildStepFigures(issues, ind, calc)}
+
+    <!-- データの注記 -->
+    <div style="margin-top:16px;padding:14px 16px;background:#F9FAFB;border:1px solid #E5E7EB;border-radius:8px;font-size:11px;color:#9CA3AF;line-height:1.8">
+      <strong style="color:#6B7280">【データの根拠】</strong><br>
+      ${calc.club.note}<br>
+      SNS投稿数は週4回×52週＝208回/年で推計（実績確認後に更新予定）。<br>
+      競合広告比較は公開データに基づく推計値です。実際の効果は媒体・時期により異なります。<br>
+      全ての数値は参考値です。実データが揃い次第更新します。
+    </div>
+  </div>`;
+}
+
+// ====== モーダル ======
+function openModal(clubKey, id=null){
+  document.getElementById('modal-title').textContent = id?'企業情報を編集':'企業を追加';
+  document.getElementById('edit-club').value = clubKey;
+  document.getElementById('edit-id').value = id||'';
+  ['f-name','f-contact','f-tel','f-email','f-budget','f-adcost','f-memo','f-start','f-followup','f-referral'].forEach(k=>{const el=document.getElementById(k);if(el)el.value='';})
+  document.getElementById('f-ad-method').value='';
+  document.getElementById('f-ad-cost').value='';
+  document.getElementById('f-recruit-method').value='';
+  document.getElementById('f-recruit-cost').value='';;
+  ['f-industry','f-employees','f-sales','f-plan','f-status','f-enthusiasm'].forEach(k=>{
+    const el=document.getElementById(k);
+    if(el) el.value=k==='f-industry'?'realestate':k==='f-status'?'prospecting':k==='f-enthusiasm'?'high':'';
+  });
+  document.querySelectorAll('#issues-check input').forEach(cb=>{cb.checked=false;cb.closest('.ci').classList.remove('checked');});
+  if(id){
+    const c=companies[clubKey]?.[id];
+    if(c){
+      const map={'f-name':'name','f-contact':'contact','f-tel':'tel','f-email':'email','f-budget':'budget','f-adcost':'adcost','f-memo':'memo','f-start':'start','f-followup':'followup','f-referral':'referral'};
+      if(c.adMethod){document.getElementById('f-ad-method').value=c.adMethod;}
+      if(c.adCostInput){document.getElementById('f-ad-cost').value=c.adCostInput;}
+      if(c.recruitMethod){document.getElementById('f-recruit-method').value=c.recruitMethod;}
+      if(c.recruitCostInput){document.getElementById('f-recruit-cost').value=c.recruitCostInput;}
+      Object.entries(map).forEach(([fid,key])=>{const el=document.getElementById(fid);if(el&&c[key])el.value=c[key];});
+      ['f-industry','f-employees','f-sales','f-plan','f-status','f-enthusiasm'].forEach(k=>{
+        const key=k.replace('f-','').replace('-','');
+        const el=document.getElementById(k);
+        const val=c[key]||c[k.replace('f-','')]||'';
+        if(el&&val)el.value=val;
+      });
+      if(Array.isArray(c.issues)){
+        document.querySelectorAll('#issues-check input').forEach(cb=>{
+          if(c.issues.includes(cb.value)){cb.checked=true;cb.closest('.ci').classList.add('checked');}
+        });
+      }
+    }
+  }
+  document.getElementById('modal').classList.add('open');
+}
+
+function closeModal(){ document.getElementById('modal').classList.remove('open'); }
+
+function saveCompany(){
+  const clubKey=document.getElementById('edit-club').value;
+  const id=document.getElementById('edit-id').value||Date.now().toString();
+  const name=document.getElementById('f-name').value.trim();
+  const budget=document.getElementById('f-budget').value;
+  if(!name){alert('企業名を入力してください');return;}
+  if(!budget){alert('スポンサー金額を入力してください');return;}
+  const issues=[];
+  document.querySelectorAll('#issues-check input:checked').forEach(cb=>issues.push(cb.value));
+  const data={
+    name,industry:document.getElementById('f-industry').value,
+    contact:document.getElementById('f-contact').value,tel:document.getElementById('f-tel').value,
+    email:document.getElementById('f-email').value,budget:parseInt(budget),
+    adcost:parseInt(document.getElementById('f-adcost').value)||0,
+    employees:document.getElementById('f-employees').value,sales:document.getElementById('f-sales').value,
+    adMethod:document.getElementById('f-ad-method').value,
+    adCostInput:parseInt(document.getElementById('f-ad-cost').value)||0,
+    recruitMethod:document.getElementById('f-recruit-method').value,
+    recruitCostInput:parseInt(document.getElementById('f-recruit-cost').value)||0,
+    issues,
+    memo:document.getElementById('f-memo').value,
+    plan:document.getElementById('f-plan').value,status:document.getElementById('f-status').value,
+    start:document.getElementById('f-start').value,followup:document.getElementById('f-followup').value,
+    enthusiasm:document.getElementById('f-enthusiasm').value,referral:document.getElementById('f-referral').value,
+    clubKey,updatedAt:new Date().toISOString()
+  };
+  db.ref(`${ROOT}/companies/${clubKey}/${id}`).set(data);
+  closeModal();
+  currentClub=clubKey;currentCompanyId=id;
+}
+
+function deleteCompany(clubKey,id){
+  if(!confirm('この企業を削除しますか？'))return;
+  db.ref(`${ROOT}/companies/${clubKey}/${id}`).remove();
+  currentCompanyId=null;
+  document.getElementById('main-content').innerHTML='<div class="empty"><i class="ti ti-chart-bar"></i><h3>企業を選択してください</h3><p>左のサイドバーからクラブを選び<br>企業をタップするとROIが表示されます</p></div>';
+  document.getElementById('top-title').textContent='スポンサーROIシミュレーター';
+  document.getElementById('top-sub').textContent='左のサイドバーから企業を選択してください';
+}
+
+document.querySelectorAll('#issues-check input').forEach(cb=>{
+  cb.addEventListener('change',()=>cb.closest('.ci').classList.toggle('checked',cb.checked));
+});
+</script>
+</body>
+</html>
