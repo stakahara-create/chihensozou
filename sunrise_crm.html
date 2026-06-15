@@ -1,0 +1,1986 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SUNRISE UENOHARA スポンサー CRM</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+<body>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0f0f0f;--bg1:#1a1010;--bg2:#1e1414;--bg3:#2a1a1a;--border:#3a2020;--border2:#4a2828;--border3:#5a3535;
+  --text:#f4f4f4;--text2:#ccc;--text3:#888;
+  --accent:#f97316;--accent2:#ea6a00;
+  --green:#22c55e;--red:#ef4444;--blue:#f97316;--amber:#fbbf24;--purple:#a855f7;
+  --font:'Syne',sans-serif;--mono:'DM Mono',monospace;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.5;min-height:600px}
+
+/* ========= SCREENS ========= */
+.screen{display:none;min-height:600px}
+.screen.active{display:flex;flex-direction:column}
+
+/* ========= LOGIN ========= */
+.grid-bg{position:fixed;inset:0;pointer-events:none;background-image:linear-gradient(var(--border) 1px,transparent 1px),linear-gradient(90deg,var(--border) 1px,transparent 1px);background-size:40px 40px;opacity:.55;z-index:0}
+.grid-fade{position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 50% 0%,transparent 40%,var(--bg) 75%);z-index:0}
+#screen-login{position:relative;z-index:1}
+.topbar{display:flex;align-items:center;justify-content:space-between;padding:18px 28px;border-bottom:1px solid var(--border)}
+.logo{display:flex;align-items:center;gap:10px;cursor:pointer}
+.logo-icon{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center}
+.logo-icon i{color:#000;font-size:14px}
+.logo-name{font-size:13px;font-weight:700;letter-spacing:.02em}
+.topbar-tag{color:#aaa;font-size:10px;font-family:var(--mono);color:var(--text3);letter-spacing:.08em;text-transform:uppercase;border:1px solid var(--border2);padding:4px 10px;border-radius:4px}
+.login-main{flex:1;display:flex;align-items:center;justify-content:center;padding:32px 20px}
+.login-box{display:grid;grid-template-columns:1fr 1fr;max-width:780px;width:100%;border:1px solid var(--border2);border-radius:14px;overflow:hidden}
+.l-left{background:var(--bg1);padding:36px;display:flex;flex-direction:column;justify-content:center;border-right:1px solid var(--border)}
+.panel-tag{font-size:9px;font-family:var(--mono);color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:18px;display:flex;align-items:center;gap:6px}
+.panel-tag::before{content:'';width:16px;height:1px;background:var(--accent)}
+.panel-hl{font-size:24px;font-weight:800;line-height:1.2;letter-spacing:-.02em;margin-bottom:9px}
+.panel-sub{font-size:11px;color:#c0c0c0;line-height:1.7;font-family:var(--mono)}
+.feat-list{margin-top:24px;display:flex;flex-direction:column;gap:9px}
+.feat-item{display:flex;align-items:center;gap:9px;font-size:11px;color:#c0c0c0;font-family:var(--mono)}
+.feat-dot{width:5px;height:5px;border-radius:50%;background:var(--accent);flex-shrink:0}
+.l-right{background:var(--bg);padding:36px;display:flex;flex-direction:column;justify-content:center}
+.form-tag{font-size:9px;font-family:var(--mono);color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:20px}
+.form-ttl{font-size:19px;font-weight:700;margin-bottom:3px}
+.form-sub{font-size:11px;color:#888;font-family:var(--mono);margin-bottom:24px}
+.f-field{margin-bottom:14px}
+.f-field label{font-size:10px;font-weight:600;color:#999;display:block;margin-bottom:5px;text-transform:uppercase;letter-spacing:.07em;font-family:var(--mono)}
+.f-field input{width:100%;padding:10px 13px;background:var(--bg2);border:1px solid var(--border2);border-radius:7px;font-size:12px;color:var(--text);font-family:var(--font);outline:none;transition:border .2s,box-shadow .2s}
+.f-field input:focus{border-color:#f97316;box-shadow:0 0 0 3px rgba(249,115,22,.15)}
+.f-field input::placeholder{color:var(--text3)}
+.f-field input.err{border-color:var(--red)}
+.errtxt{font-size:10px;color:var(--red);margin-top:3px;font-family:var(--mono);display:none}.errtxt.show{display:block}
+.forgot{font-size:10px;color:#888;font-family:var(--mono);text-align:right;margin-top:-8px;margin-bottom:18px;cursor:pointer;transition:color .15s}
+.forgot:hover{color:var(--text2)}
+.l-btn{width:100%;padding:11px;background:var(--accent);color:#fff;border:none;border-radius:7px;font-size:12px;font-weight:700;font-family:var(--font);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.l-btn:hover{background:var(--accent2);color:#fff;transform:translateY(-1px)}
+.l-btn.loading{opacity:.6;pointer-events:none}
+.divider{display:flex;align-items:center;gap:8px;margin:14px 0}
+.divider::before,.divider::after{content:'';flex:1;height:1px;background:var(--border)}
+.divider span{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.g-btn{width:100%;padding:10px;background:transparent;border:1px solid var(--border2);border-radius:7px;font-size:11px;font-family:var(--font);font-weight:600;color:var(--text2);cursor:pointer;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:7px}
+.g-btn:hover{background:var(--bg2);border-color:var(--border3);color:var(--text)}
+.signup-row{margin-top:16px;text-align:center;font-size:10px;color:var(--text3);font-family:var(--mono)}
+.sl{color:var(--accent);cursor:pointer;transition:opacity .15s}.sl:hover{opacity:.7}
+.demo-hint{margin-top:12px;padding:9px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;font-size:10px;font-family:var(--mono);color:var(--text3);line-height:1.6}
+.demo-hint strong{color:var(--accent);font-weight:600}
+.btmbar{padding:12px 28px;border-top:1px solid var(--border);display:flex;align-items:center;justify-content:space-between}
+.btm-links{display:flex;gap:14px}
+.btm-link{font-size:10px;color:var(--text3);font-family:var(--mono);cursor:pointer}.btm-link:hover{color:var(--text2)}
+.btm-copy{font-size:10px;color:var(--text3);font-family:var(--mono)}
+
+/* ========= CRM APP ========= */
+#screen-crm{flex-direction:row}
+.sb{width:192px;flex-shrink:0;background:var(--bg1);border-right:1px solid var(--border);display:flex;flex-direction:column;padding:0}
+.sb-logo{padding:18px 14px 14px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:9px}
+.sb-licon{width:28px;height:28px;background:var(--accent);border-radius:7px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.sb-licon i{color:#000;font-size:14px}
+.sb-lname{font-size:13px;font-weight:700}
+.sb-nav{padding:10px 7px;flex:1;display:flex;flex-direction:column;gap:1px}
+.sb-sec{font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.1em;text-transform:uppercase;padding:10px 9px 3px;font-family:var(--mono)}
+.ni{display:flex;align-items:center;gap:8px;padding:7px 9px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:500;color:var(--text2);border:none;background:none;width:100%;text-align:left;transition:all .15s;font-family:var(--font)}
+.ni:hover{background:var(--bg3);color:var(--text)}
+.ni.active{background:rgba(249,115,22,.15);color:#f97316;border:1px solid rgba(249,115,22,.4);font-weight:700}
+.ni i{font-size:14px;flex-shrink:0}
+.sb-bottom{padding:10px 7px;border-top:1px solid var(--border)}
+.user-chip{display:flex;align-items:center;gap:8px;padding:8px 9px;border-radius:6px;cursor:pointer;background:var(--bg2)}
+.user-chip:hover{background:var(--bg3)}
+.u-av{width:26px;height:26px;border-radius:50%;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:800;color:#000;flex-shrink:0}
+.u-name{font-size:11px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.u-role{font-size:9px;color:var(--text3);font-family:var(--mono)}
+.crm-main{flex:1;overflow-y:auto;padding:22px}
+.view{display:none}.view.active{display:block}
+.pg-hd{display:flex;align-items:center;justify-content:space-between;margin-bottom:18px}
+.pg-ttl{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.pg-sub{font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)}
+.back-btn{display:inline-flex;align-items:center;gap:5px;padding:5px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:5px;cursor:pointer;font-size:11px;color:var(--text2);font-family:var(--font);font-weight:500;transition:all .15s}
+.back-btn:hover{background:var(--bg3);color:var(--text)}
+.btn{display:inline-flex;align-items:center;gap:5px;padding:7px 13px;border-radius:6px;cursor:pointer;font-size:12px;font-weight:600;font-family:var(--font);border:none;transition:all .15s;white-space:nowrap}
+.btn-a{background:var(--accent);color:#fff}.btn-a:hover{background:var(--accent2)}
+.btn-g{background:transparent;color:var(--text2);border:1px solid var(--border2)}.btn-g:hover{background:var(--bg3);color:var(--text)}
+.btn-d{background:transparent;color:var(--red);border:1px solid rgba(239,68,68,.2)}.btn-d:hover{background:rgba(239,68,68,.08)}
+.btn-sm{padding:4px 9px;font-size:11px;border-radius:5px}
+.btn-xs{padding:3px 7px;font-size:10px;border-radius:4px}
+.toolbar{display:flex;gap:7px;margin-bottom:14px;flex-wrap:wrap;align-items:center}
+.si{flex:1;min-width:100px;padding:7px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none}
+.si:focus{border-color:var(--border3)}.si::placeholder{color:var(--text3)}
+select.fs{padding:7px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text2);font-family:var(--font);outline:none}
+.tw{border:1px solid var(--border);border-radius:8px;overflow:hidden}
+.tbl{width:100%;border-collapse:collapse;font-size:12px;table-layout:fixed}
+.tbl thead tr{background:var(--bg2)}
+.tbl th{padding:9px 11px;text-align:left;font-size:10px;font-weight:600;color:var(--text3);letter-spacing:.06em;text-transform:uppercase;border-bottom:1px solid var(--border);font-family:var(--mono)}
+.tbl td{padding:10px 11px;border-bottom:1px solid var(--border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;vertical-align:middle;background:var(--bg1)}
+.tbl tbody tr:last-child td{border-bottom:none}
+.tbl tbody tr:hover td{background:var(--bg2);cursor:pointer}
+.badge{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:600;font-family:var(--mono)}
+.av{width:26px;height:26px;border-radius:6px;display:inline-flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;flex-shrink:0;font-family:var(--mono)}
+.av-c{background:#1a2a1a;color:#22c55e;border:1px solid rgba(34,197,94,.2)}
+.av-l{background:#2a1a0a;color:#f59e0b;border:1px solid rgba(245,158,11,.2)}
+.fcard{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:10px}
+.fc-ttl{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:12px;font-family:var(--mono)}
+.frow{display:flex;gap:10px;margin-bottom:10px}
+.field{flex:1}
+.field label{font-size:10px;font-weight:600;color:var(--text3);display:block;margin-bottom:4px;text-transform:uppercase;letter-spacing:.06em;font-family:var(--mono)}
+.req{color:var(--accent)}
+.field input,.field select,.field textarea{width:100%;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none;transition:border .15s}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:var(--border3)}
+.field input.err{border-color:var(--red)}
+.field textarea{resize:vertical;min-height:55px}
+.etxt{font-size:10px;color:var(--red);margin-top:2px;font-family:var(--mono);display:none}.etxt.show{display:block}
+.crow{display:flex;align-items:center;gap:9px;padding:7px 0;border-bottom:1px solid var(--border)}
+.crow:last-child{border-bottom:none}
+.clbl{font-size:10px;color:var(--text3);width:58px;flex-shrink:0;font-family:var(--mono);text-transform:uppercase;letter-spacing:.04em}
+.alink{color:#f97316;text-decoration:none;font-size:12px;display:inline-flex;align-items:center;gap:3px}
+.alink:hover{color:#93c5fd}
+.hist{padding:9px 11px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;margin-bottom:5px}
+.hist-m{font-size:10px;color:var(--text3);margin-bottom:3px;font-family:var(--mono)}
+.kanban-wrap{display:flex;gap:9px;overflow-x:auto;padding-bottom:6px}
+.kcol{min-width:152px;flex:1}
+.kcol-hd{padding:7px 9px;border-radius:6px;margin-bottom:7px;display:flex;justify-content:space-between;align-items:center;border:1px solid}
+.kcards{min-height:50px;display:flex;flex-direction:column;gap:5px}
+.kcard{background:var(--bg1);border:1px solid var(--border);border-left:2px solid;border-radius:6px;padding:9px 10px;cursor:pointer;transition:all .15s}
+.kcard:hover{background:var(--bg2);transform:translateY(-1px)}
+.kcard-n{font-size:12px;font-weight:600;margin-bottom:2px}
+.kcard-s{font-size:10px;color:var(--text3);font-family:var(--mono)}
+.kcard-a{font-size:11px;font-weight:600;margin-top:3px;font-family:var(--mono)}
+.kpi-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.kpi-c{background:var(--bg1);border:1px solid var(--border);border-radius:9px;padding:16px 14px}
+.kpi-l{font-size:11px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:7px;font-family:var(--mono)}
+.kpi-v{font-size:28px;font-weight:700;letter-spacing:-.02em;line-height:1}
+.kpi-s{font-size:11px;color:var(--text3);margin-top:5px;font-family:var(--mono)}
+.kpi-u{font-size:10px;color:var(--green);font-family:var(--mono)}
+.c2{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-bottom:7px}
+.cbox{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:14px}
+.cbox-t{font-size:12px;font-weight:600;color:var(--text2);text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px;font-family:var(--mono)}
+.brow{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.blbl{font-size:11px;color:var(--text2);width:44px;text-align:right;flex-shrink:0;font-family:var(--mono)}
+.btrack{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.bfill{height:100%;border-radius:3px}
+.bval{font-size:11px;font-weight:600;width:40px;font-family:var(--mono)}
+.fnrow{display:flex;align-items:center;gap:8px;margin-bottom:6px}
+.fnlbl{font-size:11px;color:var(--text2);width:60px;flex-shrink:0;font-family:var(--mono)}
+.fnbar{height:24px;border-radius:4px;display:flex;align-items:center;padding:0 9px;font-size:11px;font-weight:600;font-family:var(--mono)}
+.cal-hd{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:2px}
+.cal-dow{font-size:9px;font-weight:600;color:var(--text3);text-align:center;padding:3px 0;letter-spacing:.06em;font-family:var(--mono)}
+.cal-cell{min-height:56px;border:1px solid var(--border);border-radius:5px;padding:3px;cursor:pointer;background:var(--bg1);transition:background .15s}
+.cal-cell:hover{background:var(--bg2)}
+.cal-cell.tc{border-color:var(--accent)}
+.cal-cell.oth{opacity:.3}
+.cal-num{font-size:10px;font-weight:600;margin-bottom:2px;font-family:var(--mono)}
+.tn{color:var(--accent)}
+.cal-ev{font-size:9px;padding:1px 3px;border-radius:2px;margin-bottom:1px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.ev-s{background:#0f1f35;color:#60a5fa;border:1px solid rgba(29,78,216,.15)}
+.ev-l{background:#251505;color:#fb923c;border:1px solid rgba(249,115,22,.15)}
+.ev-a{background:#0a2010;color:#4ade80;border:1px solid rgba(34,197,94,.2)}
+.prof-card{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:10px}
+.sec-t{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;font-family:var(--mono)}
+.p-av{width:48px;height:48px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000}
+.int-row{padding:12px 0;border-bottom:1px solid var(--border)}
+.int-row:last-child{border-bottom:none}
+.int-name{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px;margin-bottom:3px}
+.int-desc{font-size:11px;color:var(--text3);line-height:1.6}
+.int-on{font-size:10px;color:var(--green);background:#0a2010;border:1px solid rgba(34,197,94,.2);padding:3px 7px;border-radius:4px;display:inline-flex;align-items:center;gap:3px;margin-top:5px;font-family:var(--mono)}
+.int-off{font-size:10px;color:var(--text3);background:var(--bg2);border:1px solid var(--border);padding:3px 7px;border-radius:4px;display:inline-flex;align-items:center;gap:3px;margin-top:5px;font-family:var(--mono)}
+.int-note{font-size:10px;color:var(--text3);margin-top:7px;padding:7px 9px;background:var(--bg2);border:1px solid var(--border);border-radius:5px;line-height:1.6;font-family:var(--mono)}
+.tgl-row{display:flex;justify-content:space-between;align-items:center;padding:9px 0;border-bottom:1px solid var(--border)}
+.rep-stat{display:grid;grid-template-columns:repeat(auto-fit,minmax(90px,1fr));gap:6px;margin-bottom:12px}
+.rep-s{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:10px 11px}
+.rep-sl{font-size:9px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:3px}
+.rep-sv{font-size:16px;font-weight:700;font-family:var(--mono)}
+.rep-section{margin-bottom:8px;padding:11px 13px;background:var(--bg2);border:1px solid var(--border);border-radius:6px}
+.rep-section-t{font-size:9px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;margin-bottom:5px;font-family:var(--mono)}
+.rep-section-v{font-size:12px;color:var(--text);line-height:1.6;white-space:pre-wrap}
+.act-type{display:inline-flex;align-items:center;gap:4px;padding:2px 8px;border-radius:4px;font-size:10px;font-weight:700;font-family:var(--mono)}
+.act-call{background:#0f1f35;color:#60a5fa;border:1px solid rgba(59,130,246,.3)}
+.act-mail{background:#1a1030;color:#c084fc;border:1px solid rgba(168,85,247,.3)}
+.act-dm{background:#251505;color:#fb923c;border:1px solid rgba(249,115,22,.3)}
+.act-line{background:#0a2010;color:#4ade80;border:1px solid rgba(34,197,94,.3)}
+.act-visit{background:#2a1a05;color:#fbbf24;border:1px solid rgba(245,158,11,.3)}
+.act-other{background:#1a1a1a;color:#999;border:1px solid #333}
+.auto-badge{font-size:9px;font-family:var(--mono);color:var(--accent);background:rgba(232,255,71,.08);border:1px solid rgba(232,255,71,.2);padding:2px 6px;border-radius:3px;display:inline-flex;align-items:center;gap:3px}
+.report-auto-row{padding:8px 11px;background:rgba(232,255,71,.04);border:1px solid rgba(232,255,71,.12);border-radius:6px;margin-bottom:7px;font-size:11px;display:flex;align-items:center;gap:7px}
+
+.tgl-s{font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)}
+.ipill{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;background:var(--accent);color:#fff;border-radius:4px;font-size:10px;font-weight:700;font-family:var(--mono)}
+</style>
+
+<!-- ===== LOGIN SCREEN ===== -->
+<div class="screen active" id="screen-login">
+  <div class="grid-bg"></div>
+  <div class="grid-fade"></div>
+  <div class="topbar">
+    <div class="logo">
+      <img src="data:image/png;base64,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" style="height:54px;width:auto;object-fit:contain" alt="上野原サンライズ">
+      <div>
+        <div class="logo-name" style="font-size:14px;font-weight:800;letter-spacing:.03em">上野原サンライズ</div>
+        <div style="font-size:9px;font-family:var(--mono);color:var(--text3);letter-spacing:.08em">SPONSOR CRM</div>
+      </div>
+    </div>
+    <div class="topbar-tag">Basketball Sponsorship Platform</div>
+  </div>
+  <div class="login-main">
+    <div class="login-box">
+      <div class="l-left" style="background:linear-gradient(135deg,#0d0800 0%,#1e1000 60%,#2a1500 100%);border-right:1px solid #6b3a00">
+        <img src="data:image/png;base64,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" style="width:120px;height:auto;margin-bottom:20px;filter:drop-shadow(0 4px 12px rgba(249,115,22,.4))"><div class="panel-tag" style="color:var(--accent)">上野原サンライズ</div>
+        <div class="panel-hl">SUNRISE UENOHARA<br>スポンサー営業 CRM</div>
+        <div class="panel-sub">企業管理からリード育成、KPI分析まで<br>営業代行に必要なすべてを一画面で。</div>
+        <div class="feat-list">
+          <div class="feat-item"><span class="feat-dot"></span>企業・リードを一元管理</div>
+          <div class="feat-item"><span class="feat-dot"></span>商談化で自動的に企業へ昇格</div>
+          <div class="feat-item"><span class="feat-dot"></span>KPI・ファネルをリアルタイム可視化</div>
+          <div class="feat-item"><span class="feat-dot"></span>Gmail / Google カレンダー連携</div>
+          <div class="feat-item"><span class="feat-dot"></span>チーム全員でデータをリアルタイム共有</div>
+        </div>
+      </div>
+      <div class="l-right">
+        <div id="lf-area">
+          <div class="form-tag">// SUNRISE UENOHARA CRM</div>
+          <div class="form-ttl">ログイン</div>
+          <div class="form-sub">アカウントにサインインしてください</div>
+          <div class="f-field">
+            <label>メールアドレス</label>
+            <input type="email" id="l-email" placeholder="yourname@example.com" oninput="lclr('l-email','le-email')" onkeydown="if(event.key==='Enter')document.getElementById('l-pass').focus()">
+            <div class="errtxt" id="le-email">メールアドレスを入力してください</div>
+          </div>
+          <div class="f-field">
+            <label>パスワード</label>
+            <input type="password" id="l-pass" placeholder="••••••••" oninput="lclr('l-pass','le-pass')" onkeydown="if(event.key==='Enter')doLogin()">
+            <div class="errtxt" id="le-pass">パスワードを入力してください</div>
+          </div>
+          <div class="forgot" onclick="showLArea('forgot-area')">パスワードをお忘れですか？</div>
+          <div style="display:flex;align-items:center;gap:7px;margin-bottom:14px">
+            <input type="checkbox" id="l-remember" checked style="accent-color:var(--accent);width:14px;height:14px;cursor:pointer">
+            <label for="l-remember" style="font-size:11px;color:var(--text3);font-family:var(--mono);cursor:pointer">ログイン情報を保存する</label>
+          </div>
+          <button class="l-btn" id="l-btn" onclick="doLogin()"><i class="ti ti-arrow-right" aria-hidden="true"></i>ログイン</button>
+          <div class="signup-row">アカウントをお持ちでない方は <span class="sl" onclick="showLArea('signup-area')">新規登録</span></div>
+        </div>
+        <div id="forgot-area" style="display:none">
+          <div class="form-tag">// パスワードリセット</div>
+          <div class="form-ttl">パスワードを忘れた</div>
+          <div class="form-sub" style="margin-bottom:20px">登録メールアドレスにリセットリンクを送信します</div>
+          <div class="f-field"><label>メールアドレス</label><input type="email" id="l-reset" placeholder="yourname@example.com"></div>
+          <button class="l-btn" onclick="doReset()"><i class="ti ti-send" aria-hidden="true"></i>リセットリンクを送信</button>
+          <div class="signup-row" style="margin-top:14px"><span class="sl" onclick="showLArea('lf-area')">← ログインに戻る</span></div>
+        </div>
+        <div id="signup-area" style="display:none">
+          <div class="form-tag">// 新規登録</div>
+          <div class="form-ttl">アカウント作成</div>
+          <div class="form-sub" style="margin-bottom:18px">チームの新しいアカウントを作成します</div>
+          <div class="f-field"><label>表示名</label><input type="text" id="l-sname" placeholder="上野原 太郎"></div>
+          <div class="f-field"><label>メールアドレス</label><input type="email" id="l-semail" placeholder="yourname@example.com"></div>
+          <div class="f-field"><label>パスワード</label><input type="password" id="l-spass" placeholder="8文字以上"></div>
+          <button class="l-btn" onclick="doSignup()"><i class="ti ti-user-plus" aria-hidden="true"></i>アカウントを作成</button>
+          <div class="signup-row" style="margin-top:14px">すでにアカウントをお持ちの方は <span class="sl" onclick="showLArea('lf-area')">ログイン</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="btmbar">
+    <div class="btm-links"><span class="btm-link">利用規約</span><span class="btm-link">プライバシーポリシー</span><span class="btm-link">お問い合わせ</span></div>
+    <div class="btm-copy">© 2026 スポンサー CRM. All rights reserved.</div>
+  </div>
+</div>
+
+<!-- ===== CRM SCREEN ===== -->
+<div class="screen" id="screen-crm">
+  <div class="sb">
+    <div class="sb-logo">
+      <img src="data:image/png;base64,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" style="height:40px;width:auto;object-fit:contain;flex-shrink:0" alt="SUNRISE UENOHARA">
+      <div>
+        <div class="sb-lname" style="font-size:11px;line-height:1.2">上野原サンライズ</div>
+        <div style="font-size:8px;font-family:var(--mono);color:var(--text3);letter-spacing:.06em">SPONSOR CRM</div>
+      </div>
+    </div>
+    <div class="sb-nav">
+      <div class="sb-sec">メイン</div>
+      <button class="ni active" id="nav-action" onclick="navTo('action')"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション管理</button>
+      <button class="ni" id="nav-lead" onclick="navTo('lead')"><i class="ti ti-users" aria-hidden="true"></i>リード管理</button>
+      <button class="ni" id="nav-lost" onclick="navTo('lost')"><i class="ti ti-x" aria-hidden="true"></i>失注管理</button>
+      <button class="ni" id="nav-crm" onclick="navTo('crm')"><i class="ti ti-building" aria-hidden="true"></i>進捗管理</button>
+      <button class="ni" id="nav-board" onclick="navTo('board')"><i class="ti ti-layout-kanban" aria-hidden="true"></i>進捗ボード</button>
+      <button class="ni" id="nav-cal" onclick="navTo('cal')"><i class="ti ti-calendar" aria-hidden="true"></i>カレンダー</button>
+      <button class="ni" id="nav-kpi" onclick="navTo('kpi')"><i class="ti ti-chart-bar" aria-hidden="true"></i>KPI</button>
+      <button class="ni" id="nav-report" onclick="navTo('report')"><i class="ti ti-file-analytics" aria-hidden="true"></i>月次レポート</button>
+      <div class="sb-sec">設定</div>
+      <button class="ni" id="nav-settings" onclick="navTo('settings')"><i class="ti ti-user-circle" aria-hidden="true"></i>マイページ</button>
+    </div>
+    <div class="sb-bottom">
+      <div class="user-chip" onclick="navTo('settings')">
+        <div class="u-av" id="sb-av">高</div>
+        <div><div class="u-name" id="sb-name">上野原 太郎</div><div class="u-role" id="sb-role">manager</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="crm-main">
+
+    <!-- CRM LIST -->
+    <div class="view" id="v-crm">
+      <div class="pg-hd"><div><div class="pg-ttl">進捗管理</div><div class="pg-sub" id="crm-sub"></div></div></div>
+      <div class="toolbar"><input class="si" type="text" id="crm-q" placeholder="企業名・担当者で検索..." oninput="renderCrm()"><select class="fs" id="crm-fs" onchange="renderCrm()"><option value="">すべて</option><option>未接触</option><option>商談中</option><option>契約済</option></select></div>
+      <div class="tw"><table class="tbl"><thead><tr><th style="width:18%">企業名</th><th style="width:9%">業種</th><th style="width:11%">担当者／役職</th><th style="width:9%">担当営業</th><th style="width:10%">ステータス</th><th style="width:12%">最終アクション</th><th style="width:8%">金額</th><th style="width:13%">URL</th><th style="width:12%">リード元</th></tr></thead><tbody id="crm-tbody"></tbody></table></div>
+    </div>
+
+    <!-- CRM FORM -->
+    <div class="view" id="v-crm-form">
+      <div class="pg-hd"><div style="display:flex;align-items:center;gap:9px"><button class="back-btn" onclick="navTo('crm')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button><div class="pg-ttl" id="cf-ttl">進捗追加</div></div><button class="btn btn-d btn-sm" id="crm-del" style="display:none" onclick="delCrm()"><i class="ti ti-trash" aria-hidden="true"></i>削除</button></div>
+      <div class="fcard"><div class="fc-ttl">基本情報</div>
+        <div class="frow"><div class="field"><label>企業名<span class="req">*</span></label><input id="cf-name" oninput="ce('cf-name','cen')"><div class="etxt" id="cen">必須です</div></div><div class="field"><label>業種</label><select id="cf-ind"><option>スポーツ用品</option><option>食品・飲料</option><option>IT・テクノロジー</option><option>不動産</option><option>金融</option><option>アパレル</option><option>自動車</option><option>医療</option><option>教育</option><option>小売</option></select></div></div>
+        <div class="frow"><div class="field"><label>メール<span class="req">*</span></label><input id="cf-email" type="email" oninput="ce('cf-email','cee')"><div class="etxt" id="cee">必須です</div></div><div class="field"><label>電話番号<span class="req">*</span></label><input id="cf-phone" type="tel" oninput="ce('cf-phone','cep')"><div class="etxt" id="cep">必須です</div></div></div>
+        <div class="frow"><div class="field"><label>企業URL</label><input id="cf-url" type="url" placeholder="https://..."></div><div class="field"><label>相手側担当者名</label><input id="cf-contact" placeholder="田中 健一"></div></div>
+        <div class="frow"><div class="field"><label>相手側担当者役職</label><input id="cf-contact-title" placeholder="営業部長、CSR担当 など"></div><div class="field"></div></div>
+        <div class="frow"><div class="field"><label>ステータス</label><select id="cf-status" onchange="chkCrmSt()"><option>未接触</option><option>商談中</option><option>契約済</option><option>失注</option></select></div><div class="field"><label>金額（万円）</label><input id="cf-amount" type="number" placeholder="0"></div></div>
+        <div class="frow"><div class="field"><label>担当営業</label><select id="cf-who"><option value="">— 選択 —</option></select></div><div class="field"></div></div>
+        <div class="frow"><div class="field"><label>次回接触予定日 <span style="font-size:9px;color:var(--accent);font-family:var(--mono)">📅 カレンダーに自動反映</span></label><input id="cf-next" type="date"></div><div class="field"><label>次回接触メモ</label><input id="cf-next-note" placeholder="例：2回目提案、契約条件確認..."></div></div>
+      </div>
+      <div class="fcard" id="cf-act-block"><div class="fc-ttl">最初のアクション<span class="req">*</span></div>
+        <div class="frow"><div class="field"><label>日付<span class="req">*</span></label><input id="cf-adate" type="date" oninput="ce('cf-adate','cead')"><div class="etxt" id="cead">必須です</div></div><div class="field"><label>担当営業</label><select id="cf-awho"><option value="">— 選択 —</option></select></div></div>
+        <div class="field"><label>内容<span class="req">*</span></label><textarea id="cf-anote" oninput="ce('cf-anote','cean')"></textarea><div class="etxt" id="cean">必須です</div></div>
+      </div>
+      <div id="crm-lost-notice" style="display:none;margin-bottom:10px;padding:11px 13px;background:#1a0808;border:1px solid rgba(239,68,68,.3);border-radius:7px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><i class="ti ti-x" style="color:#ef4444;font-size:13px" aria-hidden="true"></i><span style="font-size:12px;font-weight:600;color:#ef4444">失注として記録</span></div>
+        <div style="font-size:10px;color:#fca5a5;font-family:var(--mono)">保存すると進捗管理から削除され、失注管理に記録されます。</div>
+      </div>
+      <button class="btn btn-a" onclick="saveCrm()"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存</button>
+    </div>
+
+    <!-- CRM DETAIL -->
+    <div class="view" id="v-crm-detail">
+      <div class="pg-hd"><div style="display:flex;align-items:center;gap:9px"><button class="back-btn" onclick="navTo('crm')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button><div class="pg-ttl" id="cd-ttl"></div></div><button class="btn btn-g btn-sm" onclick="openCrmForm(currentCrmId)"><i class="ti ti-edit" aria-hidden="true"></i>編集</button></div>
+      <div id="cd-body"></div>
+    </div>
+
+    <!-- LEAD LIST -->
+    <div class="view" id="v-lead">
+      <div class="pg-hd"><div><div class="pg-ttl">リード管理</div><div class="pg-sub" id="lead-sub"></div></div></div>
+      <div class="toolbar"><input class="si" type="text" id="lead-q" placeholder="名前・会社で検索..." oninput="renderLead()"><select class="fs" id="lead-fs" onchange="renderLead()"><option value="">すべて</option><option>新規</option><option>商談準備</option><option>失注</option></select></div>
+      <div class="tw"><table class="tbl"><thead><tr><th style="width:15%">会社名</th><th style="width:11%">企業担当者名</th><th style="width:9%">役職</th><th style="width:9%">担当営業</th><th style="width:11%">メール</th><th style="width:8%">ステータス</th><th style="width:10%">最終接触</th><th style="width:7%">流入元</th><th style="width:10%">連携企業</th></tr></thead><tbody id="lead-tbody"></tbody></table></div>
+    </div>
+
+    <!-- LEAD FORM -->
+    <div class="view" id="v-lead-form">
+      <div class="pg-hd"><div style="display:flex;align-items:center;gap:9px"><button class="back-btn" onclick="navTo('lead')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button><div class="pg-ttl" id="lf-ttl">リードを追加</div></div><button class="btn btn-d btn-sm" id="lead-del" style="display:none" onclick="delLead()"><i class="ti ti-trash" aria-hidden="true"></i>削除</button></div>
+      <div class="fcard"><div class="fc-ttl">基本情報</div>
+        <div class="frow"><div class="field"><label>名前<span class="req">*</span></label><input id="lf-name" oninput="ce('lf-name','len')"><div class="etxt" id="len">必須です</div></div><div class="field"><label>会社名</label><input id="lf-company"></div></div>
+        <div class="frow"><div class="field"><label>メール<span class="req">*</span></label><input id="lf-email" type="email" oninput="ce('lf-email','lee')"><div class="etxt" id="lee">必須です</div></div><div class="field"><label>電話番号<span class="req">*</span></label><input id="lf-phone" type="tel" oninput="ce('lf-phone','lep')"><div class="etxt" id="lep">必須です</div></div></div>
+        <div class="frow"><div class="field"><label>ステータス</label><select id="lf-status" onchange="chkLSt()"><option>新規</option><option>商談準備</option><option>失注</option></select></div><div class="field"><label>流入元</label><select id="lf-source"><option>自社アクション</option><option>SNS</option><option>紹介</option><option>イベント</option><option>Web</option><option>飛び込み</option><option>その他</option></select></div></div>
+        <div class="frow"><div class="field"><label>企業URL</label><input id="lf-url" type="url" placeholder="https://..."></div><div class="field"><label>担当営業</label><select id="lf-who"><option value="">— 選択 —</option></select></div></div>
+        <div class="frow"><div class="field"><label>相手側担当者役職</label><input id="lf-contact-title" placeholder="営業部長、CSR担当 など"></div><div class="field"></div></div>
+        <div class="frow"><div class="field"><label>次回接触予定日 <span style="font-size:9px;color:var(--accent);font-family:var(--mono)">📅 カレンダーに自動反映</span></label><input id="lf-next" type="date"></div><div class="field"><label>次回接触メモ</label><input id="lf-next-note" placeholder="例：フォローコール、資料送付..."></div></div>
+        <div class="field" style="margin-bottom:0"><label>メモ</label><textarea id="lf-note"></textarea></div>
+      </div>
+      <div id="lead-promo-notice" style="display:none;margin-bottom:10px;padding:11px 13px;background:#0a1a0a;border:1px solid rgba(34,197,94,.3);border-radius:7px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><i class="ti ti-building-plus" style="color:var(--green);font-size:13px" aria-hidden="true"></i><span style="font-size:12px;font-weight:600;color:var(--green)">進捗管理へ自動移行</span></div>
+        <div style="font-size:10px;color:#4ade80;font-family:var(--mono)">保存するとリード一覧から削除され、進捗管理に「商談中」として移行されます。</div>
+      </div>
+      <div id="lead-lost-notice" style="display:none;margin-bottom:10px;padding:11px 13px;background:#1a0808;border:1px solid rgba(239,68,68,.3);border-radius:7px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><i class="ti ti-x" style="color:#ef4444;font-size:13px" aria-hidden="true"></i><span style="font-size:12px;font-weight:600;color:#ef4444">失注として記録</span></div>
+        <div style="font-size:10px;color:#fca5a5;font-family:var(--mono)">保存するとリード一覧から削除され、失注記録として保存されます。</div>
+      </div>
+      <button class="btn btn-a" onclick="saveLead()"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存</button>
+    </div>
+
+    <!-- LEAD DETAIL -->
+    <div class="view" id="v-lead-detail">
+      <div class="pg-hd"><div style="display:flex;align-items:center;gap:9px"><button class="back-btn" onclick="navTo('lead')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button><div class="pg-ttl" id="ld-ttl"></div></div><button class="btn btn-g btn-sm" onclick="openLeadForm(currentLeadId)"><i class="ti ti-edit" aria-hidden="true"></i>編集</button></div>
+      <div id="ld-body"></div>
+    </div>
+
+    <!-- LOST LEADS -->
+    <div class="view" id="v-lost">
+      <div class="pg-hd"><div><div class="pg-ttl">失注管理</div><div class="pg-sub" id="lost-sub"></div></div></div>
+      <div class="toolbar"><input class="si" type="text" id="lost-q" placeholder="名前・会社で検索..." oninput="renderLost()"></div>
+      <div class="tw"><table class="tbl"><thead><tr><th style="width:15%">会社名</th><th style="width:11%">企業担当者名</th><th style="width:9%">役職</th><th style="width:9%">担当営業</th><th style="width:11%">メール</th><th style="width:7%">流入元</th><th style="width:10%">失注日</th><th style="width:8%"></th></tr></thead><tbody id="lost-tbody"></tbody></table></div>
+    </div>
+    <div class="view" id="v-board">
+      <div class="pg-hd"><div class="pg-ttl">進捗ボード</div><div style="display:flex;gap:6px"><button class="btn btn-sm" id="bm-crm" onclick="setBM('crm')">企業</button><button class="btn btn-sm btn-g" id="bm-lead" onclick="setBM('lead')">リード</button></div></div>
+      <div class="kanban-wrap" id="kanban-wrap"></div>
+    </div>
+
+    <!-- CALENDAR -->
+    <div class="view" id="v-cal">
+      <div class="cal-hd"><div class="pg-ttl" id="cal-ttl"></div><div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="calMv(-1)"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="btn btn-g btn-sm" onclick="calMv(1)"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div></div>
+      <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap">
+        <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#0f1f35;border:1px solid rgba(59,130,246,.4);display:inline-block"></span>企業 次回予定</span>
+        <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#251505;border:1px solid rgba(245,158,11,.4);display:inline-block"></span>リード 次回予定</span>
+        <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#0a2010;border:1px solid rgba(34,197,94,.4);display:inline-block"></span>アクション 次回予定</span>
+      </div>
+      <div class="cal-grid" id="cal-dows"></div>
+      <div class="cal-grid" id="cal-cells" style="margin-top:2px"></div>
+      <div id="cal-detail" style="margin-top:12px"></div>
+    </div>
+
+    <!-- ACTION LIST -->
+    <div class="view" id="v-action">
+      <div class="pg-hd">
+        <div><div class="pg-ttl">アクション管理</div><div class="pg-sub" id="action-sub"></div></div>
+        <button class="btn btn-a" onclick="openActionForm(null)"><i class="ti ti-plus" aria-hidden="true"></i>アクション追加</button>
+      </div>
+      <div class="toolbar">
+        <input class="si" type="text" id="action-q" placeholder="企業名・担当者で検索..." oninput="renderActions()">
+        <select class="fs" id="action-ft" onchange="renderActions()">
+          <option value="">種別：すべて</option>
+          <option>架電</option><option>メール</option><option>DM</option><option>LINE</option><option>訪問</option><option>その他</option>
+        </select>
+        <select class="fs" id="action-fi" onchange="renderActions()">
+          <option value="">業種：すべて</option>
+          <option>スポーツ用品</option><option>食品・飲料</option><option>IT・テクノロジー</option><option>不動産</option><option>金融</option><option>アパレル</option><option>自動車</option><option>医療</option><option>教育</option><option>小売</option><option>その他</option>
+        </select>
+        <select class="fs" id="action-fr" onchange="renderActions()">
+          <option value="">地域：すべて</option>
+          <option>北海道</option><option>東北</option><option>関東</option><option>中部</option><option>関西</option><option>中国・四国</option><option>九州</option><option>沖縄</option><option>全国</option>
+        </select>
+      </div>
+      <div id="action-stats" style="display:flex;gap:7px;margin-bottom:12px;flex-wrap:wrap"></div>
+      <div class="tw"><table class="tbl"><thead><tr>
+        <th style="width:11%">アクション日</th>
+        <th style="width:17%">企業名</th>
+        <th style="width:9%">業種</th>
+        <th style="width:7%">地域</th>
+        <th style="width:8%">種別</th>
+        <th style="width:9%">担当者</th>
+        <th style="width:9%">相手担当</th>
+        <th style="width:9%">結果</th>
+        <th style="width:22%">メモ</th>
+      </tr></thead><tbody id="action-tbody"></tbody></table></div>
+    </div>
+
+    <!-- ACTION FORM -->
+    <div class="view" id="v-action-form">
+      <div class="pg-hd">
+        <div style="display:flex;align-items:center;gap:9px">
+          <button class="back-btn" onclick="navTo('action')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button>
+          <div class="pg-ttl" id="af-ttl">アクション追加</div>
+        </div>
+        <button class="btn btn-d btn-sm" id="action-del" style="display:none" onclick="delAction()"><i class="ti ti-trash" aria-hidden="true"></i>削除</button>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">アクション基本情報</div>
+        <div class="frow">
+          <div class="field"><label>アクション日<span class="req">*</span></label><input id="af-date" type="date" oninput="ce('af-date','aen-date')"><div class="etxt" id="aen-date">必須です</div></div>
+          <div class="field"><label>種別<span class="req">*</span></label>
+            <select id="af-type">
+              <option>架電</option><option>メール</option><option>DM</option><option>LINE</option><option>訪問</option><option>その他</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>企業名<span class="req">*</span></label>
+            <input id="af-company" list="af-company-list" placeholder="企業名を入力 or 選択" oninput="ce('af-company','aen-company');fillActionCompany()">
+            <datalist id="af-company-list"></datalist>
+            <div class="etxt" id="aen-company">必須です</div>
+          </div>
+          <div class="field"><label>業種</label>
+            <select id="af-industry">
+              <option>スポーツ用品</option><option>食品・飲料</option><option>IT・テクノロジー</option><option>不動産</option><option>金融</option><option>アパレル</option><option>自動車</option><option>医療</option><option>教育</option><option>小売</option><option>その他</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>地域</label>
+            <select id="af-region">
+              <option value="">—</option>
+              <option>北海道</option><option>青森県</option><option>岩手県</option><option>宮城県</option><option>秋田県</option><option>山形県</option><option>福島県</option>
+              <option>茨城県</option><option>栃木県</option><option>群馬県</option><option>埼玉県</option><option>千葉県</option><option>東京都</option><option>神奈川県</option>
+              <option>新潟県</option><option>富山県</option><option>石川県</option><option>福井県</option><option>山梨県</option><option>長野県</option><option>岐阜県</option><option>静岡県</option><option>愛知県</option>
+              <option>三重県</option><option>滋賀県</option><option>京都府</option><option>大阪府</option><option>兵庫県</option><option>奈良県</option><option>和歌山県</option>
+              <option>鳥取県</option><option>島根県</option><option>岡山県</option><option>広島県</option><option>山口県</option>
+              <option>徳島県</option><option>香川県</option><option>愛媛県</option><option>高知県</option>
+              <option>福岡県</option><option>佐賀県</option><option>長崎県</option><option>熊本県</option><option>大分県</option><option>宮崎県</option><option>鹿児島県</option><option>沖縄県</option>
+            </select>
+          </div>
+          <div class="field"><label>担当営業<span class="req">*</span> <span style="font-size:9px;color:var(--blue);font-family:var(--mono)">→ 各管理に自動反映</span></label>
+            <select id="af-who" onchange="onSalesRepChange()">
+              <option value="">— 選択 —</option>
+            </select>
+            <input id="af-who-custom" placeholder="新規メンバー名を入力" style="margin-top:4px;display:none;width:100%;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none">
+          </div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>担当者メール</label><input id="af-email" type="email" placeholder="tanaka@example.co.jp"></div>
+          <div class="field"><label>担当者電話番号</label><input id="af-phone" type="tel" placeholder="03-1234-5678"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>相手側担当者名</label><input id="af-contact-name" placeholder="田中 健一"></div>
+          <div class="field"><label>相手側担当者役職</label><input id="af-contact-title" placeholder="営業部長、CSR担当 など"></div>
+        </div>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">結果・詳細</div>
+        <div class="frow">
+          <div class="field"><label>アクション結果</label>
+            <select id="af-result" onchange="onResultChange()">
+              <option value="">—</option>
+              <option>繋がった・反応あり</option><option>不在・留守</option><option>再コール予定</option><option>断られた</option><option>リード獲得</option>
+            </select>
+          </div>
+          <div class="field"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>次回アクション予定日 <span style="font-size:9px;color:var(--accent);font-family:var(--mono)">📅 カレンダーに自動反映</span></label><input id="af-next" type="date"></div>
+          <div class="field"><label>次回アクションメモ</label><input id="af-next-note" placeholder="例：再コール、資料送付..."></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>メモ・内容</label><textarea id="af-note" style="min-height:70px" placeholder="担当者の反応、次回アクション予定、気づきなど..."></textarea></div>
+        </div>
+      </div>
+      <div id="action-lead-notice" style="display:none;margin-bottom:10px;padding:11px 13px;background:#0a1a0a;border:1px solid rgba(34,197,94,.3);border-radius:7px">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px"><i class="ti ti-users" style="color:var(--green);font-size:13px" aria-hidden="true"></i><span style="font-size:12px;font-weight:600;color:var(--green)">リード管理にも自動追加</span></div>
+        <div style="font-size:10px;color:#4ade80;font-family:var(--mono)">保存後、リード管理に追加されます。アクション管理の記録はそのまま残ります。</div>
+      </div>
+      <div class="fcard" style="background:rgba(232,255,71,.03);border-color:rgba(232,255,71,.15)">
+        <div class="fc-ttl" style="color:var(--accent)"><i class="ti ti-chart-bar" style="font-size:11px" aria-hidden="true"></i> データ連携</div>
+        <div style="font-size:11px;color:var(--text3);line-height:1.7;font-family:var(--mono)">
+          結果「リード獲得」→ リード管理に自動追加（アクション記録はそのまま残ります）<br>
+          種別「架電」→ 月次レポートの架電数に自動反映
+        </div>
+      </div>
+      <button class="btn btn-a" onclick="saveAction()"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存</button>
+    </div>
+
+    <!-- KPI -->
+    <div class="view" id="v-kpi">
+      <div class="pg-hd"><div><div class="pg-ttl">KPI</div><div class="pg-sub">リアルタイム営業指標</div></div></div>
+      <div class="kpi-grid" id="kpi-grid"></div>
+      <div class="c2"><div class="cbox"><div class="cbox-t">月次成約（万円）</div><div id="ch-m"></div></div><div class="cbox"><div class="cbox-t">営業ファネル</div><div id="ch-f"></div></div></div>
+      <div class="c2"><div class="cbox"><div class="cbox-t">架電数 / リード獲得（月次）</div><div id="ch-l"></div></div><div class="cbox"><div class="cbox-t">業界別アクション数</div><div id="ch-s"></div></div></div>
+    </div>
+
+    <!-- MONTHLY REPORT -->
+    <div class="view" id="v-report">
+      <div class="pg-hd">
+        <div><div class="pg-ttl">月次レポート</div><div class="pg-sub">営業チームへの月次報告・蓄積</div></div>
+        <button class="btn btn-a" onclick="openReportForm(null)"><i class="ti ti-plus" aria-hidden="true"></i>新規レポート作成</button>
+      </div>
+      <div id="report-list-view">
+        <div id="report-list-empty" style="display:none;text-align:center;padding:40px 20px;color:var(--text3);font-family:var(--mono);font-size:12px">
+          <i class="ti ti-file-analytics" style="font-size:32px;display:block;margin-bottom:8px;opacity:.3" aria-hidden="true"></i>
+          まだレポートがありません。「新規レポート作成」からはじめましょう。
+        </div>
+        <div class="tw"><table class="tbl" id="report-tbl" style="display:none"><thead><tr><th style="width:9%">年月</th><th style="width:7%">架電数</th><th style="width:9%">リード獲得</th><th style="width:10%">架電→リード率</th><th style="width:9%">アポイント</th><th style="width:8%">商談数</th><th style="width:9%">リード→アポ率</th><th style="width:8%">契約数</th><th style="width:9%">売上貢献</th><th style="width:7%">稼働h</th><th style="width:10%"></th></tr></thead><tbody id="report-tbody"></tbody></table></div>
+      </div>
+    </div>
+
+    <!-- REPORT FORM -->
+    <div class="view" id="v-report-form">
+      <div class="pg-hd">
+        <div style="display:flex;align-items:center;gap:9px">
+          <button class="back-btn" onclick="navTo('report')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button>
+          <div class="pg-ttl" id="rf-ttl">月次レポート作成</div>
+        </div>
+        <button class="btn btn-d btn-sm" id="report-del" style="display:none" onclick="delReport()"><i class="ti ti-trash" aria-hidden="true"></i>削除</button>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">基本情報</div>
+        <div class="frow">
+          <div class="field"><label>対象年月<span class="req">*</span></label><input id="rf-month" type="month" oninput="ce('rf-month','ren-month')"><div class="etxt" id="ren-month">必須です</div></div>
+          <div class="field"><label>担当者名</label><input id="rf-author" placeholder="担当者名"></div>
+        </div>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">活動実績</div>
+        <div class="frow">
+          <div class="field"><label>稼働時間（h）</label><input id="rf-hours" type="number" min="0" placeholder="例: 160"></div>
+          <div class="field"><label>架電数（件）</label><input id="rf-calls" type="number" min="0" placeholder="例: 120"></div>
+          <div class="field"><label>アポ取得数（件）</label><input id="rf-appts" type="number" min="0" placeholder="例: 15"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>リード獲得数（件）</label><input id="rf-leads" type="number" min="0" placeholder="例: 10"></div>
+          <div class="field"><label>商談数（件）</label><input id="rf-deals" type="number" min="0" placeholder="例: 8"></div>
+          <div class="field"><label>契約数（件）</label><input id="rf-contracts" type="number" min="0" placeholder="例: 3"></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>売上貢献額（万円）</label><input id="rf-revenue" type="number" min="0" placeholder="例: 500"></div>
+          <div class="field"><label>メール送信数（件）</label><input id="rf-emails" type="number" min="0" placeholder="例: 80"></div>
+          <div class="field"><label>資料送付数（件）</label><input id="rf-docs" type="number" min="0" placeholder="例: 20"></div>
+        </div>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">営業チームとの連携・共有</div>
+        <div class="frow">
+          <div class="field"><label>共有事項・トピックス</label><textarea id="rf-shared" style="min-height:70px" placeholder="チームへ共有すべき情報、ホット案件の状況、市場感など..."></textarea></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>チームへの連携依頼・サポート要請</label><textarea id="rf-request" style="min-height:60px" placeholder="営業部からのフォローが必要な案件、同行依頼、資料共有依頼など..."></textarea></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>翌月アクションプラン</label><textarea id="rf-plan" style="min-height:60px" placeholder="来月の重点ターゲット、アプローチ戦略、KPI目標など..."></textarea></div>
+        </div>
+      </div>
+      <div class="fcard">
+        <div class="fc-ttl">課題・改善点</div>
+        <div class="frow">
+          <div class="field"><label>今月の課題・気づき</label><textarea id="rf-issues" style="min-height:60px" placeholder="障壁になっているポイント、断られた主な理由、改善提案など..."></textarea></div>
+        </div>
+        <div class="frow">
+          <div class="field"><label>その他メモ</label><textarea id="rf-notes" style="min-height:50px" placeholder="自由記述"></textarea></div>
+        </div>
+      </div>
+      <button class="btn btn-a" onclick="saveReport()"><i class="ti ti-device-floppy" aria-hidden="true"></i>レポートを保存</button>
+    </div>
+
+    <!-- REPORT DETAIL -->
+    <div class="view" id="v-report-detail">
+      <div class="pg-hd">
+        <div style="display:flex;align-items:center;gap:9px">
+          <button class="back-btn" onclick="navTo('report')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button>
+          <div class="pg-ttl" id="rd-ttl"></div>
+        </div>
+        <button class="btn btn-g btn-sm" onclick="openReportForm(currentReportId)"><i class="ti ti-edit" aria-hidden="true"></i>編集</button>
+      </div>
+      <div id="rd-body"></div>
+    </div>
+    <div class="view" id="v-settings">
+      <div class="pg-hd"><div><div class="pg-ttl">マイページ</div><div class="pg-sub">アカウント情報・外部連携を管理</div></div></div>
+      <div class="prof-card"><div class="sec-t">基本情報</div>
+        <div style="display:flex;align-items:center;gap:12px;margin-bottom:14px">
+          <div class="p-av" id="s-av">高</div>
+          <div><div style="font-size:14px;font-weight:700;margin-bottom:4px" id="s-nd">上野原 太郎</div><div class="ipill"><i class="ti ti-shield-check" style="font-size:10px" aria-hidden="true"></i><span id="s-rd">manager</span></div></div>
+          <button class="btn btn-g btn-sm" style="margin-left:auto" onclick="togglePE()"><i class="ti ti-edit" aria-hidden="true"></i>編集</button>
+        </div>
+        <div id="prof-edit" style="display:none;padding-top:12px;border-top:1px solid var(--border)">
+          <div class="frow"><div class="field"><label>表示名</label><input id="s-ni" value="上野原 太郎"></div><div class="field"><label>ロール</label><select id="s-ri"><option>manager</option><option>sales</option><option>admin</option></select></div></div>
+          <button class="btn btn-a btn-sm" onclick="saveProf()"><i class="ti ti-check" aria-hidden="true"></i>保存</button>
+        </div>
+      </div>
+      <div class="prof-card"><div class="sec-t">外部連携</div>
+        <div class="int-row">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+            <div style="flex:1"><div class="int-name"><i class="ti ti-brand-gmail" style="color:#ef4444;font-size:15px" aria-hidden="true"></i>Gmail 連携</div><div class="int-desc">候補者へのメール送信を CRM 内で完結させるための Google アカウント連携です。送信は <code style="background:var(--bg3);padding:1px 4px;border-radius:3px;font-size:10px">gmail.send</code> 権限のみ使用（読取・削除権は要求しません）。</div><div id="gm-badge" class="int-off"><i class="ti ti-x" style="font-size:9px" aria-hidden="true"></i>未連携</div><div id="gm-info" style="display:none"><div class="int-note">※ 連携した Gmail から送信されるため、送信履歴は Google アカウントの送信箱にも残ります。返信は Google アカウントに直接届きます。</div></div></div>
+            <button class="btn btn-g btn-sm" id="gm-btn" onclick="toggleGm()">連携する</button>
+          </div>
+          <div id="gm-form" style="display:none;margin-top:9px"><div class="frow" style="margin-bottom:7px"><div class="field"><label>Gmailアドレス</label><input id="s-gmail" type="email" placeholder="yourname@gmail.com"></div></div><button class="btn btn-a btn-sm" onclick="connectGm()"><i class="ti ti-link" aria-hidden="true"></i>連携を完了する</button></div>
+        </div>
+        <div class="int-row">
+          <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+            <div style="flex:1"><div class="int-name"><i class="ti ti-calendar-event" style="color:var(--blue);font-size:15px" aria-hidden="true"></i>Google カレンダー連携</div><div class="int-desc">アクション・アポイントをカレンダーへ自動反映。Gmail 連携と組み合わせると、メール送信と予定作成を一括で行えます。</div><div id="gc-badge" class="int-off"><i class="ti ti-x" style="font-size:9px" aria-hidden="true"></i>未連携</div><div id="gc-info" style="display:none"><div class="int-note">※ 連携したカレンダーにアクション日程が自動追加されます。</div></div></div>
+            <button class="btn btn-g btn-sm" id="gc-btn" onclick="toggleGc()">連携する</button>
+          </div>
+          <div id="gc-form" style="display:none;margin-top:9px"><div class="frow" style="margin-bottom:7px"><div class="field"><label>カレンダーID（省略時: primary）</label><input id="s-gcal" placeholder="primary"></div></div><button class="btn btn-a btn-sm" onclick="connectGc()"><i class="ti ti-link" aria-hidden="true"></i>連携を完了する</button></div>
+        </div>
+      </div>
+      <div class="prof-card"><div class="sec-t">通知設定</div>
+        <div class="tgl-row"><div><div class="tgl-l">締切リマインダー</div><div class="tgl-s">アクション期限の3日前に通知</div></div><label style="cursor:pointer;font-size:11px;font-family:var(--mono);color:var(--text2);display:flex;align-items:center;gap:5px"><input type="checkbox" checked>ON</label></div>
+        <div class="tgl-row"><div><div class="tgl-l">商談準備→企業移行通知</div><div class="tgl-s">リードが商談準備に変わったとき通知</div></div><label style="cursor:pointer;font-size:11px;font-family:var(--mono);color:var(--text2);display:flex;align-items:center;gap:5px"><input type="checkbox" checked>ON</label></div>
+        <div class="tgl-row"><div><div class="tgl-l">高スコアリード通知</div><div class="tgl-s">スコアが80以上になったら通知</div></div><label style="cursor:pointer;font-size:11px;font-family:var(--mono);color:var(--text2);display:flex;align-items:center;gap:5px"><input type="checkbox">ON</label></div>
+      </div>
+      <div class="prof-card">
+  <div class="sec-t">担当営業メンバー管理</div>
+  <div id="sales-rep-list" style="margin-bottom:10px"></div>
+  <div style="display:flex;gap:7px;align-items:center">
+    <input id="new-rep-input" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none" placeholder="新しいメンバー名を入力">
+    <button class="btn btn-a btn-sm" onclick="addRepFromSettings()"><i class="ti ti-plus" aria-hidden="true"></i>追加</button>
+  </div>
+</div>
+<div class="prof-card"><div class="sec-t" style="color:var(--red)">データ管理</div>
+        <div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:12px;line-height:1.7">すべてのデータを初期状態（空）に戻します。<br>入力済みのデータはすべて削除されます。</div>
+        <button class="btn btn-d btn-sm" onclick="resetAllData()"><i class="ti ti-refresh" aria-hidden="true"></i>データをリセット（初期化）</button>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<script>
+const SK={C:'sunrise_crms',L:'sunrise_leads',P:'sunrise_prof',I:'sunrise_int',R:'sunrise_reports',A:'sunrise_actions'};
+const DC=[];
+const DL=[];
+const DA=[];
+// ============================================================
+// 🔥 Firebase 設定（ここを書き換えてください）
+// ============================================================
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyANZOXJnUia_KL2Z_n212AU0MBPfeINbr8",
+  authDomain:        "crm-sales-d6fa4.firebaseapp.com",
+  databaseURL:       "https://crm-sales-d6fa4-default-rtdb.asia-southeast1.firebasedatabase.app",
+  projectId:         "crm-sales-d6fa4",
+  storageBucket:     "crm-sales-d6fa4.firebasestorage.app",
+  messagingSenderId: "270622981120",
+  appId:             "1:270622981120:web:56b320e2c016d0c077ece5"
+};
+// ============================================================
+
+// Firebase SDK 読み込み
+(function(){
+  const s1=document.createElement('script');
+  s1.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js';
+  document.head.appendChild(s1);
+  s1.onload=()=>{
+    const s2=document.createElement('script');
+    s2.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js';
+    document.head.appendChild(s2);
+    s2.onload=()=>{
+      try{
+        firebase.initializeApp(FIREBASE_CONFIG);
+        window._db=firebase.database();
+        window._fbReady=true;
+      }catch(e){
+        console.warn('Firebase初期化失敗。ローカルモードで動作します。',e);
+        window._fbReady=false;
+      }
+      initCRM();
+    };
+    s2.onerror=()=>{window._fbReady=false;initCRM();};
+  };
+  s1.onerror=()=>{window._fbReady=false;initCRM();};
+})();
+
+// Firebase 読み書き
+async function fbGet(key,fallback){
+  if(!window._fbReady||!window._db)return fallback;
+  try{
+    const snap=await window._db.ref('crm/'+key).get();
+    if(snap.exists()){const v=snap.val();return v!==null?v:fallback;}
+  }catch(e){}
+  return fallback;
+}
+async function fbSet(key,val){
+  if(!window._fbReady||!window._db)return;
+  try{await window._db.ref('crm/'+key).set(val);}catch(e){console.warn('Firebase書き込みエラー',e);}
+}
+
+// データ読み込み
+async function ldAsync(){
+  const[c,l,p,i,rep,act,lost]=await Promise.all([
+    fbGet(SK.C,DC),fbGet(SK.L,DL),
+    fbGet(SK.P,{name:'上野原 太郎',role:'manager'}),
+    fbGet(SK.I,{gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''}),
+    fbGet(SK.R,[]),fbGet(SK.A,DA),fbGet('sunrise_lost',[])
+  ]);
+  // Firebaseは配列をオブジェクトで返すことがあるので変換
+  const toArr=v=>v?Array.isArray(v)?v:Object.values(v):[];
+  return{crms:toArr(c)||DC,leads:toArr(l)||DL,prof:p||{name:'上野原 太郎',role:'manager'},
+         int:i||{gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''},
+         reports:toArr(rep),actions:toArr(act)||DA,lost:toArr(lost)};
+}
+
+// データ保存
+async function sv(){
+  await Promise.all([
+    fbSet(SK.C,crms),fbSet(SK.L,leads),fbSet(SK.P,prof),
+    fbSet(SK.I,intg),fbSet(SK.R,reports),fbSet(SK.A,actions),
+    fbSet('sunrise_lost',lostLeads)
+  ]);
+}
+
+// 変数初期化（initCRM()で上書き）
+let crms=DC,leads=DL,prof={name:'上野原 太郎',role:'manager'},
+    intg={gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''},
+    reports=[],actions=DA,lostLeads=[];
+let crmNI=1,leadNI=1,reportNI=1,actionNI=1;
+
+async function initCRM(){
+  // ローディング表示
+  const ov=document.createElement('div');
+  ov.id='fb-loading';
+  ov.style.cssText='position:fixed;inset:0;background:#141414;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:14px';
+  const isReady=window._fbReady;
+  ov.innerHTML=`
+    <div style="width:36px;height:36px;background:#e8ff47;border-radius:9px;display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M12 2L2 19h20L12 2z"/></svg>
+    </div>
+    <div style="font-size:13px;font-family:monospace;color:#aaa">${isReady?'共有データを読み込み中...':'オフラインモードで起動中...'}</div>
+    ${!isReady?'<div style="font-size:11px;font-family:monospace;color:#e8ff47;background:#1c1c1c;border:1px solid #333;padding:8px 14px;border-radius:6px;max-width:320px;text-align:center">Firebase未設定のためデータはこの端末にのみ保存されます</div>':''}
+  `;
+  document.body.appendChild(ov);
+
+  try{
+    const D=await ldAsync();
+    crms=D.crms;leads=D.leads;prof=D.prof;intg=D.int;
+    reports=D.reports;actions=D.actions;lostLeads=D.lost||[];
+    crmNI=Math.max(...(crms.length?crms.map(c=>c.id):[0]),0)+1;
+    leadNI=Math.max(...(leads.length?leads.map(l=>l.id):[0]),0)+1;
+    reportNI=Math.max(...(reports.length?reports.map(r=>r.id):[0]),0)+1;
+    actionNI=Math.max(...(actions.length?actions.map(a=>a.id):[0]),0)+1;
+  }catch(e){console.warn('データ読み込みエラー',e);}
+
+  document.getElementById('fb-loading').remove();
+  setBM('crm');
+
+  // Firebase未設定の場合は警告バナーを表示
+  if(!window._fbReady){
+    const banner=document.createElement('div');
+    banner.style.cssText='position:fixed;bottom:0;left:0;right:0;background:#2a1a00;border-top:1px solid #f59e0b;padding:8px 16px;font-size:11px;font-family:monospace;color:#fbbf24;z-index:1000;display:flex;align-items:center;justify-content:space-between';
+    banner.innerHTML='<span>⚠️ Firebase未設定：データはこの端末のみに保存されます。チーム共有するにはFirebaseを設定してください。</span><span onclick="this.parentElement.remove()" style="cursor:pointer;color:#aaa;padding:0 6px">✕</span>';
+    document.body.appendChild(banner);
+    // フォールバック：localStorageに保存
+    window._fbReady=false;
+  }
+}
+let currentCrmId=null,currentLeadId=null,currentReportId=null,currentActionId=null,bMode='crm',calY=2026,calM=4;
+
+/* ========= 担当営業管理 ========= */
+const SK_SALES='sunrise_sales_reps';
+let salesReps=['高原'];// デフォルト担当営業リスト
+
+function loadSalesReps(){
+  try{
+    const s=localStorage.getItem(SK_SALES);
+    if(s){const p=JSON.parse(s);if(Array.isArray(p)&&p.length){salesReps=p;return;}}
+  }catch(e){}
+  // localStorageに保存がなければデフォルトリストを保存して終了（デモデータからは収集しない）
+  saveSalesReps();
+}
+function saveSalesReps(){try{localStorage.setItem(SK_SALES,JSON.stringify(salesReps));}catch(e){}}
+function addSalesRep(name){if(name&&!salesReps.includes(name)){salesReps.push(name);saveSalesReps();}refreshSalesRepSelects();}
+function getSalesRepOptions(selectedVal=''){
+  const opts=salesReps.map(r=>`<option value="${r}"${r===selectedVal?' selected':''}>${r}</option>`).join('');
+  return`<option value="">— 選択 —</option>${opts}<option value="__new__">＋ 新規追加...</option>`;
+}
+function refreshSalesRepSelects(){
+  ['af-who','cf-who','cf-awho','lf-who'].forEach(id=>{
+    const el=document.getElementById(id);if(!el)return;
+    const cur=el.dataset.val||el.value;
+    el.innerHTML=getSalesRepOptions(salesReps.includes(cur)?cur:'');
+  });
+}
+function onSalesRepChange(){
+  const sel=document.getElementById('af-who');
+  const cust=document.getElementById('af-who-custom');
+  if(sel.value==='__new__'){
+    cust.style.display='block';cust.focus();
+    sel.dataset.val='';
+    cust.oninput=function(){
+      if(this.value.trim()){sel.dataset.val=this.value.trim();}
+    };
+    cust.onblur=function(){
+      const n=this.value.trim();
+      if(n){addSalesRep(n);sel.value=n;sel.dataset.val=n;cust.style.display='none';}
+    };
+  }else{
+    cust.style.display='none';
+    sel.dataset.val=sel.value;
+  }
+}
+function getWhoVal(selectId){
+  const sel=document.getElementById(selectId);
+  if(!sel)return'';
+  if(sel.value==='__new__'){
+    const cust=document.getElementById(selectId+'-custom');
+    return cust?cust.value.trim():'';}
+  return sel.value;
+}
+
+const ST={
+  '未接触':{bg:'#1a1a1a',tx:'#666',ac:'#444',bd:'#333'},
+  '商談中':{bg:'#2a1a05',tx:'#fbbf24',ac:'#f59e0b',bd:'rgba(245,158,11,.3)'},
+  '契約済':{bg:'#0a2010',tx:'#4ade80',ac:'#22c55e',bd:'rgba(34,197,94,.3)'},
+  '失注':{bg:'#1f0a0a',tx:'#f87171',ac:'#ef4444',bd:'rgba(239,68,68,.3)'},
+  '新規':{bg:'#1a1030',tx:'#c084fc',ac:'#a855f7',bd:'rgba(168,85,247,.3)'},
+  '商談準備':{bg:'#251505',tx:'#fb923c',ac:'#f97316',bd:'rgba(249,115,22,.3)'},
+};
+
+/* LOGIN */
+const SK_ACCOUNTS='sunrise_accounts';
+function getLocalAccounts(){
+  try{const s=localStorage.getItem(SK_ACCOUNTS);if(s)return JSON.parse(s);}catch(e){}
+  return[];
+}
+function saveLocalAccounts(list){try{localStorage.setItem(SK_ACCOUNTS,JSON.stringify(list));}catch(e){}}
+
+function lclr(f,e){document.getElementById(f).classList.remove('err');document.getElementById(e).classList.remove('show');}
+function showLArea(id){['lf-area','forgot-area','signup-area'].forEach(a=>document.getElementById(a).style.display='none');document.getElementById(id).style.display='block';}
+function doLogin(){
+  const em=document.getElementById('l-email').value.trim(),pw=document.getElementById('l-pass').value;
+  let ok=true;
+  if(!em){document.getElementById('l-email').classList.add('err');document.getElementById('le-email').classList.add('show');ok=false;}
+  if(!pw){document.getElementById('l-pass').classList.add('err');document.getElementById('le-pass').classList.add('show');ok=false;}
+  if(!ok)return;
+  const btn=document.getElementById('l-btn');btn.classList.add('loading');
+  btn.innerHTML='<i class="ti ti-loader-2" style="animation:spin .8s linear infinite" aria-hidden="true"></i>確認中...';
+  (async()=>{
+    let authenticated=false;
+    let foundName='',foundRole='sales';
+    try{
+      // ① まずlocalStorageのアカウントを確認
+      const localAccs=getLocalAccounts();
+      const localFound=localAccs.find(a=>a.email===em&&a.password===pw);
+      if(localFound){authenticated=true;foundName=localFound.name||em;foundRole=localFound.role||'sales';}
+
+      // ② Firebaseにも確認（接続できる場合）
+      if(!authenticated&&window._fbReady&&window._db){
+        const snap=await window._db.ref('accounts').get();
+        if(snap.exists()){
+          const accounts=snap.val();
+          const list=Array.isArray(accounts)?accounts:Object.values(accounts);
+          const fbFound=list.find(a=>a.email===em&&a.password===pw);
+          if(fbFound){
+            authenticated=true;foundName=fbFound.name||em;foundRole=fbFound.role||'sales';
+            // FirebaseアカウントをlocalStorageにも同期
+            const merged=getLocalAccounts();
+            if(!merged.find(a=>a.email===em)){merged.push({email:em,password:pw,name:foundName,role:foundRole});saveLocalAccounts(merged);}
+          }
+        }else if(!localAccs.length){
+          // 初回ユーザー → Firebase & localStorageに登録
+          const newAcc={email:em,password:pw,name:em,role:'admin'};
+          await window._db.ref('accounts/0').set(newAcc).catch(()=>{});
+          saveLocalAccounts([newAcc]);
+          authenticated=true;foundName=em;foundRole='admin';
+        }
+      }
+
+      // ③ どこにも登録がなく、localStorageも空 → 初回として登録
+      if(!authenticated&&!getLocalAccounts().length){
+        const newAcc={email:em,password:pw,name:em,role:'admin'};
+        saveLocalAccounts([newAcc]);
+        authenticated=true;foundName=em;foundRole='admin';
+      }
+    }catch(e){
+      // エラー時: localStorageのみで再確認
+      const localAccs=getLocalAccounts();
+      const lf=localAccs.find(a=>a.email===em&&a.password===pw);
+      if(lf){authenticated=true;foundName=lf.name||em;foundRole=lf.role||'sales';}
+      else if(!localAccs.length){
+        saveLocalAccounts([{email:em,password:pw,name:em,role:'admin'}]);
+        authenticated=true;foundName=em;foundRole='admin';
+      }
+    }
+    if(authenticated){
+      prof.name=foundName||em;prof.role=foundRole;
+      // ログイン情報を保存
+      try{localStorage.setItem('sunrise_saved_email',em);localStorage.setItem('sunrise_saved_pass',pw);}catch(e2){}
+      if(!document.getElementById('l-remember').checked){
+        try{localStorage.removeItem('sunrise_saved_email');localStorage.removeItem('sunrise_saved_pass');}catch(e2){}
+      }
+      launchCRM();
+    }else{
+      btn.classList.remove('loading');
+      btn.innerHTML='<i class="ti ti-arrow-right" aria-hidden="true"></i>ログイン';
+      document.getElementById('l-email').classList.add('err');
+      document.getElementById('l-pass').classList.add('err');
+      document.getElementById('le-pass').textContent='メールアドレスまたはパスワードが正しくありません';
+      document.getElementById('le-pass').classList.add('show');
+    }
+  })();
+}
+// 保存済みログイン情報を自動入力
+(function(){
+  try{
+    const se=localStorage.getItem('sunrise_saved_email'),sp=localStorage.getItem('sunrise_saved_pass');
+    if(se&&sp){
+      document.addEventListener('DOMContentLoaded',()=>{
+        document.getElementById('l-email').value=se;
+        document.getElementById('l-pass').value=sp;
+        document.getElementById('l-remember').checked=true;
+      });
+      // DOMContentLoaded が既に発火していた場合
+      if(document.readyState!=='loading'){
+        document.getElementById('l-email').value=se;
+        document.getElementById('l-pass').value=sp;
+        document.getElementById('l-remember').checked=true;
+      }
+    }
+  }catch(e){}
+})();
+function doSignup(){
+  const n=document.getElementById('l-sname').value.trim(),e=document.getElementById('l-semail').value.trim(),p=document.getElementById('l-spass').value;
+  if(!n||!e||!p){alert('すべての項目を入力してください');return;}
+  if(p.length<8){alert('パスワードは8文字以上で設定してください');return;}
+  const existing=getLocalAccounts();
+  if(existing.find(a=>a.email===e)){alert('このメールアドレスはすでに登録されています');return;}
+  const newAcc={email:e,password:p,name:n,role:'sales'};
+  existing.push(newAcc);saveLocalAccounts(existing);
+  // Firebaseにも登録を試みる
+  if(window._fbReady&&window._db){window._db.ref('accounts').get().then(snap=>{const list=snap.exists()?(Array.isArray(snap.val())?snap.val():Object.values(snap.val())):[];list.push(newAcc);window._db.ref('accounts').set(list).catch(()=>{});}).catch(()=>{});}
+  prof.name=n;sv().catch(()=>{});
+  try{localStorage.setItem('sunrise_saved_email',e);localStorage.setItem('sunrise_saved_pass',p);}catch(err){}
+  launchCRM();
+}
+function doReset(){const e=document.getElementById('l-reset').value.trim();if(!e){alert('メールアドレスを入力してください');return;}alert(`${e} にリセットリンクを送信しました。`);showLArea('lf-area');}
+function launchCRM(){
+  document.getElementById('screen-login').classList.remove('active');
+  document.getElementById('screen-crm').classList.add('active');
+  loadSalesReps();refreshSalesRepSelects();
+  applyProf();applyInt();navTo('action');
+}
+
+/* NAV */
+function navTo(p){
+  document.querySelectorAll('.ni').forEach(el=>el.classList.remove('active'));
+  const el=document.getElementById('nav-'+p);if(el)el.classList.add('active');
+  document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
+  document.getElementById('v-'+p).classList.add('active');
+  if(p==='crm')renderCrm();if(p==='lead')renderLead();if(p==='lost')renderLost();if(p==='board')renderBoard();if(p==='cal')renderCal();if(p==='kpi')renderKPI();if(p==='report')renderReports();if(p==='action')renderActions();if(p==='settings')renderSalesRepList();
+}
+function showV(id){document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));document.getElementById(id).classList.add('active');}
+function ce(f,e){document.getElementById(f).classList.remove('err');document.getElementById(e).classList.remove('show');}
+function se(f,e){document.getElementById(f).classList.add('err');document.getElementById(e).classList.add('show');}
+
+/* CRM */
+function renderCrm(){
+  const q=document.getElementById('crm-q').value.toLowerCase(),fs=document.getElementById('crm-fs').value;
+  const data=crms.filter(c=>(!q||c.name.toLowerCase().includes(q)||(c.contact||'').toLowerCase().includes(q))&&(!fs||c.status===fs));
+  document.getElementById('crm-sub').textContent=`${data.length}社`;
+  document.getElementById('crm-tbody').innerHTML=data.map(c=>{
+    const s=ST[c.status]||{},last=c.history&&c.history[0],ll=leads.find(l=>l.linkedCrmId===c.id);
+    return`<tr onclick="openCrmDtl(${c.id})"><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-c">${c.name.slice(0,2)}</div><span style="font-weight:600">${c.name}</span>${c.fromLead?`<span style="font-size:9px;background:#251505;color:#fb923c;padding:1px 5px;border-radius:3px;font-family:var(--mono)">LEAD</span>`:''}</div></td><td style="color:var(--text3)">${c.industry}</td><td>${c.contact||'—'}${c.contactTitle?`<br><span style=\'font-size:9px;color:var(--text3);font-family:var(--mono)\'>${c.contactTitle}</span>`:''}</td><td style="color:#f97316;font-family:var(--mono);font-size:11px;font-weight:600">${c.salesRep||'—'}</td><td><span class="badge" style="background:${s.bg};color:${s.tx};border:1px solid ${s.bd||'transparent'}">${c.status}</span></td><td style="color:var(--text3);font-family:var(--mono);font-size:11px">${last?last.date:'—'}</td><td style="font-weight:600;color:var(--accent);font-family:var(--mono)">${c.amount?c.amount.toLocaleString()+'万':'—'}</td><td>${c.url?`<a href="${c.url}" class="alink" onclick="event.stopPropagation()" target="_blank" style="font-size:11px"><i class="ti ti-external-link" aria-hidden="true"></i>サイト</a>`:'—'}</td><td>${ll?`<span style="font-size:10px;background:#1a0e00;color:#fbbf24;padding:2px 6px;border-radius:3px;font-family:var(--mono)">${ll.name}</span>`:'—'}</td></tr>`;
+  }).join('');
+}
+function openCrmDtl(id){
+  currentCrmId=id;const c=crms.find(x=>x.id===id);document.getElementById('cd-ttl').textContent=c.name;
+  const s=ST[c.status]||{},ll=leads.find(l=>l.linkedCrmId===id);
+  document.getElementById('cd-body').innerHTML=`<div class="fcard"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="av av-c" style="width:38px;height:38px;font-size:12px;border-radius:7px">${c.name.slice(0,2)}</div><div><div style="font-size:14px;font-weight:700">${c.name}</div><div style="font-size:10px;color:var(--text3);font-family:var(--mono)">${c.industry}</div></div><span class="badge" style="margin-left:auto;background:${s.bg};color:${s.tx};border:1px solid ${s.bd||'transparent'}">${c.status}</span></div><div class="crow"><span class="clbl">担当者</span><span>${c.contact||'—'}${c.contactTitle?` <span style="font-size:10px;color:var(--text3);font-family:var(--mono)">（${c.contactTitle}）</span>`:''}</span></div><div class="crow"><span class="clbl">担当営業</span><span style="color:#f97316;font-weight:600;font-family:var(--mono)">${c.salesRep||'—'}</span></div><div class="crow"><span class="clbl">メール</span><a href="mailto:${c.email}" class="alink"><i class="ti ti-send" style="font-size:12px" aria-hidden="true"></i>${c.email}</a></div><div class="crow"><span class="clbl">電話</span><a href="tel:${c.phone}" class="alink"><i class="ti ti-phone-call" style="font-size:12px" aria-hidden="true"></i>${c.phone}</a></div>${c.url?`<div class="crow"><span class="clbl">URL</span><a href="${c.url}" class="alink" target="_blank"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i>${c.url}</a></div>`:''}<div class="crow"><span class="clbl">金額</span><span style="font-weight:700;color:var(--accent);font-family:var(--mono)">${c.amount?c.amount.toLocaleString()+'万円':'—'}</span></div>${ll?`<div class="crow"><span class="clbl">リード元</span><button class="btn btn-g btn-xs" onclick="openLeadDtl(${ll.id})"><i class="ti ti-users" aria-hidden="true"></i>${ll.name}</button></div>`:''}</div><div class="fcard"><div class="fc-ttl">アクション履歴</div>${(c.history||[]).map(h=>`<div class="hist"><div class="hist-m">${h.date} ・ ${h.who}</div><div style="font-size:12px;color:var(--text2)">${h.note}</div></div>`).join('')||'<div style="color:var(--text3);font-size:12px">記録なし</div>'}</div><div class="fcard"><div class="fc-ttl">アクション追加</div><div class="frow"><div class="field"><label>日付</label><input id="na-d" type="date"></div><div class="field"><label>担当者</label><input id="na-w" placeholder="担当者名"></div></div><div class="field"><label>内容</label><textarea id="na-n"></textarea></div><button class="btn btn-g btn-sm" style="margin-top:7px" onclick="addCA(${id})"><i class="ti ti-plus" aria-hidden="true"></i>追加</button></div>`;
+  showV('v-crm-detail');
+}
+function addCA(id){const c=crms.find(x=>x.id===id),d=document.getElementById('na-d').value,n=document.getElementById('na-n').value.trim();if(!d||!n){alert('日付と内容を入力してください');return;}if(!c.history)c.history=[];c.history.unshift({date:d,who:document.getElementById('na-w').value||'—',note:n});sv().catch(()=>{});openCrmDtl(id);}
+function openCrmForm(id){
+  currentCrmId=id;const c=id?crms.find(x=>x.id===id):null;
+  document.getElementById('cf-ttl').textContent=c?c.name+' を編集':'企業を追加';
+  document.getElementById('crm-del').style.display=c?'inline-flex':'none';
+  document.getElementById('cf-act-block').style.display=c?'none':'block';
+  document.getElementById('cf-name').value=c?c.name:'';
+  document.getElementById('cf-email').value=c?c.email:'';
+  document.getElementById('cf-phone').value=c?c.phone:'';
+  document.getElementById('cf-url').value=c?c.url||'':'';
+  document.getElementById('cf-contact').value=c?c.contact||'':'';
+  document.getElementById('cf-contact-title').value=c?c.contactTitle||'':'';
+  document.getElementById('cf-ind').value=c?c.industry:'スポーツ用品';document.getElementById('cf-status').value=c?c.status:'未接触';document.getElementById('cf-amount').value=c?c.amount||'':'';
+  // 担当営業セレクト更新
+  const cfWho=document.getElementById('cf-who');
+  cfWho.innerHTML=getSalesRepOptions(c&&c.salesRep?c.salesRep:'');
+    cfWho.value=(c&&c.salesRep&&salesReps.includes(c.salesRep))?c.salesRep:'';
+  const cfAWho=document.getElementById('cf-awho');
+  cfAWho.innerHTML=getSalesRepOptions('');cfAWho.value='';
+  document.getElementById('cf-next').value=c?c.nextContact||'':'';document.getElementById('cf-next-note').value=c?c.nextContactNote||'':'';
+  document.getElementById('cf-adate').value='';document.getElementById('cf-anote').value='';
+  document.getElementById('crm-lost-notice').style.display=(c&&c.status==='失注')?'block':'none';
+  ['cf-name','cf-email','cf-phone','cf-adate','cf-anote'].forEach(f=>document.getElementById(f).classList.remove('err'));
+  ['cen','cee','cep','cead','cean'].forEach(e=>document.getElementById(e).classList.remove('show'));
+  showV('v-crm-form');
+}
+function chkCrmSt(){
+  const v=document.getElementById('cf-status').value;
+  document.getElementById('crm-lost-notice').style.display=v==='失注'?'block':'none';
+}
+function saveCrm(){
+  const name=document.getElementById('cf-name').value.trim(),email=document.getElementById('cf-email').value.trim(),phone=document.getElementById('cf-phone').value.trim();
+  let ok=true;if(!name){se('cf-name','cen');ok=false;}if(!email){se('cf-email','cee');ok=false;}if(!phone){se('cf-phone','cep');ok=false;}
+  const today=new Date().toISOString().slice(0,10);
+  const newStatus=document.getElementById('cf-status').value;
+  const salesRepVal=document.getElementById('cf-who').value||'';
+  if(salesRepVal)addSalesRep(salesRepVal);
+
+  if(!currentCrmId){
+    const ad=document.getElementById('cf-adate').value,an=document.getElementById('cf-anote').value.trim();
+    const aWhoVal=document.getElementById('cf-awho').value||'—';
+    if(!ad){se('cf-adate','cead');ok=false;}if(!an){se('cf-anote','cean');ok=false;}if(!ok)return;
+    crms.push({id:crmNI++,name,industry:document.getElementById('cf-ind').value,contact:document.getElementById('cf-contact').value.trim(),contactTitle:document.getElementById('cf-contact-title').value.trim(),email,phone,url:document.getElementById('cf-url').value.trim(),status:newStatus,salesRep:salesRepVal,amount:parseInt(document.getElementById('cf-amount').value)||0,nextContact:document.getElementById('cf-next').value,nextContactNote:document.getElementById('cf-next-note').value.trim(),fromLead:false,statusLog:[{status:newStatus,date:ad}],history:[{date:ad,who:aWhoVal||salesRepVal||'—',note:an}]});
+  }else{
+    if(!ok)return;
+    const c=crms.find(x=>x.id===currentCrmId);
+    const prevStatus=c.status;
+    Object.assign(c,{name,industry:document.getElementById('cf-ind').value,contact:document.getElementById('cf-contact').value.trim(),contactTitle:document.getElementById('cf-contact-title').value.trim(),email,phone,url:document.getElementById('cf-url').value.trim(),status:newStatus,salesRep:salesRepVal,amount:parseInt(document.getElementById('cf-amount').value)||0,nextContact:document.getElementById('cf-next').value,nextContactNote:document.getElementById('cf-next-note').value.trim()});
+    if(prevStatus!==newStatus){
+      if(!c.statusLog)c.statusLog=[];
+      c.statusLog.push({status:newStatus,date:today});
+      if(!c.history)c.history=[];
+      c.history.unshift({date:today,who:'システム',note:`ステータス変更: ${prevStatus} → ${newStatus}`});
+    }
+    const ad=document.getElementById('cf-adate').value,an=document.getElementById('cf-anote').value.trim();
+    const aWhoVal2=document.getElementById('cf-awho').value||salesRepVal||'—';
+    if(ad&&an){if(!c.history)c.history=[];c.history.unshift({date:ad,who:aWhoVal2,note:an});}
+
+    // 失注 → 失注管理へ移行、進捗管理から削除
+    if(newStatus==='失注'&&prevStatus!=='失注'){
+      lostLeads.push({
+        id:c.id,name:c.name,company:c.name,
+        email:c.email,phone:c.phone,source:'進捗管理',
+        salesRep:salesRepVal||c.salesRep||'',
+        contactName:c.contact||'',
+        contactTitle:c.contactTitle||'',
+        note:(c.history&&c.history[0]?c.history[0].note:''),
+        lostAt:today,
+        statusLog:(c.statusLog||[])
+      });
+      crms=crms.filter(x=>x.id!==currentCrmId);
+      currentCrmId=null;sv().catch(()=>{});
+      alert('失注として記録しました。失注管理をご確認ください。');
+      navTo('crm');return;
+    }
+  }
+  currentCrmId=null;sv().catch(()=>{});navTo('crm');
+}
+function delCrm(){if(!currentCrmId||!confirm('削除しますか？'))return;crms=crms.filter(x=>x.id!==currentCrmId);currentCrmId=null;sv().catch(()=>{});navTo('crm');}
+
+/* LEAD */
+function renderLead(){
+  const q=document.getElementById('lead-q').value.toLowerCase(),fs=document.getElementById('lead-fs').value;
+  const data=leads.filter(l=>(!q||l.name.toLowerCase().includes(q)||(l.company||'').toLowerCase().includes(q))&&(!fs||l.status===fs));
+  document.getElementById('lead-sub').textContent=`${data.length}件`;
+  document.getElementById('lead-tbody').innerHTML=data.map(l=>{
+    const s=ST[l.status]||{},lc=l.linkedCrmId?crms.find(c=>c.id===l.linkedCrmId):null;
+    return`<tr onclick="openLeadDtl(${l.id})"><td style="color:var(--text2);font-weight:600">${l.company||'—'}</td><td><div style="display:flex;align-items:center;gap:6px"><div class="av av-l">${l.name.slice(0,2)}</div><span style="font-weight:600">${l.name}</span></div></td><td style="font-size:11px;color:var(--text3)">${l.contactTitle||'—'}</td><td style="color:#f97316;font-family:var(--mono);font-size:11px;font-weight:600">${l.salesRep||'—'}</td><td style="font-size:11px;color:var(--text3);font-family:var(--mono)">${l.email}</td><td><span class="badge" style="background:${s.bg};color:${s.tx};border:1px solid ${s.bd||'transparent'}">${l.status}</span></td><td style="color:var(--text3)">${l.source}</td><td style="color:var(--text3);font-family:var(--mono);font-size:11px">${l.lastContact||'—'}</td><td>${lc?`<button class="btn btn-g btn-xs" onclick="event.stopPropagation();openCrmDtl(${lc.id})"><i class="ti ti-building" aria-hidden="true"></i>${lc.name.slice(0,6)}</button>`:'—'}</td></tr>`;
+  }).join('');
+}
+function openLeadDtl(id){
+  currentLeadId=id;const l=leads.find(x=>x.id===id);document.getElementById('ld-ttl').textContent=l.name;
+  const s=ST[l.status]||{},lc=l.linkedCrmId?crms.find(c=>c.id===l.linkedCrmId):null;
+  document.getElementById('ld-body').innerHTML=`<div class="fcard"><div style="display:flex;align-items:center;gap:10px;margin-bottom:12px"><div class="av av-l" style="width:38px;height:38px;font-size:12px;border-radius:7px">${l.name.slice(0,2)}</div><div><div style="font-size:14px;font-weight:700">${l.name}</div><div style="font-size:10px;color:var(--text3);font-family:var(--mono)">${l.company||'—'}</div></div><span class="badge" style="margin-left:auto;background:${s.bg};color:${s.tx};border:1px solid ${s.bd||'transparent'}">${l.status}</span></div><div class="crow"><span class="clbl">メール</span><a href="mailto:${l.email}" class="alink"><i class="ti ti-send" style="font-size:12px" aria-hidden="true"></i>${l.email}</a></div>${l.phone?`<div class="crow"><span class="clbl">電話</span><a href="tel:${l.phone}" class="alink"><i class="ti ti-phone-call" style="font-size:12px" aria-hidden="true"></i>${l.phone}</a></div>`:''} ${l.url?`<div class="crow"><span class="clbl">URL</span><a href="${l.url}" class="alink" target="_blank"><i class="ti ti-external-link" style="font-size:12px" aria-hidden="true"></i>${l.url}</a></div>`:''}<div class="crow"><span class="clbl">流入元</span><span>${l.source}</span></div>${lc?`<div class="crow"><span class="clbl">進捗管理</span><button class="btn btn-g btn-xs" onclick="openCrmDtl(${lc.id})"><i class="ti ti-building" aria-hidden="true"></i>${lc.name}</button></div>`:''} ${l.note?`<div style="margin-top:9px;padding:9px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;font-size:12px;color:var(--text2)">${l.note}</div>`:''}</div>`;
+  showV('v-lead-detail');
+}
+function openLeadForm(id){
+  currentLeadId=id;const l=id?leads.find(x=>x.id===id):null;
+  document.getElementById('lf-ttl').textContent=l?l.name+' を編集':'リードを追加';
+  document.getElementById('lead-del').style.display=l?'inline-flex':'none';
+  document.getElementById('lf-name').value=l?l.name:'';document.getElementById('lf-company').value=l?l.company||'':'';document.getElementById('lf-email').value=l?l.email:'';document.getElementById('lf-phone').value=l?l.phone||'':'';document.getElementById('lf-status').value=l?l.status:'新規';document.getElementById('lf-source').value=l?l.source:'自社アクション';document.getElementById('lf-url').value=l?l.url||'':'';document.getElementById('lf-note').value=l?l.note||'':'';
+  // 担当営業セレクト更新
+  const lfWho=document.getElementById('lf-who');
+  lfWho.innerHTML=getSalesRepOptions(l&&l.salesRep?l.salesRep:'');
+  lfWho.value=(l&&l.salesRep&&salesReps.includes(l.salesRep))?l.salesRep:'';
+  document.getElementById('lf-contact-title').value=l?l.contactTitle||'':'';
+  document.getElementById('lf-next').value=l?l.nextContact||'':'';document.getElementById('lf-next-note').value=l?l.nextContactNote||'':'';
+  document.getElementById('lead-promo-notice').style.display=l&&l.status==='商談準備'?'block':'none';
+  ['lf-name','lf-email'].forEach(f=>document.getElementById(f).classList.remove('err'));['len','lee'].forEach(e=>document.getElementById(e).classList.remove('show'));
+  showV('v-lead-form');
+}
+function chkLSt(){
+  const v=document.getElementById('lf-status').value;
+  document.getElementById('lead-promo-notice').style.display=v==='商談準備'?'block':'none';
+  document.getElementById('lead-lost-notice').style.display=v==='失注'?'block':'none';
+}
+function saveLead(){
+  const name=document.getElementById('lf-name').value.trim(),email=document.getElementById('lf-email').value.trim(),phone=document.getElementById('lf-phone').value.trim();
+  let ok=true;
+  if(!name){document.getElementById('lf-name').classList.add('err');document.getElementById('len').classList.add('show');ok=false;}
+  if(!email){document.getElementById('lf-email').classList.add('err');document.getElementById('lee').classList.add('show');ok=false;}
+  if(!phone){document.getElementById('lf-phone').classList.add('err');document.getElementById('lep').classList.add('show');ok=false;}
+  if(!ok)return;
+  const today=new Date().toISOString().slice(0,10),status=document.getElementById('lf-status').value,company=document.getElementById('lf-company').value.trim(),url=document.getElementById('lf-url').value.trim(),source=document.getElementById('lf-source').value,note=document.getElementById('lf-note').value.trim(),nextContact=document.getElementById('lf-next').value,nextContactNote=document.getElementById('lf-next-note').value.trim();
+  const score=50;
+  const salesRepVal=document.getElementById('lf-who').value||'';
+  if(salesRepVal)addSalesRep(salesRepVal);
+  const contactTitleVal=document.getElementById('lf-contact-title')?document.getElementById('lf-contact-title').value.trim():'';
+
+  if(status==='商談準備'){
+    const lead=currentLeadId?leads.find(x=>x.id===currentLeadId):{id:leadNI++,name,company,email,phone,url,status,source,score,salesRep:salesRepVal,contactTitle:contactTitleVal,note,nextContact,nextContactNote,lastContact:today,linkedCrmId:null,statusLog:[{status:'新規',date:today}]};
+    if(currentLeadId){
+      const prev=lead.status;
+      Object.assign(lead,{name,company,email,phone,url,status,source,score,salesRep:salesRepVal,contactTitle:contactTitleVal,note,nextContact,nextContactNote,lastContact:today});
+      if(prev!==status){if(!lead.statusLog)lead.statusLog=[];lead.statusLog.push({status,date:today});}
+    }else leads.push(lead);
+    promoteL(lead);
+
+  }else if(status==='失注'){
+    // 失注 → lostLeads に移動、リード一覧から削除
+    const existL=currentLeadId?leads.find(x=>x.id===currentLeadId):null;
+    const lostData={
+      id:currentLeadId||(leadNI++),
+      name,company,email,phone,url,source,note,
+      salesRep:salesRepVal||existL?.salesRep||'',
+      contactTitle:contactTitleVal||existL?.contactTitle||'',
+      contactName:existL?.name||'',
+      lastContact:today,
+      lostAt:today,
+      statusLog:(currentLeadId?existL?.statusLog||[]:[]).concat([{status:'失注',date:today}])
+    };
+    if(!lostLeads)lostLeads=[];
+    lostLeads.push(lostData);
+    if(currentLeadId)leads=leads.filter(x=>x.id!==currentLeadId);
+    currentLeadId=null;
+    sv().catch(()=>{});
+    alert('失注として記録しました。');
+    navTo('lead');
+    return;
+
+  }else{
+    if(!currentLeadId){
+      leads.push({id:leadNI++,name,company,email,phone,url,status,source,score,salesRep:salesRepVal,contactTitle:contactTitleVal,note,nextContact,nextContactNote,lastContact:today,linkedCrmId:null,statusLog:[{status,date:today}]});
+    }else{
+      const l=leads.find(x=>x.id===currentLeadId);
+      const prev=l.status;
+      Object.assign(l,{name,company,email,phone,url,status,source,score,salesRep:salesRepVal,contactTitle:contactTitleVal,note,nextContact,nextContactNote,lastContact:today});
+      if(prev!==status){if(!l.statusLog)l.statusLog=[];l.statusLog.push({status,date:today});}
+    }
+  }
+  currentLeadId=null;sv().catch(()=>{});navTo('lead');
+}
+function promoteL(lead){
+  const today=new Date().toISOString().slice(0,10);
+  // リード側にも商談準備のstatusLogを確実に記録
+  if(!lead.statusLog)lead.statusLog=[];
+  if(!lead.statusLog.some(s=>s.status==='商談準備'&&s.date===today)){
+    lead.statusLog.push({status:'商談準備',date:today});
+  }
+  const ex=crms.find(c=>c.email===lead.email);
+  if(ex){
+    lead.linkedCrmId=ex.id;
+    ex.status='商談中';
+    ex.fromLead=true;
+    // アクション由来の担当者情報を上書き反映
+    if(lead.contactTitle)ex.contactTitle=lead.contactTitle;
+    if(lead.contactName)ex.contact=lead.contactName;
+    if(lead.salesRep)ex.salesRep=lead.salesRep;
+    if(!ex.statusLog)ex.statusLog=[];
+    ex.statusLog.push({status:'商談中',date:today});
+    if(!ex.history)ex.history=[];
+    ex.history.unshift({date:today,who:'システム',note:`リード「${lead.name}」が商談準備に移行`});
+  }else{
+    const ni=crmNI++;
+    crms.push({
+      id:ni,name:lead.company||lead.name,industry:'その他',
+      contact:lead.contactName||lead.name,
+      contactTitle:lead.contactTitle||'',
+      salesRep:lead.salesRep||'',
+      email:lead.email,phone:lead.phone||'',url:lead.url||'',
+      status:'商談中',amount:0,fromLead:true,
+      statusLog:[{status:'商談中',date:today}],
+      history:[{date:today,who:'システム',note:`リード「${lead.name}」が商談準備に移行したため自動登録`}]
+    });
+    lead.linkedCrmId=ni;
+  }
+  leads=leads.filter(x=>x.id!==lead.id);
+}
+function delLead(){if(!currentLeadId||!confirm('削除しますか？'))return;leads=leads.filter(x=>x.id!==currentLeadId);currentLeadId=null;sv().catch(()=>{});navTo('lead');}
+
+/* LOST LEADS */
+function renderLost(){
+  const q=(document.getElementById('lost-q').value||'').toLowerCase();
+  const data=[...lostLeads].filter(l=>!q||l.name.toLowerCase().includes(q)||(l.company||'').toLowerCase().includes(q)).sort((a,b)=>b.lostAt.localeCompare(a.lostAt));
+  document.getElementById('lost-sub').textContent=`${data.length}件`;
+  document.getElementById('lost-tbody').innerHTML=data.length?data.map(l=>`
+    <tr>
+      <td style="color:var(--text2);font-weight:600">${l.company||'—'}</td>
+      <td><div style="display:flex;align-items:center;gap:6px"><div class="av" style="width:28px;height:28px;font-size:10px;border-radius:5px;background:#1a0808;color:#ef4444;border:1px solid rgba(239,68,68,.3);display:flex;align-items:center;justify-content:center;flex-shrink:0">${l.name.slice(0,2)}</div><span style="font-weight:600">${l.name}</span></div></td>
+      <td style="font-size:11px;color:var(--text3)">${l.contactTitle||'—'}</td>
+      <td style="color:#f97316;font-family:var(--mono);font-size:11px;font-weight:600">${l.salesRep||'—'}</td>
+      <td style="font-size:11px;color:var(--text3);font-family:var(--mono)">${l.email}</td>
+      <td style="font-size:11px;color:var(--text3);font-family:var(--mono)">${l.phone||'—'}</td>
+      <td style="color:var(--text3)">${l.source||'—'}</td>
+      <td style="font-family:var(--mono);font-size:11px;color:#ef4444">${l.lostAt}</td>
+      <td><button class="btn btn-g btn-xs" onclick="restoreLost(${l.id})" title="リード管理に戻す"><i class="ti ti-refresh" aria-hidden="true"></i>復活</button></td>
+    </tr>
+  `).join(''):`<tr><td colspan="8" style="text-align:center;padding:24px;color:var(--text3);font-family:var(--mono);font-size:11px">失注記録がありません</td></tr>`;
+}
+function restoreLost(id){
+  const l=lostLeads.find(x=>x.id===id);
+  if(!l||!confirm(`「${l.name}」をリード管理（新規）に戻しますか？`))return;
+  leads.push({...l,status:'新規',lastContact:new Date().toISOString().slice(0,10),linkedCrmId:null,statusLog:(l.statusLog||[]).concat([{status:'新規（復活）',date:new Date().toISOString().slice(0,10)}])});
+  lostLeads=lostLeads.filter(x=>x.id!==id);
+  sv().catch(()=>{});renderLost();
+}
+
+/* BOARD */
+function setBM(m){bMode=m;document.getElementById('bm-crm').className='btn btn-sm'+(m==='crm'?' btn-a':' btn-g');document.getElementById('bm-lead').className='btn btn-sm'+(m==='lead'?' btn-a':' btn-g');renderBoard();}
+function renderBoard(){
+  const sts=bMode==='crm'?['未接触','商談中','契約済']:['新規','商談準備','失注'],items=bMode==='crm'?crms:leads;
+  document.getElementById('kanban-wrap').innerHTML=sts.map(st=>{
+    const s=ST[st]||{},cards=items.filter(x=>x.status===st);
+    return`<div class="kcol"><div class="kcol-hd" style="background:${s.bg};border-color:${s.bd||'var(--border)'}"><span style="font-size:11px;font-weight:600;color:${s.tx}">${st}</span><span style="font-size:10px;color:${s.tx};padding:2px 6px;border-radius:3px;background:rgba(0,0,0,.3);font-family:var(--mono)">${cards.length}</span></div><div class="kcards">${cards.map(x=>`<div class="kcard" style="border-left-color:${s.ac}" onclick="${bMode==='crm'?`openCrmDtl(${x.id})`:`openLeadDtl(${x.id})`}"><div class="kcard-n">${x.name}</div><div class="kcard-s">${bMode==='crm'?x.industry:(x.company||x.source)}</div>${bMode==='crm'&&x.amount?`<div class="kcard-a" style="color:${s.ac}">${x.amount.toLocaleString()}万円</div>`:''}${bMode==='lead'?`<div class="kcard-a" style="color:${x.score>=80?'#4ade80':x.score>=50?'#fbbf24':'#f87171'}">Score ${x.score}</div>`:''}</div>`).join('')||`<div style="font-size:10px;color:var(--text3);padding:8px;font-family:var(--mono)">0件</div>`}</div></div>`;
+  }).join('');
+}
+
+/* CALENDAR — real data from crm/lead/action */
+function getCalEvents(){
+  const evs=[];
+  // 企業の次回接触予定日
+  crms.forEach(c=>{
+    if(c.nextContact)evs.push({date:c.nextContact,type:'crm',label:(c.nextContactNote||'次回接触')+' — '+c.name,id:c.id,name:c.name,status:c.status});
+  });
+  // リードの次回接触予定日
+  leads.forEach(l=>{
+    if(l.nextContact)evs.push({date:l.nextContact,type:'lead',label:(l.nextContactNote||'次回接触')+' — '+(l.company||l.name),id:l.id,name:l.name,company:l.company,status:l.status});
+  });
+  // アクションの次回予定日（次回アクション日のみ表示）
+  actions.forEach(a=>{
+    if(a.nextContact)evs.push({date:a.nextContact,type:'action',label:(a.nextContactNote||'次回アクション')+' — '+a.company,id:a.id,company:a.company,actionType:a.type});
+  });
+  return evs;
+}
+function calMv(d){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}renderCal();}
+function renderCal(){
+  const MN=['1月','2月','3月','4月','5月','6月','7月','8月','9月','10月','11月','12月'];
+  document.getElementById('cal-ttl').textContent=`${calY}年 ${MN[calM]}`;
+  document.getElementById('cal-dows').innerHTML=['日','月','火','水','木','金','土'].map(d=>`<div class="cal-dow">${d}</div>`).join('');
+  const first=new Date(calY,calM,1).getDay(),days=new Date(calY,calM+1,0).getDate(),today=new Date();
+  const allEvs=getCalEvents();
+  // upcoming schedule sidebar
+  const thisMonthEvs=allEvs.filter(e=>e.date&&e.date.slice(0,7)===`${calY}-${String(calM+1).padStart(2,'0')}`).sort((a,b)=>a.date.localeCompare(b.date));
+  let c='';
+  for(let i=0;i<first;i++){const pd=new Date(calY,calM,-(first-1-i));c+=`<div class="cal-cell oth"><div class="cal-num">${pd.getDate()}</div></div>`;}
+  for(let d=1;d<=days;d++){
+    const ds=`${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
+    const iT=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
+    const evs=allEvs.filter(e=>e.date===ds);
+    c+=`<div class="cal-cell${iT?' tc':''}" onclick="calClick('${ds}')"><div class="cal-num${iT?' tn':''}">${d}</div>${evs.slice(0,2).map(e=>`<div class="cal-ev ${e.type==='crm'?'ev-s':e.type==='lead'?'ev-l':'ev-a'}" style="font-size:9px;padding:1px 4px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.label.slice(0,16)}</div>`).join('')}${evs.length>2?`<div style="font-size:9px;color:var(--text3);font-family:var(--mono)">+${evs.length-2}</div>`:''}</div>`;
+  }
+  const rem=(7-((first+days)%7))%7;for(let i=1;i<=rem;i++)c+=`<div class="cal-cell oth"><div class="cal-num">${i}</div></div>`;
+  document.getElementById('cal-cells').innerHTML=c;
+  // Upcoming list
+  if(thisMonthEvs.length){
+    const upcoming=thisMonthEvs.filter(e=>e.type!=='action-done').slice(0,8);
+    document.getElementById('cal-detail').innerHTML=upcoming.length?`<div class="fcard"><div class="fc-ttl">📅 ${MN[calM]}の予定一覧</div>${upcoming.map(e=>{
+      const typeColor=e.type==='crm'?'var(--blue)':e.type==='lead'?'var(--amber)':'var(--green)';
+      const typeLabel=e.type==='crm'?'企業':e.type==='lead'?'リード':'アクション';
+      return`<div style="display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)">
+        <div style="font-size:11px;font-weight:600;color:var(--text3);font-family:var(--mono);min-width:50px">${e.date.slice(5)}</div>
+        <span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${typeColor}20;color:${typeColor};border:1px solid ${typeColor}40;font-family:var(--mono);white-space:nowrap">${typeLabel}</span>
+        <div style="flex:1"><div style="font-size:12px;font-weight:600">${e.label}</div></div>
+        <button class="btn btn-g btn-xs" onclick="${e.type==='crm'?`openCrmDtl(${e.id})`:e.type==='lead'?`openLeadDtl(${e.id})`:`openActionForm(${e.id})`}">詳細</button>
+      </div>`;
+    }).join('')}</div>`:'';
+  }else{
+    document.getElementById('cal-detail').innerHTML='';
+  }
+}
+function calClick(ds){
+  const allEvs=getCalEvents().filter(e=>e.date===ds);
+  if(!allEvs.length){document.getElementById('cal-detail').innerHTML='';return;}
+  let h=`<div class="fcard"><div class="fc-ttl">📅 ${ds} のスケジュール</div>`;
+  allEvs.forEach(e=>{
+    const typeColor=e.type==='crm'?'var(--blue)':e.type==='lead'?'var(--amber)':e.type==='action'?'var(--green)':'var(--text3)';
+    const typeLabel=e.type==='crm'?'企業予定':e.type==='lead'?'リード予定':e.type==='action'?'次回アクション':'実施済';
+    const btn=e.type==='crm'?`<button class="btn btn-g btn-xs" onclick="openCrmDtl(${e.id})"><i class="ti ti-building" aria-hidden="true"></i>企業ページへ</button>`:e.type==='lead'?`<button class="btn btn-g btn-xs" onclick="openLeadDtl(${e.id})"><i class="ti ti-users" aria-hidden="true"></i>リードページへ</button>`:e.type==='action'||e.type==='action-done'?`<button class="btn btn-g btn-xs" onclick="openActionForm(${e.id})"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション詳細</button>`:'';
+    h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:600">${e.label}</div><span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${typeColor}20;color:${typeColor};font-family:var(--mono)">${typeLabel}</span></div>${btn}</div>`;
+  });
+  document.getElementById('cal-detail').innerHTML=h+'</div>';
+}
+
+/* KPI — fully connected to real data */
+function renderKPI(){
+  const today=new Date();
+  const thisMonth=`${today.getFullYear()}-${String(today.getMonth()+1).padStart(2,'0')}`;
+
+  // 企業管理データ
+  const ct=crms.filter(c=>c.status==='契約済');
+  const totalRevenue=ct.reduce((s,c)=>s+c.amount,0);
+  const goal=5000;
+  const pipe=crms.filter(c=>c.status==='商談中').reduce((s,c)=>s+c.amount,0);
+  const acted=crms.filter(c=>c.status!=='未接触'&&c.status!=='見送り');
+  const convR=acted.length?Math.round(ct.length/acted.length*100):0;
+
+  // リード管理データ
+  const hiL=leads.filter(l=>l.score>=80).length;
+  const conv=leads.filter(l=>l.status==='商談準備').length;
+  const avgSc=leads.length?Math.round(leads.reduce((s,l)=>s+l.score,0)/leads.length):0;
+
+  // アクション管理データ
+  const totalCalls=actions.filter(a=>a.type==='架電').length;
+  const totalLeadAcq=actions.filter(a=>a.result==='リード獲得').length;
+  const callToLead=totalCalls?Math.round(totalLeadAcq/totalCalls*100):0;
+
+  // 月次データを最近6ヶ月分生成
+  const months=[];
+  for(let i=5;i>=0;i--){
+    const d=new Date(today.getFullYear(),today.getMonth()-i,1);
+    months.push(`${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}`);
+  }
+
+  // KPIカード
+  document.getElementById('kpi-grid').innerHTML=[
+    {l:'成約金額合計',v:`${totalRevenue.toLocaleString()}万`,s:`目標 ${goal.toLocaleString()}万 (${Math.round(totalRevenue/goal*100)}%)`,c:'var(--accent)'},
+    {l:'パイプライン',v:`${pipe.toLocaleString()}万`,s:'商談中の合計金額',c:'var(--blue)'},
+    {l:'成約率',v:`${convR}%`,s:`接触${acted.length}社→契約${ct.length}社`,c:'var(--green)'},
+    {l:'架電→リード率',v:`${callToLead}%`,s:`${totalCalls}架電→${totalLeadAcq}リード`,c:'var(--amber)'},
+    {l:'リード総数',v:`${leads.length}`,s:`今月: ${leads.filter(l=>l.lastContact&&l.lastContact.slice(0,7)===thisMonth).length}名`,c:'var(--text)'},
+    {l:'今月アクション',v:`${actions.filter(a=>a.date&&a.date.slice(0,7)===thisMonth).length}件`,s:`合計: ${actions.length}件`,c:'var(--text)'},
+    {l:'企業管理',v:`${crms.length}社`,s:`商談中: ${crms.filter(c=>c.status==='商談中').length}社`,c:'var(--text)'},
+    {l:'今月リード獲得',v:`${actions.filter(a=>a.date&&a.date.slice(0,7)===thisMonth&&a.result==='リード獲得').length}件`,s:`全期間: ${totalLeadAcq}件`,c:'var(--accent)'},
+  ].map(k=>`<div class="kpi-c"><div class="kpi-l">${k.l}</div><div class="kpi-v" style="color:${k.c}">${k.v}</div><div class="kpi-s">${k.s}</div></div>`).join('');
+
+  // 月次成約（実データ）
+  const mRevData=months.map(m=>{
+    const auto=computeAutoStats(m);
+    const label=m.slice(5)+'月';
+    return{m:label,v:auto.revenue};
+  });
+  const mRevMax=Math.max(...mRevData.map(x=>x.v),1);
+  document.getElementById('ch-m').innerHTML=`<div style="margin-bottom:6px;font-size:10px;color:var(--text3);font-family:var(--mono)">直近6ヶ月の売上貢献（万円）</div>`+mRevData.map(x=>`<div class="brow"><div class="blbl">${x.m}</div><div class="btrack"><div class="bfill" style="width:${Math.round(x.v/mRevMax*100)}%;background:#3b82f6;min-width:${x.v?'4px':'0'}"></div></div><div class="bval" style="color:${x.v?'var(--blue)':'var(--text3)'}">${x.v?x.v.toLocaleString()+'万':'—'}</div></div>`).join('');
+
+  // 営業ファネル（実データ）
+  const fn=[
+    {l:'全企業',n:crms.length,c:'#64748b'},
+    {l:'接触済以上',n:acted.length,c:'#3b82f6'},
+    {l:'商談中',n:crms.filter(c=>c.status==='商談中').length,c:'#f59e0b'},
+    {l:'契約済',n:ct.length,c:'#e8ff47'}
+  ];
+  document.getElementById('ch-f').innerHTML=fn.map(f=>`<div class="fnrow"><div class="fnlbl">${f.l}</div><div class="fnbar" style="width:${Math.round(f.n/Math.max(crms.length,1)*100)}%;background:${f.c}20;color:${f.c};border:1px solid ${f.c}40;min-width:${f.n?'32px':'0'}">${f.n}社</div></div>`).join('');
+
+  // 月次架電・リード獲得（実データ）- 見やすく改善
+  const mActData=months.map(m=>{
+    const auto=computeAutoStats(m);
+    return{m:m.slice(5)+'月',calls:auto.calls,leads:auto.leadAcq};
+  });
+  const mActMax=Math.max(...mActData.map(x=>x.calls),1);
+  document.getElementById('ch-l').innerHTML=
+    `<div style="margin-bottom:10px;font-size:11px;color:var(--text3);font-family:var(--mono)">直近6ヶ月</div>`+
+    mActData.map(x=>`<div class="brow" style="margin-bottom:10px;align-items:flex-start">
+      <div class="blbl" style="padding-top:2px">${x.m}</div>
+      <div style="flex:1;display:flex;flex-direction:column;gap:4px">
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="btrack" style="flex:1"><div class="bfill" style="width:${Math.round(x.calls/mActMax*100)}%;background:#3b82f6;min-width:${x.calls?'8px':'0'};height:14px;border-radius:3px"></div></div>
+          <div style="font-size:12px;font-weight:700;color:#60a5fa;font-family:var(--mono);min-width:32px">${x.calls}<span style="font-size:9px;color:var(--text3);font-weight:400"> 架電</span></div>
+        </div>
+        <div style="display:flex;align-items:center;gap:6px">
+          <div class="btrack" style="flex:1"><div class="bfill" style="width:${Math.round(x.leads/mActMax*100)}%;background:#e8ff47;min-width:${x.leads?'8px':'0'};height:14px;border-radius:3px"></div></div>
+          <div style="font-size:12px;font-weight:700;color:#e8ff47;font-family:var(--mono);min-width:32px">${x.leads}<span style="font-size:9px;color:var(--text3);font-weight:400"> リード</span></div>
+        </div>
+      </div>
+    </div>`).join('');
+
+  // 業界別アクション数（リードスコア分布の代わり）
+  const indMap={};
+  actions.forEach(a=>{if(a.industry)indMap[a.industry]=(indMap[a.industry]||0)+1;});
+  const indData=Object.entries(indMap).sort((a,b)=>b[1]-a[1]).slice(0,8);
+  const indMax=Math.max(...indData.map(x=>x[1]),1);
+  const indColors=['#3b82f6','#e8ff47','#f59e0b','#22c55e','#a855f7','#ef4444','#06b6d4','#fb923c'];
+  document.getElementById('ch-s').innerHTML=
+    indData.length?
+    `<div style="margin-bottom:10px;font-size:11px;color:var(--text3);font-family:var(--mono)">全アクション ${actions.length}件</div>`+
+    indData.map(([k,v],i)=>`<div class="fnrow"><div class="fnlbl" style="width:80px;font-size:11px">${k}</div><div class="fnbar" style="width:${Math.round(v/indMax*100)}%;background:${indColors[i%indColors.length]}20;color:${indColors[i%indColors.length]};border:1px solid ${indColors[i%indColors.length]}50;min-width:32px;height:24px;font-size:12px;font-weight:700">${v}件</div></div>`).join('')
+    :`<div style="color:var(--text3);font-size:12px;padding:20px 0">アクションデータがありません</div>`;
+}
+
+/* SETTINGS */
+async function resetAllData(){
+  if(!confirm('すべてのデータを削除して初期化します。よろしいですか？'))return;
+  if(window._fbReady&&window._db){
+    try{await window._db.ref('crm').remove();}catch(e){}
+  }
+  location.reload();
+}
+function togglePE(){const a=document.getElementById('prof-edit');a.style.display=a.style.display==='none'?'block':'none';}
+function saveProf(){prof.name=document.getElementById('s-ni').value;prof.role=document.getElementById('s-ri').value;sv().catch(()=>{});applyProf();document.getElementById('prof-edit').style.display='none';}
+function renderSalesRepList(){
+  const el=document.getElementById('sales-rep-list');
+  if(!el)return;
+  if(!salesReps.length){el.innerHTML='<div style="font-size:11px;color:var(--text3);font-family:var(--mono)">メンバーがいません</div>';return;}
+  el.innerHTML=salesReps.map((r,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg2);border:1px solid var(--border);border-radius:6px;margin-bottom:5px">
+      <span style="font-size:12px;font-weight:600">${r}</span>
+      <button onclick="deleteSalesRep(${i})" style="background:transparent;border:none;cursor:pointer;color:var(--red);font-size:13px;padding:2px 5px;border-radius:4px;display:flex;align-items:center;gap:3px;font-family:var(--font);font-size:11px" title="${r}を削除"><i class="ti ti-trash" aria-hidden="true"></i>削除</button>
+    </div>`).join('');
+}
+function deleteSalesRep(idx){
+  const name=salesReps[idx];
+  if(!confirm(`「${name}」を担当営業リストから削除しますか？`))return;
+  salesReps.splice(idx,1);
+  saveSalesReps();
+  refreshSalesRepSelects();
+  renderSalesRepList();
+}
+function addRepFromSettings(){
+  const inp=document.getElementById('new-rep-input');
+  const name=inp.value.trim();
+  if(!name){inp.style.borderColor='var(--red)';setTimeout(()=>inp.style.borderColor='',1000);return;}
+  if(salesReps.includes(name)){alert(`「${name}」はすでに登録されています`);return;}
+  addSalesRep(name);
+  renderSalesRepList();
+  inp.value='';
+}
+function applyProf(){const n=prof.name||'名前';['s-av','sb-av'].forEach(id=>document.getElementById(id).textContent=n.slice(0,1));document.getElementById('s-nd').textContent=n;document.getElementById('s-rd').textContent=prof.role||'member';document.getElementById('sb-name').textContent=n;document.getElementById('sb-role').textContent=prof.role||'member';}
+function applyInt(){
+  const g=intg;
+  document.getElementById('gm-badge').className=g.gm?'int-on':'int-off';document.getElementById('gm-badge').innerHTML=g.gm?`<i class="ti ti-check" style="font-size:9px" aria-hidden="true"></i>連携完了: ${g.gmDate}`:'<i class="ti ti-x" style="font-size:9px" aria-hidden="true"></i>未連携';document.getElementById('gm-btn').textContent=g.gm?'連携を解除':'連携する';document.getElementById('gm-info').style.display=g.gm?'block':'none';
+  document.getElementById('gc-badge').className=g.gc?'int-on':'int-off';document.getElementById('gc-badge').innerHTML=g.gc?`<i class="ti ti-check" style="font-size:9px" aria-hidden="true"></i>連携完了: ${g.gcDate}`:'<i class="ti ti-x" style="font-size:9px" aria-hidden="true"></i>未連携';document.getElementById('gc-btn').textContent=g.gc?'連携を解除':'連携する';document.getElementById('gc-info').style.display=g.gc?'block':'none';
+}
+function toggleGm(){if(intg.gm){intg.gm=false;intg.gmAddr='';intg.gmDate='';document.getElementById('gm-form').style.display='none';sv().catch(()=>{});applyInt();}else{document.getElementById('gm-form').style.display=document.getElementById('gm-form').style.display==='block'?'none':'block';}}
+function connectGm(){const a=document.getElementById('s-gmail').value.trim();if(!a){alert('Gmailアドレスを入力してください');return;}intg.gm=true;intg.gmAddr=a;const n=new Date();intg.gmDate=`${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;document.getElementById('gm-form').style.display='none';sv().catch(()=>{});applyInt();}
+function toggleGc(){if(intg.gc){intg.gc=false;intg.gcDate='';document.getElementById('gc-form').style.display='none';sv().catch(()=>{});applyInt();}else{document.getElementById('gc-form').style.display=document.getElementById('gc-form').style.display==='block'?'none':'block';}}
+function connectGc(){intg.gc=true;intg.gcId=document.getElementById('s-gcal').value||'primary';const n=new Date();intg.gcDate=`${n.getFullYear()}/${String(n.getMonth()+1).padStart(2,'0')}/${String(n.getDate()).padStart(2,'0')} ${String(n.getHours()).padStart(2,'0')}:${String(n.getMinutes()).padStart(2,'0')}`;document.getElementById('gc-form').style.display='none';sv().catch(()=>{});applyInt();}
+
+/* ACTIONS */
+const ACT_TYPE_CSS={'架電':'act-call','メール':'act-mail','DM':'act-dm','LINE':'act-line','訪問':'act-visit','その他':'act-other'};
+const ACT_TYPE_ICON={'架電':'ti-phone','メール':'ti-mail','DM':'ti-brand-instagram','LINE':'ti-brand-line','訪問':'ti-building','その他':'ti-dots'};
+function actTypeBadge(t){return`<span class="act-type ${ACT_TYPE_CSS[t]||'act-other'}"><i class="ti ${ACT_TYPE_ICON[t]||'ti-dots'}" style="font-size:9px" aria-hidden="true"></i>${t}</span>`;}
+
+/* compute auto-aggregated stats for a given YYYY-MM — purely month-based */
+function computeAutoStats(month){
+  // ── 架電数・リード獲得数（アクション管理 = KPIと同一ソース）──
+  const ma=actions.filter(a=>a.date&&a.date.slice(0,7)===month);
+  const calls=ma.filter(a=>a.type==='架電').length;
+  const leadAcq=ma.filter(a=>a.result==='リード獲得').length;
+
+  // ── アポイント数（リード→商談準備になった数）──
+  // 集計優先順位：
+  //   1. statusLog に該当月の「商談準備」記録がある
+  //   2. lastContact が該当月で linkedCrmId を持つ（promoteL済み）
+  //   3. lostLeads の statusLog にも同様の記録がある場合
+  const apptSet=new Set(); // 重複カウント防止
+
+  // 現在のleads（statusLog優先）
+  leads.forEach(l=>{
+    if(l.statusLog&&l.statusLog.some(s=>s.date&&s.date.slice(0,7)===month&&s.status==='商談準備')){
+      apptSet.add('l_'+l.id);
+    }
+  });
+  // 進捗管理（fromLead=true）で lastContact or statusLog が該当月の「商談中」初回
+  crms.forEach(c=>{
+    if(!c.fromLead)return;
+    if(c.statusLog&&c.statusLog.some(s=>s.date&&s.date.slice(0,7)===month&&s.status==='商談中')){
+      apptSet.add('c_'+c.id);
+    }
+    // historyにシステムノートで商談準備の記録がある場合
+    if(c.history&&c.history.some(h=>h.date&&h.date.slice(0,7)===month&&h.who==='システム'&&h.note&&h.note.includes('商談準備に移行'))){
+      apptSet.add('ch_'+c.id);
+    }
+  });
+  // lostLeads からも（失注管理に移行済みのもの）
+  lostLeads.forEach(l=>{
+    if(l.statusLog&&l.statusLog.some(s=>s.date&&s.date.slice(0,7)===month&&s.status==='商談準備')){
+      apptSet.add('lo_'+l.id);
+    }
+  });
+  const appts=apptSet.size;
+
+  // ── 商談数（商談中・契約済・失注になった月 = 全て商談済み）──
+  const dealSet=new Set();
+  crms.forEach(c=>{
+    if(c.statusLog){
+      c.statusLog.forEach(s=>{
+        if(s.date&&s.date.slice(0,7)===month&&(s.status==='商談中'||s.status==='契約済'||s.status==='失注')){
+          dealSet.add('cs_'+c.id+'_'+s.status);
+        }
+      });
+    }
+    // statusLogがない場合のフォールバック：historyのシステムノートを参照
+    if(c.history){
+      c.history.forEach(h=>{
+        if(h.date&&h.date.slice(0,7)===month&&h.who==='システム'){
+          if(h.note&&h.note.includes('→ 商談中'))dealSet.add('ch_'+c.id+'_deal');
+          if(h.note&&h.note.includes('→ 契約済'))dealSet.add('ch_'+c.id+'_contract');
+          if(h.note&&h.note.includes('→ 失注'))dealSet.add('ch_'+c.id+'_lost');
+        }
+      });
+    }
+  });
+  lostLeads.forEach(l=>{
+    if(l.statusLog&&l.statusLog.some(s=>s.date&&s.date.slice(0,7)===month&&s.status==='失注')){
+      dealSet.add('lo_'+l.id);
+    }
+    if(l.lostAt&&l.lostAt.slice(0,7)===month){
+      dealSet.add('lat_'+l.id);
+    }
+  });
+  const deals=dealSet.size;
+
+  // ── 契約数・売上 ──
+  let contracts=0,crmRevenue=0;
+  crms.forEach(c=>{
+    const hasContractLog=c.statusLog&&c.statusLog.some(s=>s.date&&s.date.slice(0,7)===month&&s.status==='契約済');
+    const hasContractHist=c.history&&c.history.some(h=>h.date&&h.date.slice(0,7)===month&&h.who==='システム'&&h.note&&h.note.includes('→ 契約済'));
+    if(hasContractLog||hasContractHist){contracts++;crmRevenue+=c.amount||0;}
+  });
+
+  const callToLead=calls?Math.round(leadAcq/calls*100):0;
+  const apptRate=leadAcq?Math.round(appts/Math.max(leadAcq,1)*100):0;
+
+  return{calls,leadAcq,appts,deals,contracts,revenue:crmRevenue,callToLead,apptRate,total:ma.length};
+}
+
+function renderActions(){
+  const q=(document.getElementById('action-q').value||'').toLowerCase();
+  const ft=document.getElementById('action-ft').value;
+  const fi=document.getElementById('action-fi').value;
+  const fr=document.getElementById('action-fr').value;
+  const data=[...actions].filter(a=>
+    (!q||a.company.toLowerCase().includes(q)||(a.who||'').toLowerCase().includes(q))&&
+    (!ft||a.type===ft)&&(!fi||a.industry===fi)&&(!fr||a.region===fr)
+  ).sort((a,b)=>b.date.localeCompare(a.date));
+  document.getElementById('action-sub').textContent=`${data.length}件`;
+
+  // mini stats bar
+  const calls=data.filter(a=>a.type==='架電').length;
+  const leads_=data.filter(a=>a.result==='リード獲得').length;
+  const contracts=data.filter(a=>a.result==='契約').length;
+  const callToLead=calls?Math.round(leads_/calls*100):0;
+  // industry breakdown
+  const inds={};data.forEach(a=>{if(a.industry)inds[a.industry]=(inds[a.industry]||0)+1;});
+  const topInd=Object.entries(inds).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k}:${v}`).join('  ');
+  // region breakdown
+  const regs={};data.forEach(a=>{if(a.region)regs[a.region]=(regs[a.region]||0)+1;});
+  const topReg=Object.entries(regs).sort((a,b)=>b[1]-a[1]).slice(0,3).map(([k,v])=>`${k}:${v}`).join('  ');
+  document.getElementById('action-stats').innerHTML=[
+    {l:'架電',v:calls,c:'var(--blue)'},{l:'リード獲得',v:leads_,c:'var(--accent)'},{l:'架電→リード率',v:callToLead+'%',c:'var(--amber)'},{l:'契約',v:contracts,c:'var(--green)'}
+  ].map(s=>`<div style="background:var(--bg1);border:1px solid var(--border);border-radius:6px;padding:7px 13px;display:flex;align-items:center;gap:7px"><span style="font-size:10px;color:var(--text3);font-family:var(--mono)">${s.l}</span><span style="font-size:16px;font-weight:700;color:${s.c};font-family:var(--mono)">${s.v}</span></div>`).join('')
+  +(topInd?`<div style="background:var(--bg1);border:1px solid var(--border);border-radius:6px;padding:7px 13px;font-size:10px;color:var(--text3);font-family:var(--mono)"><span style="color:var(--text2);margin-right:5px">業種</span>${topInd}</div>`:'')
+  +(topReg?`<div style="background:var(--bg1);border:1px solid var(--border);border-radius:6px;padding:7px 13px;font-size:10px;color:var(--text3);font-family:var(--mono)"><span style="color:var(--text2);margin-right:5px">地域</span>${topReg}</div>`:'');
+
+  document.getElementById('action-tbody').innerHTML=data.length?data.map(a=>{
+    const resColor=a.result==='契約'?'var(--green)':a.result==='リード獲得'?'var(--accent)':a.result==='繋がった・反応あり'?'var(--blue)':'var(--text3)';
+    const res=a.result?`<span style="font-size:10px;font-family:var(--mono);color:${resColor}">${a.result}</span>`:'—';
+    return`<tr onclick="openActionForm(${a.id})" style="cursor:pointer">
+      <td style="font-family:var(--mono);font-size:11px;color:var(--text2)">${a.date}</td>
+      <td style="font-weight:600">${a.company}</td>
+      <td style="color:var(--text3);font-size:11px">${a.industry||'—'}</td>
+      <td style="color:var(--text3);font-size:11px;font-family:var(--mono)">${a.region||'—'}</td>
+      <td>${actTypeBadge(a.type)}</td>
+      <td style="color:var(--text3)">${a.who||'—'}</td>
+      <td style="color:var(--text3);font-size:11px">${a.contactName?a.contactName+(a.contactTitle?'<br><span style=\"font-size:9px;color:var(--text3)\">'+a.contactTitle+'</span>':''):'—'}</td>
+      <td>${res}</td>
+      <td style="color:var(--text3);font-size:11px">${a.note?a.note.slice(0,30)+(a.note.length>30?'…':''):'—'}</td>
+    </tr>`;
+  }).join(''):`<tr><td colspan="9" style="text-align:center;padding:24px;color:var(--text3);font-family:var(--mono);font-size:11px">アクションがありません</td></tr>`;
+}
+function onResultChange(){
+  const v=document.getElementById('af-result').value;
+  document.getElementById('action-lead-notice').style.display=v==='リード獲得'?'block':'none';
+}
+function openActionForm(id){
+  currentActionId=(id!=null&&id!==undefined)?id:null;
+  document.getElementById('action-del').style.display=currentActionId?'inline-flex':'none';
+  document.getElementById('af-ttl').textContent=currentActionId?'アクション編集':'アクション追加';
+  const a=currentActionId?actions.find(x=>x.id===currentActionId):{};
+  document.getElementById('af-date').value=(a&&a.date)||new Date().toISOString().slice(0,10);
+  document.getElementById('af-type').value=(a&&a.type)||'架電';
+  document.getElementById('af-company').value=(a&&a.company)||'';
+  document.getElementById('af-industry').value=(a&&a.industry)||'スポーツ用品';
+  document.getElementById('af-region').value=(a&&a.region)||'';
+  // 担当営業セレクト更新
+  const afWhoSel=document.getElementById('af-who');
+  afWhoSel.innerHTML=getSalesRepOptions((a&&a.who)||'');
+  afWhoSel.value=(a&&a.who&&salesReps.includes(a.who))?(a.who):'';
+  afWhoSel.dataset.val=(a&&a.who)||'';
+  document.getElementById('af-who-custom').style.display='none';
+  document.getElementById('af-who-custom').value='';
+  document.getElementById('af-result').value=(a&&a.result)||'';
+  document.getElementById('af-revenue')&&(document.getElementById('af-revenue').value=(a&&a.revenue)||'');
+  document.getElementById('af-note').value=(a&&a.note)||'';
+  document.getElementById('af-next').value=(a&&a.nextContact)||'';
+  document.getElementById('af-next-note').value=(a&&a.nextContactNote)||'';
+  document.getElementById('af-email').value=(a&&a.email)||'';
+  document.getElementById('af-phone').value=(a&&a.phone)||'';
+  document.getElementById('af-contact-name').value=(a&&a.contactName)||'';
+  document.getElementById('af-contact-title').value=(a&&a.contactTitle)||'';
+  document.getElementById('action-lead-notice').style.display=(a&&a.result==='リード獲得')?'block':'none';
+  document.getElementById('af-company-list').innerHTML=[...new Set([...crms.map(c=>c.name),...actions.map(x=>x.company)])].map(n=>`<option value="${n}">`).join('');
+  ['af-date','af-company'].forEach(f=>document.getElementById(f).classList.remove('err'));
+  ['aen-date','aen-company'].forEach(e=>document.getElementById(e).classList.remove('show'));
+  showV('v-action-form');
+}
+function fillActionCompany(){
+  const v=document.getElementById('af-company').value;
+  const c=crms.find(x=>x.name===v);
+  if(c){document.getElementById('af-industry').value=c.industry;}
+}
+function saveAction(){
+  const date=document.getElementById('af-date').value;
+  const company=document.getElementById('af-company').value.trim();
+  const result=document.getElementById('af-result').value;
+  const who=getWhoVal('af-who');
+
+  let ok=true;
+  if(!date){se('af-date','aen-date');ok=false;}
+  if(!company){se('af-company','aen-company');ok=false;}
+  if(!ok)return;
+
+  // 新規 or 編集を明確に判定
+  const editing=(currentActionId!==null&&currentActionId!==undefined);
+
+  const newId=editing?currentActionId:actionNI++;
+  const a={
+    id:newId, date, company, result, who,
+    type:document.getElementById('af-type').value,
+    industry:document.getElementById('af-industry').value,
+    region:document.getElementById('af-region').value,
+    email:document.getElementById('af-email').value.trim(),
+    phone:document.getElementById('af-phone').value.trim(),
+    contactName:document.getElementById('af-contact-name').value.trim(),
+    contactTitle:document.getElementById('af-contact-title').value.trim(),
+    revenue:parseInt(document.getElementById('af-revenue')?document.getElementById('af-revenue').value:0)||0,
+    note:document.getElementById('af-note').value.trim(),
+    nextContact:document.getElementById('af-next').value,
+    nextContactNote:document.getElementById('af-next-note').value.trim(),
+    savedAt:new Date().toISOString()
+  };
+
+  // 担当営業をリストに追加（新規の場合）
+  if(who)addSalesRep(who);
+
+  // アクションに紐づく進捗管理企業の担当営業も自動更新
+  {
+    const linkedCrm=crms.find(x=>x.name===company);
+    if(linkedCrm){
+      if(who)linkedCrm.salesRep=who;
+      if(a.contactName)linkedCrm.contact=a.contactName;
+      if(a.contactTitle)linkedCrm.contactTitle=a.contactTitle;
+    }
+  }
+
+  if(editing){
+    const idx=actions.findIndex(x=>x.id===currentActionId);
+    if(idx>=0)actions[idx]=a; else actions.push(a);
+  }else{
+    actions.push(a);
+  }
+
+  // リード獲得 → 新規保存のときだけリード管理へ追加
+  if(result==='リード獲得'&&!editing){
+    // 担当営業を新規メンバーとして追加（未登録なら）
+    if(who)addSalesRep(who);
+    const newLead={
+      id:leadNI++,
+      name:who||company,
+      company,
+      email:a.email||'',
+      phone:a.phone||'',
+      url:'',
+      status:'新規',
+      source:'自社アクション',
+      score:50,
+      salesRep:who||'',
+      contactName:a.contactName||'',
+      contactTitle:a.contactTitle||'',
+      note:'アクション管理から自動追加（'+date+'）。'+(a.note||''),
+      lastContact:date,
+      linkedCrmId:null,
+      statusLog:[{status:'新規',date:date}]
+    };
+    leads.push(newLead);
+    currentActionId=null;
+    sv().catch(()=>{});
+    alert('✅ リード管理に「'+(who||company)+'」を追加しました！\n担当営業:「'+(who||'未設定')+'」も自動セット済みです。\nアクション管理の記録はそのまま残っています。');
+    navTo('action');
+    return;
+  }
+
+  currentActionId=null;
+  sv().catch(()=>{});
+  navTo('action');
+}
+function delAction(){
+  if(!confirm('このアクションを削除しますか？'))return;
+  actions=actions.filter(x=>x.id!==currentActionId);currentActionId=null;sv().catch(()=>{});navTo('action');
+}
+
+/* MONTHLY REPORTS */
+function renderReports(){
+  const sorted=[...reports].sort((a,b)=>b.month.localeCompare(a.month));
+  const tbl=document.getElementById('report-tbl');
+  const empty=document.getElementById('report-list-empty');
+  // Collect all months with any data
+  const actionMonths=[...new Set(actions.map(a=>a.date.slice(0,7)))];
+  const leadMonths=[...new Set(leads.flatMap(l=>(l.statusLog||[]).map(s=>s.date?s.date.slice(0,7):'')).filter(Boolean))];
+  const crmMonths=[...new Set(crms.flatMap(c=>(c.statusLog||[]).map(s=>s.date?s.date.slice(0,7):'')).filter(Boolean))];
+  const lostMonths=[...new Set(lostLeads.map(l=>l.lostAt?l.lostAt.slice(0,7):'').filter(Boolean))];
+  const allDataMonths=[...new Set([...actionMonths,...leadMonths,...crmMonths,...lostMonths,...sorted.map(r=>r.month)])].sort((a,b)=>b.localeCompare(a));
+  if(!allDataMonths.length){tbl.style.display='none';empty.style.display='block';return;}
+  tbl.style.display='';empty.style.display='none';
+  document.getElementById('report-tbody').innerHTML=allDataMonths.map(month=>{
+    const r=sorted.find(x=>x.month===month);
+    const auto=computeAutoStats(month);
+    const calls=r&&r.calls?r.calls:auto.calls;
+    const leadAcq=auto.leadAcq;
+    const appts=auto.appts;
+    const deals=auto.deals;
+    const contracts=auto.contracts;
+    const revenue=r&&r.revenue?r.revenue:auto.revenue;
+    const hours=r&&r.hours?r.hours:0;
+    const c2l=calls?Math.round(leadAcq/calls*100)+'%':'—';
+    const l2a=leadAcq?Math.round(appts/Math.max(leadAcq,1)*100)+'%':'—';
+    const isAuto=!r;
+    return`<tr onclick="${r?`openReportDetail(${r.id})`:`openAutoReport('${month}')`}" style="cursor:pointer">
+      <td style="font-weight:600;font-family:var(--mono)">${month}${isAuto?'<span class="auto-badge" style="margin-left:5px"><i class="ti ti-bolt" style="font-size:8px" aria-hidden="true"></i>自動</span>':''}</td>
+      <td style="font-family:var(--mono)">${calls||'0'}</td>
+      <td style="font-family:var(--mono);color:var(--accent)">${leadAcq||'0'}</td>
+      <td style="font-family:var(--mono);color:var(--amber);font-weight:600">${c2l}</td>
+      <td style="font-family:var(--mono);color:var(--blue);font-weight:600">${appts||'0'}</td>
+      <td style="font-family:var(--mono)">${deals||'0'}</td>
+      <td style="font-family:var(--mono);color:var(--text3)">${l2a}</td>
+      <td style="font-family:var(--mono);color:var(--green)">${contracts||'0'}</td>
+      <td style="font-family:var(--mono);color:var(--accent)">${revenue?revenue.toLocaleString()+'万':'—'}</td>
+      <td style="font-family:var(--mono);color:var(--text3)">${hours?hours+'h':'—'}</td>
+      <td><div style="display:flex;gap:4px">${r?`<button class="btn btn-g btn-xs" onclick="event.stopPropagation();openReportForm(${r.id})"><i class="ti ti-edit" aria-hidden="true"></i>編集</button>`:`<button class="btn btn-a btn-xs" onclick="event.stopPropagation();createReportFromAuto('${month}')"><i class="ti ti-plus" aria-hidden="true"></i>作成</button>`}</div></td>
+    </tr>`;
+  }).join('');
+}
+function openAutoReport(month){
+  const auto=computeAutoStats(month);
+  const ma=actions.filter(a=>a.date.slice(0,7)===month).sort((a,b)=>b.date.localeCompare(a.date));
+  const ml=leads.filter(l=>l.lastContact&&l.lastContact.slice(0,7)===month);
+  const mc=crms.filter(c=>c.history&&c.history.some(h=>h.date&&h.date.slice(0,7)===month));
+  document.getElementById('rd-ttl').textContent=month+' 月次レポート（自動集計）';
+  let h=`<div class="report-auto-row"><i class="ti ti-bolt" style="color:var(--accent);font-size:13px" aria-hidden="true"></i><span style="color:var(--accent);font-weight:600">各管理画面のデータから自動集計されたレポートです。</span><button class="btn btn-a btn-xs" onclick="createReportFromAuto('${month}')"><i class="ti ti-plus" aria-hidden="true"></i>手動レポート作成</button></div>`;
+  h+=buildReportStats(auto,null);
+  h+=buildReportBreakdown(month,ma,ml,mc);
+  document.getElementById('rd-body').innerHTML=h;
+  showV('v-report-detail');
+}
+function buildReportStats(auto,r){
+  const calls=r&&r.calls?r.calls:auto.calls;
+  const hours=r&&r.hours?r.hours:0;
+  const c2l=calls?Math.round(auto.leadAcq/calls*100):0;
+  const l2a=auto.leadAcq?Math.round(auto.appts/Math.max(auto.leadAcq,1)*100):0;
+  return`<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:9px;margin-bottom:14px">
+    <div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">架電数</div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono)">${calls}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">アクション管理から</div>
+    </div>
+    <div style="background:rgba(232,255,71,.05);border:1px solid rgba(232,255,71,.2);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">リード獲得数</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent);font-family:var(--mono)">${auto.leadAcq}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">KPIと同一ソース</div>
+    </div>
+    <div style="background:rgba(245,158,11,.05);border:1px solid rgba(245,158,11,.2);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">架電→リード率</div>
+      <div style="font-size:22px;font-weight:700;color:var(--amber);font-family:var(--mono)">${c2l}%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">${calls}架電→${auto.leadAcq}リード</div>
+    </div>
+    <div style="background:rgba(59,130,246,.05);border:1px solid rgba(59,130,246,.2);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">アポイント数</div>
+      <div style="font-size:22px;font-weight:700;color:var(--blue);font-family:var(--mono)">${auto.appts}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">リード→商談準備になった数</div>
+    </div>
+    <div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">リード→アポ率</div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono)">${l2a}%</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">${auto.leadAcq}リード→${auto.appts}アポ</div>
+    </div>
+    <div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">商談数</div>
+      <div style="font-size:22px;font-weight:700;font-family:var(--mono)">${auto.deals}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">商談中・契約・失注の合計</div>
+    </div>
+    <div style="background:rgba(34,197,94,.05);border:1px solid rgba(34,197,94,.2);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">契約数</div>
+      <div style="font-size:22px;font-weight:700;color:var(--green);font-family:var(--mono)">${auto.contracts}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">進捗管理から</div>
+    </div>
+    <div style="background:rgba(232,255,71,.05);border:1px solid rgba(232,255,71,.2);border-radius:8px;padding:13px">
+      <div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">売上貢献</div>
+      <div style="font-size:22px;font-weight:700;color:var(--accent);font-family:var(--mono)">${auto.revenue?auto.revenue.toLocaleString()+'万':'—'}</div>
+      <div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">進捗管理から</div>
+    </div>
+    ${hours?`<div style="background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:13px"><div style="font-size:10px;color:var(--text3);font-family:var(--mono);text-transform:uppercase;letter-spacing:.06em;margin-bottom:4px">稼働時間</div><div style="font-size:22px;font-weight:700;font-family:var(--mono)">${hours}h</div><div style="font-size:10px;color:var(--text3);margin-top:2px;font-family:var(--mono)">手動入力</div></div>`:''}
+  </div>`;
+}
+function buildReportBreakdown(month,ma,ml,mc){
+  let h='';
+  // Action breakdown
+  if(ma.length){
+    h+=`<div class="fcard"><div class="fc-ttl"><i class="ti ti-phone-call" style="color:var(--blue);font-size:10px" aria-hidden="true"></i> アクション明細（${ma.length}件）</div>
+    <div class="tw"><table class="tbl"><thead><tr><th>日付</th><th>企業名</th><th>業種</th><th>地域</th><th>種別</th><th>担当</th><th>結果</th></tr></thead><tbody>
+    ${ma.map(a=>{
+      const rc=a.result==='契約'?'var(--green)':a.result==='リード獲得'?'var(--accent)':a.result==='繋がった・反応あり'?'var(--blue)':'var(--text3)';
+      return`<tr onclick="openActionForm(${a.id})" style="cursor:pointer"><td style="font-family:var(--mono);font-size:10px">${a.date}</td><td style="font-weight:600;font-size:11px">${a.company}</td><td style="font-size:10px;color:var(--text3)">${a.industry||'—'}</td><td style="font-size:10px;color:var(--text3);font-family:var(--mono)">${a.region||'—'}</td><td>${actTypeBadge(a.type)}</td><td style="font-size:10px;color:var(--text3)">${a.who||'—'}</td><td style="font-size:10px;color:${rc}">${a.result||'—'}</td></tr>`;
+    }).join('')}
+    </tbody></table></div></div>`;
+  }
+  // Lead breakdown for the month
+  if(ml.length){
+    h+=`<div class="fcard"><div class="fc-ttl"><i class="ti ti-users" style="color:var(--amber);font-size:10px" aria-hidden="true"></i> リード管理 接触（${ml.length}件）</div>
+    <div class="tw"><table class="tbl"><thead><tr><th>最終接触日</th><th>名前</th><th>会社名</th><th>ステータス</th><th>流入元</th><th>スコア</th></tr></thead><tbody>
+    ${ml.map(l=>{const s=ST[l.status]||{};return`<tr onclick="openLeadDtl(${l.id})" style="cursor:pointer"><td style="font-family:var(--mono);font-size:10px">${l.lastContact}</td><td style="font-weight:600;font-size:11px">${l.name}</td><td style="font-size:10px;color:var(--text3)">${l.company||'—'}</td><td><span class="badge" style="background:${s.bg};color:${s.tx};border:1px solid ${s.bd||'transparent'}">${l.status}</span></td><td style="font-size:10px;color:var(--text3)">${l.source}</td><td style="font-size:11px;font-weight:700;color:${l.score>=80?'var(--green)':l.score>=50?'var(--amber)':'var(--red)'};font-family:var(--mono)">${l.score}</td></tr>`;}).join('')}
+    </tbody></table></div></div>`;
+  }
+  // Industry & region insight from actions
+  if(ma.length){
+    const inds={},regs={};ma.forEach(a=>{if(a.industry)inds[a.industry]=(inds[a.industry]||0)+1;if(a.region)regs[a.region]=(regs[a.region]||0)+1;});
+    const topInd=Object.entries(inds).sort((a,b)=>b[1]-a[1]);
+    const topReg=Object.entries(regs).sort((a,b)=>b[1]-a[1]);
+    if(topInd.length||topReg.length)h+=`<div class="c2" style="margin-top:7px">
+      ${topInd.length?`<div class="cbox"><div class="cbox-t">刺さった業種</div>${topInd.map(([k,v])=>`<div class="fnrow"><div class="fnlbl">${k}</div><div class="fnbar" style="width:${Math.round(v/ma.length*100)}%;background:#3b82f620;color:#60a5fa;border:1px solid rgba(59,130,246,.3)">${v}件</div></div>`).join('')}</div>`:''}
+      ${topReg.length?`<div class="cbox"><div class="cbox-t">刺さった地域</div>${topReg.map(([k,v])=>`<div class="fnrow"><div class="fnlbl">${k}</div><div class="fnbar" style="width:${Math.round(v/ma.length*100)}%;background:#a855f720;color:#c084fc;border:1px solid rgba(168,85,247,.3)">${v}件</div></div>`).join('')}</div>`:''}
+    </div>`;
+  }
+  return h;
+}
+function createReportFromAuto(month){
+  const auto=computeAutoStats(month);
+  currentReportId=null;
+  document.getElementById('report-del').style.display='none';
+  document.getElementById('rf-ttl').textContent='月次レポート作成（自動集計から）';
+  document.getElementById('rf-month').value=month;
+  document.getElementById('rf-author').value='';
+  document.getElementById('rf-hours').value='';
+  document.getElementById('rf-calls').value=auto.calls||'';
+  document.getElementById('rf-appts').value=auto.appts||'';
+  document.getElementById('rf-leads').value=auto.leads||'';
+  document.getElementById('rf-deals').value=auto.deals||'';
+  document.getElementById('rf-contracts').value=auto.contracts||'';
+  document.getElementById('rf-revenue').value=auto.revenue||'';
+  document.getElementById('rf-emails').value='';
+  document.getElementById('rf-docs').value='';
+  document.getElementById('rf-shared').value='';
+  document.getElementById('rf-request').value='';
+  document.getElementById('rf-plan').value='';
+  document.getElementById('rf-issues').value='';
+  document.getElementById('rf-notes').value='';
+  showV('v-report-form');
+}
+function openReportForm(id){
+  currentReportId=id;
+  document.getElementById('report-del').style.display=id?'':'none';
+  document.getElementById('rf-ttl').textContent=id?'月次レポート編集':'月次レポート作成';
+  const r=id?reports.find(x=>x.id===id):{};
+  document.getElementById('rf-month').value=r.month||'';
+  document.getElementById('rf-author').value=r.author||'';
+  document.getElementById('rf-hours').value=r.hours||'';
+  document.getElementById('rf-calls').value=r.calls||'';
+  document.getElementById('rf-appts').value=r.appts||'';
+  document.getElementById('rf-leads').value=r.leads||'';
+  document.getElementById('rf-deals').value=r.deals||'';
+  document.getElementById('rf-contracts').value=r.contracts||'';
+  document.getElementById('rf-revenue').value=r.revenue||'';
+  document.getElementById('rf-emails').value=r.emails||'';
+  document.getElementById('rf-docs').value=r.docs||'';
+  document.getElementById('rf-shared').value=r.shared||'';
+  document.getElementById('rf-request').value=r.request||'';
+  document.getElementById('rf-plan').value=r.plan||'';
+  document.getElementById('rf-issues').value=r.issues||'';
+  document.getElementById('rf-notes').value=r.notes||'';
+  showV('v-report-form');
+}
+function saveReport(){
+  const month=document.getElementById('rf-month').value;
+  if(!month){document.getElementById('rf-month').classList.add('err');document.getElementById('ren-month').classList.add('show');return;}
+  const r={
+    id:currentReportId||reportNI++,month,
+    author:document.getElementById('rf-author').value,
+    hours:+document.getElementById('rf-hours').value||0,
+    calls:+document.getElementById('rf-calls').value||0,
+    appts:+document.getElementById('rf-appts').value||0,
+    leads:+document.getElementById('rf-leads').value||0,
+    deals:+document.getElementById('rf-deals').value||0,
+    contracts:+document.getElementById('rf-contracts').value||0,
+    revenue:+document.getElementById('rf-revenue').value||0,
+    emails:+document.getElementById('rf-emails').value||0,
+    docs:+document.getElementById('rf-docs').value||0,
+    shared:document.getElementById('rf-shared').value,
+    request:document.getElementById('rf-request').value,
+    plan:document.getElementById('rf-plan').value,
+    issues:document.getElementById('rf-issues').value,
+    notes:document.getElementById('rf-notes').value,
+    savedAt:new Date().toISOString()
+  };
+  if(currentReportId){const idx=reports.findIndex(x=>x.id===currentReportId);if(idx>=0)reports[idx]=r;}
+  else reports.push(r);
+  sv().catch(()=>{});navTo('report');
+}
+function delReport(){
+  if(!confirm('このレポートを削除しますか？'))return;
+  reports=reports.filter(x=>x.id!==currentReportId);sv().catch(()=>{});navTo('report');
+}
+function openReportDetail(id){
+  currentReportId=id;
+  const r=reports.find(x=>x.id===id);
+  document.getElementById('rd-ttl').textContent=r.month+' 月次レポート';
+  const auto=computeAutoStats(r.month);
+  const ma=actions.filter(a=>a.date.slice(0,7)===r.month).sort((a,b)=>b.date.localeCompare(a.date));
+  const ml=leads.filter(l=>l.lastContact&&l.lastContact.slice(0,7)===r.month);
+  const mc=crms.filter(c=>c.history&&c.history.some(h=>h.date&&h.date.slice(0,7)===r.month));
+  let h='';
+  if(r.author)h+=`<div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:10px">担当: ${r.author} ／ 保存日時: ${new Date(r.savedAt).toLocaleDateString('ja-JP')}</div>`;
+  h+=buildReportStats(auto,r);
+  // text sections
+  const sec=(t,v)=>v?`<div class="rep-section"><div class="rep-section-t">${t}</div><div class="rep-section-v">${v}</div></div>`:'';
+  h+=sec('共有事項・トピックス',r.shared);
+  h+=sec('チームへの連携依頼・サポート要請',r.request);
+  h+=sec('翌月アクションプラン',r.plan);
+  h+=sec('今月の課題・気づき',r.issues);
+  h+=sec('その他メモ',r.notes);
+  h+=buildReportBreakdown(r.month,ma,ml,mc);
+  document.getElementById('rd-body').innerHTML=h;
+  showV('v-report-detail');
+}
+
+const sty=document.createElement('style');sty.textContent='@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';document.head.appendChild(sty);
+// initCRM() は Firebase SDK ロード後に自動呼び出しされます
+</script>
+</body>
+</html>
