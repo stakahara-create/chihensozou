@@ -2543,6 +2543,24 @@ import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebase
 const firebaseConfig={apiKey:"AIzaSyAGSoXmEiBCt8q62N8CAMMqDVLPgHB6nBE",authDomain:"company-efb27.firebaseapp.com",projectId:"company-efb27",storageBucket:"company-efb27.firebasestorage.app",messagingSenderId:"283506844161",appId:"1:283506844161:web:33f06404ce566ed9f29600",databaseURL:"https://company-efb27-default-rtdb.asia-southeast1.firebasedatabase.app"};
 const app=initializeApp(firebaseConfig);
 const db=getDatabase(app);
+
+import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+const auth = getAuth(app);
+const SHARED_EMAIL = "team@chihensozou.jp";
+
+document.documentElement.style.visibility = "hidden";
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.documentElement.style.visibility = "visible";
+  } else {
+    const pw = prompt("合言葉を入力してください");
+    if (!pw) { document.body.innerHTML = "<h2>認証が必要です</h2>"; return; }
+    signInWithEmailAndPassword(auth, SHARED_EMAIL, pw)
+      .then(() => { document.documentElement.style.visibility = "visible"; })
+      .catch(() => { alert("合言葉が違います"); location.reload(); });
+  }
+});
+
 const ROOT="terminal/v1";
 function fbSet(path,value){set(ref(db,ROOT+"/"+path),value).catch(e=>console.error("fbSet",e))}
 window._fbSm=function(id,value){fbSet("fields/"+id,value)}
