@@ -177,6 +177,7 @@ select.fs{padding:7px 9px;background:var(--bg2);border:1px solid var(--border);b
 .ev-s{background:#0f1f35;color:#60a5fa;border:1px solid rgba(29,78,216,.15)}
 .ev-l{background:#251505;color:#fb923c;border:1px solid rgba(249,115,22,.15)}
 .ev-a{background:#0a2010;color:#4ade80;border:1px solid rgba(34,197,94,.2)}
+.ev-m{background:#1a1030;color:#c084fc;border:1px solid rgba(168,85,247,.25)}
 .prof-card{background:var(--bg1);border:1px solid var(--border);border-radius:8px;padding:18px;margin-bottom:10px}
 .sec-t{font-size:9px;font-weight:700;color:var(--text3);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;font-family:var(--mono)}
 .p-av{width:48px;height:48px;border-radius:9px;background:var(--accent);display:flex;align-items:center;justify-content:center;font-size:15px;font-weight:800;color:#000}
@@ -410,6 +411,7 @@ select.fs{padding:7px 9px;background:var(--bg2);border:1px solid var(--border);b
         <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#0f1f35;border:1px solid rgba(59,130,246,.4);display:inline-block"></span>企業 次回予定</span>
         <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#251505;border:1px solid rgba(245,158,11,.4);display:inline-block"></span>リード 次回予定</span>
         <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#0a2010;border:1px solid rgba(34,197,94,.4);display:inline-block"></span>アクション 次回予定</span>
+        <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#1a1030;border:1px solid rgba(168,85,247,.4);display:inline-block"></span>手動予定</span>
       </div>
       <div class="cal-grid" id="cal-dows"></div>
       <div class="cal-grid" id="cal-cells" style="margin-top:2px"></div>
@@ -721,7 +723,7 @@ select.fs{padding:7px 9px;background:var(--bg2);border:1px solid var(--border);b
 </div>
 
 <script>
-const SK={C:'spc_crms',L:'spc_leads',P:'spc_prof',I:'spc_int',R:'spc_reports',A:'spc_actions',BL:'spc_blocklist',EX:'spc_existinglist'};
+const SK={C:'spc_crms',L:'spc_leads',P:'spc_prof',I:'spc_int',R:'spc_reports',A:'spc_actions',BL:'spc_blocklist',EX:'spc_existinglist',CAL:'spc_calevents'};
 const DC=[];
 const DL=[];
 const DA=[];
@@ -799,19 +801,19 @@ async function fbSet(key,val){
 
 // データ読み込み
 async function ldAsync(){
-  const[c,l,p,i,rep,act,lost,bl,ex]=await Promise.all([
+  const[c,l,p,i,rep,act,lost,bl,ex,cal]=await Promise.all([
     fbGet(SK.C,DC),fbGet(SK.L,DL),
     fbGet(SK.P,{name:'高原 晟也',role:'manager'}),
     fbGet(SK.I,{gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''}),
     fbGet(SK.R,[]),fbGet(SK.A,DA),fbGet('spc_lost',[]),
-    fbGet(SK.BL,[]),fbGet(SK.EX,[])
+    fbGet(SK.BL,[]),fbGet(SK.EX,[]),fbGet(SK.CAL,[])
   ]);
   // Firebaseは配列をオブジェクトで返すことがあるので変換
   const toArr=v=>v?Array.isArray(v)?v:Object.values(v):[];
   return{crms:toArr(c)||DC,leads:toArr(l)||DL,prof:p||{name:'高原 晟也',role:'manager'},
          int:i||{gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''},
          reports:toArr(rep),actions:toArr(act)||DA,lost:toArr(lost),
-         blockList:toArr(bl),existingList:toArr(ex)};
+         blockList:toArr(bl),existingList:toArr(ex),calEvents:toArr(cal)};
 }
 
 // データ保存
@@ -820,15 +822,16 @@ async function sv(){
     fbSet(SK.C,crms),fbSet(SK.L,leads),fbSet(SK.P,prof),
     fbSet(SK.I,intg),fbSet(SK.R,reports),fbSet(SK.A,actions),
     fbSet('spc_lost',lostLeads),
-    fbSet(SK.BL,blockList),fbSet(SK.EX,existingList)
+    fbSet(SK.BL,blockList),fbSet(SK.EX,existingList),
+    fbSet(SK.CAL,calEvents)
   ]);
 }
 
 // 変数初期化（initCRM()で上書き）
 let crms=DC,leads=DL,prof={name:'高原 晟也',role:'manager'},
     intg={gm:false,gmAddr:'',gmDate:'',gc:false,gcDate:''},
-    reports=[],actions=DA,lostLeads=[],blockList=[],existingList=[];
-let crmNI=1,leadNI=1,reportNI=1,actionNI=1,blockNI=1,existingNI=1;
+    reports=[],actions=DA,lostLeads=[],blockList=[],existingList=[],calEvents=[];
+let crmNI=1,leadNI=1,reportNI=1,actionNI=1,blockNI=1,existingNI=1,calNI=1;
 
 async function initCRM(){
   // ローディング表示
@@ -850,12 +853,14 @@ async function initCRM(){
     crms=D.crms;leads=D.leads;prof=D.prof;intg=D.int;
     reports=D.reports;actions=D.actions;lostLeads=D.lost||[];
     blockList=D.blockList||[];existingList=D.existingList||[];
+    calEvents=D.calEvents||[];
     crmNI=Math.max(...(crms.length?crms.map(c=>c.id):[0]),0)+1;
     leadNI=Math.max(...(leads.length?leads.map(l=>l.id):[0]),0)+1;
     reportNI=Math.max(...(reports.length?reports.map(r=>r.id):[0]),0)+1;
     actionNI=Math.max(...(actions.length?actions.map(a=>a.id):[0]),0)+1;
     blockNI=Math.max(...(blockList.length?blockList.map(b=>b.id):[0]),0)+1;
     existingNI=Math.max(...(existingList.length?existingList.map(x=>x.id):[0]),0)+1;
+    calNI=Math.max(...(calEvents.length?calEvents.map(e=>e.id):[0]),0)+1;
     renderBlockList();renderExistingList();
   }catch(e){console.warn('データ読み込みエラー',e);}
 
@@ -1343,6 +1348,10 @@ function getCalEvents(){
   actions.forEach(a=>{
     if(a.nextContact)evs.push({date:a.nextContact,type:'action',label:(a.nextContactNote||'次回アクション')+' — '+a.company,id:a.id,company:a.company,actionType:a.type});
   });
+  // 手動で追加した予定
+  calEvents.forEach(e=>{
+    evs.push({date:e.date,type:'manual',label:e.title+(e.note?'（'+e.note+'）':''),id:e.id,note:e.note});
+  });
   return evs;
 }
 function calMv(d){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}renderCal();}
@@ -1360,7 +1369,7 @@ function renderCal(){
     const ds=`${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const iT=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
     const evs=allEvs.filter(e=>e.date===ds);
-    c+=`<div class="cal-cell${iT?' tc':''}" onclick="calClick('${ds}')"><div class="cal-num${iT?' tn':''}">${d}</div>${evs.slice(0,2).map(e=>`<div class="cal-ev ${e.type==='crm'?'ev-s':e.type==='lead'?'ev-l':'ev-a'}" style="font-size:9px;padding:1px 4px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.label.slice(0,16)}</div>`).join('')}${evs.length>2?`<div style="font-size:9px;color:var(--text3);font-family:var(--mono)">+${evs.length-2}</div>`:''}</div>`;
+    c+=`<div class="cal-cell${iT?' tc':''}" onclick="calClick('${ds}')"><div class="cal-num${iT?' tn':''}">${d}</div>${evs.slice(0,2).map(e=>`<div class="cal-ev ${e.type==='crm'?'ev-s':e.type==='lead'?'ev-l':e.type==='manual'?'ev-m':'ev-a'}" style="font-size:9px;padding:1px 4px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.label.slice(0,16)}</div>`).join('')}${evs.length>2?`<div style="font-size:9px;color:var(--text3);font-family:var(--mono)">+${evs.length-2}</div>`:''}</div>`;
   }
   const rem=(7-((first+days)%7))%7;for(let i=1;i<=rem;i++)c+=`<div class="cal-cell oth"><div class="cal-num">${i}</div></div>`;
   document.getElementById('cal-cells').innerHTML=c;
@@ -1383,15 +1392,41 @@ function renderCal(){
 }
 function calClick(ds){
   const allEvs=getCalEvents().filter(e=>e.date===ds);
-  if(!allEvs.length){document.getElementById('cal-detail').innerHTML='';return;}
   let h=`<div class="fcard"><div class="fc-ttl">📅 ${ds} のスケジュール</div>`;
+  if(!allEvs.length){
+    h+='<div style="font-size:12px;color:var(--text3);padding:6px 0 12px">予定はありません</div>';
+  }
   allEvs.forEach(e=>{
-    const typeColor=e.type==='crm'?'var(--blue)':e.type==='lead'?'var(--amber)':e.type==='action'?'var(--green)':'var(--text3)';
-    const typeLabel=e.type==='crm'?'企業予定':e.type==='lead'?'リード予定':e.type==='action'?'次回アクション':'実施済';
-    const btn=e.type==='crm'?`<button class="btn btn-g btn-xs" onclick="openCrmDtl(${e.id})"><i class="ti ti-building" aria-hidden="true"></i>企業ページへ</button>`:e.type==='lead'?`<button class="btn btn-g btn-xs" onclick="openLeadDtl(${e.id})"><i class="ti ti-users" aria-hidden="true"></i>リードページへ</button>`:e.type==='action'||e.type==='action-done'?`<button class="btn btn-g btn-xs" onclick="openActionForm(${e.id})"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション詳細</button>`:'';
+    const typeColor=e.type==='crm'?'var(--blue)':e.type==='lead'?'var(--amber)':e.type==='action'?'var(--green)':e.type==='manual'?'var(--purple)':'var(--text3)';
+    const typeLabel=e.type==='crm'?'企業予定':e.type==='lead'?'リード予定':e.type==='action'?'次回アクション':e.type==='manual'?'手動予定':'実施済';
+    const btn=e.type==='crm'?`<button class="btn btn-g btn-xs" onclick="openCrmDtl(${e.id})"><i class="ti ti-building" aria-hidden="true"></i>企業ページへ</button>`:e.type==='lead'?`<button class="btn btn-g btn-xs" onclick="openLeadDtl(${e.id})"><i class="ti ti-users" aria-hidden="true"></i>リードページへ</button>`:e.type==='action'||e.type==='action-done'?`<button class="btn btn-g btn-xs" onclick="openActionForm(${e.id})"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション詳細</button>`:e.type==='manual'?`<button class="btn btn-d btn-xs" onclick="delManualCalEvent(${e.id})"><i class="ti ti-trash" aria-hidden="true"></i>削除</button>`:'';
     h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:600">${e.label}</div><span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${typeColor}20;color:${typeColor};font-family:var(--mono)">${typeLabel}</span></div>${btn}</div>`;
   });
+  h+=`<div style="margin-top:12px;padding-top:12px;border-top:1px solid var(--border)">
+    <div style="font-size:11px;font-weight:600;color:var(--text2);margin-bottom:8px"><i class="ti ti-calendar-plus" style="font-size:12px" aria-hidden="true"></i> この日に予定を追加</div>
+    <div class="frow" style="margin-bottom:8px">
+      <div class="field"><label>タイトル</label><input id="cal-new-title" placeholder="例：〇〇社訪問"></div>
+      <div class="field"><label>メモ</label><input id="cal-new-note" placeholder="任意"></div>
+    </div>
+    <button class="btn btn-a btn-sm" onclick="addManualCalEvent('${ds}')"><i class="ti ti-plus" aria-hidden="true"></i>追加する</button>
+  </div>`;
   document.getElementById('cal-detail').innerHTML=h+'</div>';
+}
+function addManualCalEvent(ds){
+  const titleEl=document.getElementById('cal-new-title'),noteEl=document.getElementById('cal-new-note');
+  const title=titleEl.value.trim(),note=noteEl.value.trim();
+  if(!title){titleEl.classList.add('err');return;}
+  calEvents.push({id:calNI++,date:ds,title,note,addedAt:new Date().toISOString().slice(0,10)});
+  sv().catch(()=>{});
+  renderCal();
+  calClick(ds);
+}
+function delManualCalEvent(id){
+  if(!confirm('この予定を削除しますか？'))return;
+  calEvents=calEvents.filter(e=>e.id!==id);
+  sv().catch(()=>{});
+  renderCal();
+  document.getElementById('cal-detail').innerHTML='';
 }
 
 /* KPI — fully connected to real data */
