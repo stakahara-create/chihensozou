@@ -11,10 +11,10 @@
 @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;500;600;700;800&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0f0f0f;--bg1:#1a1010;--bg2:#1e1414;--bg3:#2a1a1a;--border:#3a2020;--border2:#4a2828;--border3:#5a3535;
-  --text:#f4f4f4;--text2:#ccc;--text3:#888;
+  --bg:#FFFFFF;--bg1:#F7F7F8;--bg2:#F1F1F3;--bg3:#E9E9EC;--border:#E0E0E4;--border2:#D0D0D6;--border3:#B8B8C0;
+  --text:#1A1A1E;--text2:#4A4A52;--text3:#8A8A92;
   --accent:#cc1122;--accent2:#a00e1a;
-  --green:#22c55e;--red:#ef4444;--blue:#3b82f6;--amber:#f59e0b;--purple:#a855f7;
+  --green:#16a34a;--red:#dc2626;--blue:#2563eb;--amber:#d97706;--purple:#9333ea;
   --font:'Syne',sans-serif;--mono:'DM Mono',monospace;
 }
 body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:13px;line-height:1.5;min-height:600px}
@@ -828,14 +828,14 @@ async function initCRM(){
   // ローディング表示
   const ov=document.createElement('div');
   ov.id='fb-loading';
-  ov.style.cssText='position:fixed;inset:0;background:#141414;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:14px';
+  ov.style.cssText='position:fixed;inset:0;background:#FFFFFF;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:9999;gap:14px';
   const isReady=window._fbReady;
   ov.innerHTML=`
-    <div style="width:36px;height:36px;background:#e8ff47;border-radius:9px;display:flex;align-items:center;justify-content:center">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="#000"><path d="M12 2L2 19h20L12 2z"/></svg>
+    <div style="width:36px;height:36px;background:#cc1122;border-radius:9px;display:flex;align-items:center;justify-content:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#fff"><path d="M12 2L2 19h20L12 2z"/></svg>
     </div>
-    <div style="font-size:13px;font-family:monospace;color:#aaa">${isReady?'共有データを読み込み中...':'オフラインモードで起動中...'}</div>
-    ${!isReady?'<div style="font-size:11px;font-family:monospace;color:#e8ff47;background:#1c1c1c;border:1px solid #333;padding:8px 14px;border-radius:6px;max-width:320px;text-align:center">Firebase未設定のためデータはこの端末にのみ保存されます</div>':''}
+    <div style="font-size:13px;font-family:monospace;color:#4A4A52">${isReady?'共有データを読み込み中...':'オフラインモードで起動中...'}</div>
+    ${!isReady?'<div style="font-size:11px;font-family:monospace;color:#a00e1a;background:#F1F1F3;border:1px solid #E0E0E4;padding:8px 14px;border-radius:6px;max-width:320px;text-align:center">Firebase未設定のためデータはこの端末にのみ保存されます</div>':''}
   `;
   document.body.appendChild(ov);
 
@@ -1120,6 +1120,7 @@ function saveCrm(){
   const newStatus=document.getElementById('cf-status').value;
   const salesRepVal=document.getElementById('cf-who').value||'';
   if(salesRepVal)addSalesRep(salesRepVal);
+  if(!currentCrmId&&!checkCompanyConflict(name))return;
 
   if(!currentCrmId){
     const ad=document.getElementById('cf-adate').value,an=document.getElementById('cf-anote').value.trim();
@@ -2057,15 +2058,21 @@ function delExistingItem(id){
   existingList=existingList.filter(x=>x.id!==id);
   renderExistingList();sv().catch(()=>{});
 }
+// 表記ゆれ（全角/半角スペース・大文字小文字・前後の空白）を正規化して比較
+function normCompanyName(s){
+  if(!s)return'';
+  return s.trim().replace(/[\u3000\s]+/g,'').toLowerCase();
+}
 // リード登録時のバッティングチェック（true=登録続行可, false=中止）
 function checkCompanyConflict(company){
   if(!company)return true;
-  const blocked=blockList.find(b=>b.name===company);
+  const target=normCompanyName(company);
+  const blocked=blockList.find(b=>normCompanyName(b.name)===target);
   if(blocked){
     alert('⚠️「'+company+'」は禁止リストに登録されている企業のため、登録できません。\n理由：'+(blocked.reason||'（理由未記入）'));
     return false;
   }
-  const existing=existingList.find(x=>x.name===company);
+  const existing=existingList.find(x=>normCompanyName(x.name)===target);
   if(existing){
     return confirm('⚠️「'+company+'」は既存リストに登録されている企業です（営業部本体が対応中の可能性があります）。\nメモ：'+(existing.note||'（メモなし）')+'\n\nこのまま登録を続けますか？');
   }
