@@ -367,7 +367,7 @@ select.fs{padding:7px 9px;background:var(--bg2);border:1px solid var(--border);b
     <div class="view" id="v-lead-form">
       <div class="pg-hd"><div style="display:flex;align-items:center;gap:9px"><button class="back-btn" onclick="navTo('lead')"><i class="ti ti-arrow-left" aria-hidden="true"></i>一覧</button><div class="pg-ttl" id="lf-ttl">リードを追加</div></div><button class="btn btn-d btn-sm" id="lead-del" style="display:none" onclick="delLead()"><i class="ti ti-trash" aria-hidden="true"></i>削除</button></div>
       <div class="fcard"><div class="fc-ttl">基本情報</div>
-        <div class="frow"><div class="field"><label>名前<span class="req">*</span></label><input id="lf-name" oninput="ce('lf-name','len')"><div class="etxt" id="len">必須です</div></div><div class="field"><label>会社名</label><input id="lf-company"></div></div>
+        <div class="frow"><div class="field"><label>名前<span class="req">*</span></label><input id="lf-name" oninput="ce('lf-name','len')"><div class="etxt" id="len">必須です</div></div><div class="field"><label>会社名</label><input id="lf-company" oninput="ce('lf-company','len-company')"><div class="etxt" id="len-company">エラー</div></div></div>
         <div class="frow"><div class="field"><label>メール<span class="req">*</span></label><input id="lf-email" type="email" oninput="ce('lf-email','lee')"><div class="etxt" id="lee">必須です</div></div><div class="field"><label>電話番号<span class="req">*</span></label><input id="lf-phone" type="tel" oninput="ce('lf-phone','lep')"><div class="etxt" id="lep">必須です</div></div></div>
         <div class="frow"><div class="field"><label>ステータス</label><select id="lf-status" onchange="chkLSt()"><option>新規</option><option>商談準備</option><option>失注</option></select></div><div class="field"><label>流入元</label><select id="lf-source"><option>自社アクション</option><option>SNS</option><option>紹介</option><option>イベント</option><option>Web</option><option>飛び込み</option><option>その他</option></select></div></div>
         <div class="frow"><div class="field"><label>企業URL</label><input id="lf-url" type="url" placeholder="https://..."></div><div class="field"><label>担当営業</label><select id="lf-who"><option value="">— 選択 —</option></select></div></div>
@@ -1120,7 +1120,7 @@ function saveCrm(){
   const newStatus=document.getElementById('cf-status').value;
   const salesRepVal=document.getElementById('cf-who').value||'';
   if(salesRepVal)addSalesRep(salesRepVal);
-  if(!currentCrmId&&!checkCompanyConflict(name))return;
+  if(!currentCrmId&&enforceCompanyBlock('cf-name','cen',name))return;
 
   if(!currentCrmId){
     const ad=document.getElementById('cf-adate').value,an=document.getElementById('cf-anote').value.trim();
@@ -1207,7 +1207,7 @@ function saveLead(){
   if(!ok)return;
   const today=new Date().toISOString().slice(0,10),status=document.getElementById('lf-status').value,company=document.getElementById('lf-company').value.trim(),url=document.getElementById('lf-url').value.trim(),source=document.getElementById('lf-source').value,note=document.getElementById('lf-note').value.trim(),nextContact=document.getElementById('lf-next').value,nextContactNote=document.getElementById('lf-next-note').value.trim();
   // 既存の企業を編集中の場合は再チェック不要（新規登録時のみチェック）
-  if(!currentLeadId&&!checkCompanyConflict(company))return;
+  if(!currentLeadId&&enforceCompanyBlock('lf-company','len-company',company))return;
   const score=50;
   const salesRepVal=document.getElementById('lf-who').value||'';
   if(salesRepVal)addSalesRep(salesRepVal);
@@ -1715,6 +1715,8 @@ function saveAction(){
   if(!date){se('af-date','aen-date');ok=false;}
   if(!company){se('af-company','aen-company');ok=false;}
   if(!ok)return;
+  const editing0=(currentActionId!==null&&currentActionId!==undefined);
+  if(!editing0&&enforceCompanyBlock('af-company','aen-company',company))return;
 
   // 新規 or 編集を明確に判定
   const editing=(currentActionId!==null&&currentActionId!==undefined);
@@ -2063,20 +2065,28 @@ function normCompanyName(s){
   if(!s)return'';
   return s.trim().replace(/[\u3000\s]+/g,'').toLowerCase();
 }
-// リード登録時のバッティングチェック（true=登録続行可, false=中止）
-function checkCompanyConflict(company){
-  if(!company)return true;
+// 禁止/既存リストとの照合。ブロックすべき場合はエラーメッセージを、問題なければnullを返す
+function getCompanyBlockMessage(company){
+  if(!company)return null;
   const target=normCompanyName(company);
   const blocked=blockList.find(b=>normCompanyName(b.name)===target);
-  if(blocked){
-    alert('⚠️「'+company+'」は禁止リストに登録されている企業のため、登録できません。\n理由：'+(blocked.reason||'（理由未記入）'));
-    return false;
-  }
+  if(blocked)return '⚠️禁止リストの企業です（理由：'+(blocked.reason||'未記入')+'）。登録できません。';
   const existing=existingList.find(x=>normCompanyName(x.name)===target);
-  if(existing){
-    return confirm('⚠️「'+company+'」は既存リストに登録されている企業です（営業部本体が対応中の可能性があります）。\nメモ：'+(existing.note||'（メモなし）')+'\n\nこのまま登録を続けますか？');
+  if(existing)return '⚠️既存リストの企業です（メモ：'+(existing.note||'なし')+'）。登録できません。';
+  return null;
+}
+// 指定した入力欄・エラー表示欄に赤字でエラーを表示する（true=ブロックあり, false=問題なし）
+function enforceCompanyBlock(inputId,errId,company){
+  const inp=document.getElementById(inputId),err=document.getElementById(errId);
+  const msg=getCompanyBlockMessage(company);
+  if(msg){
+    if(inp)inp.classList.add('err');
+    if(err){err.textContent=msg;err.classList.add('show');}
+    return true;
   }
-  return true;
+  if(inp)inp.classList.remove('err');
+  if(err)err.classList.remove('show');
+  return false;
 }
 
 const sty=document.createElement('style');sty.textContent='@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';document.head.appendChild(sty);
