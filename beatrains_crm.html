@@ -706,6 +706,7 @@ const FIREBASE_CONFIG = {
 // ============================================================
 
 // Firebase SDK 読み込み
+document.documentElement.style.visibility="hidden";
 (function(){
   const s1=document.createElement('script');
   s1.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-app-compat.js';
@@ -715,19 +716,37 @@ const FIREBASE_CONFIG = {
     s2.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-database-compat.js';
     document.head.appendChild(s2);
     s2.onload=()=>{
-      try{
-        firebase.initializeApp(FIREBASE_CONFIG);
-        window._db=firebase.database();
-        window._fbReady=true;
-      }catch(e){
-        console.warn('Firebase初期化失敗。ローカルモードで動作します。',e);
-        window._fbReady=false;
-      }
-      initCRM();
+      const s3=document.createElement('script');
+      s3.src='https://www.gstatic.com/firebasejs/10.12.2/firebase-auth-compat.js';
+      document.head.appendChild(s3);
+      s3.onload=()=>{
+        try{
+          firebase.initializeApp(FIREBASE_CONFIG);
+          window._db=firebase.database();
+          window._fbReady=true;
+        }catch(e){
+          console.warn('Firebase初期化失敗。ローカルモードで動作します。',e);
+          window._fbReady=false;
+        }
+        const SHARED_EMAIL="team@chihensozou.jp";
+        firebase.auth().onAuthStateChanged(function(user){
+          if(user){
+            document.documentElement.style.visibility="visible";
+            initCRM();
+          }else{
+            const pw=prompt("合言葉を入力してください");
+            if(!pw){document.body.innerHTML="<h2>認証が必要です</h2>";return;}
+            firebase.auth().signInWithEmailAndPassword(SHARED_EMAIL,pw)
+              .then(function(){document.documentElement.style.visibility="visible";initCRM();})
+              .catch(function(){alert("合言葉が違います");location.reload();});
+          }
+        });
+      };
+      s3.onerror=()=>{window._fbReady=false;document.documentElement.style.visibility="visible";initCRM();};
     };
-    s2.onerror=()=>{window._fbReady=false;initCRM();};
+    s2.onerror=()=>{window._fbReady=false;document.documentElement.style.visibility="visible";initCRM();};
   };
-  s1.onerror=()=>{window._fbReady=false;initCRM();};
+  s1.onerror=()=>{window._fbReady=false;document.documentElement.style.visibility="visible";initCRM();};
 })();
 
 // Firebase 読み書き
@@ -958,22 +977,24 @@ function doLogin(){
     }
   })();
 }
-// 保存済みログイン情報を自動入力
+// 保存済みログイン情報を自動入力 → 自動ログイン
 (function(){
   try{
     const se=localStorage.getItem('spc_saved_email'),sp=localStorage.getItem('spc_saved_pass');
-    if(se&&sp){
-      document.addEventListener('DOMContentLoaded',()=>{
-        document.getElementById('l-email').value=se;
-        document.getElementById('l-pass').value=sp;
-        document.getElementById('l-remember').checked=true;
-      });
-      // DOMContentLoaded が既に発火していた場合
-      if(document.readyState!=='loading'){
-        document.getElementById('l-email').value=se;
-        document.getElementById('l-pass').value=sp;
-        document.getElementById('l-remember').checked=true;
-      }
+    if(!se||!sp)return;
+    const autoFillAndLogin=()=>{
+      const emEl=document.getElementById('l-email'),pwEl=document.getElementById('l-pass'),rmEl=document.getElementById('l-remember');
+      if(!emEl||!pwEl||!rmEl)return;
+      emEl.value=se;
+      pwEl.value=sp;
+      rmEl.checked=true;
+      // 保存済みの場合は自動的にログインを実行（ボタン操作不要）
+      doLogin();
+    };
+    if(document.readyState!=='loading'){
+      autoFillAndLogin();
+    }else{
+      document.addEventListener('DOMContentLoaded',autoFillAndLogin);
     }
   }catch(e){}
 })();
