@@ -276,6 +276,7 @@ select.fs{padding:10px 12px;background:#fff;border:1.5px solid var(--border);bor
           <div class="f-field"><label>表示名</label><input type="text" id="l-sname" placeholder="山梨 太郎"></div>
           <div class="f-field"><label>メールアドレス</label><input type="email" id="l-semail" placeholder="yourname@example.com"></div>
           <div class="f-field"><label>パスワード</label><input type="password" id="l-spass" placeholder="8文字以上"></div>
+          <div class="f-field"><label>入室コード</label><input type="password" id="l-scode" placeholder="チームから共有されたコードを入力"></div>
           <button class="l-btn" onclick="doSignup()"><i class="ti ti-user-plus" aria-hidden="true"></i>アカウントを作成</button>
           <div class="signup-row" style="margin-top:14px">すでにアカウントをお持ちの方は <span class="sl" onclick="showLArea('lf-area')">ログイン</span></div>
         </div>
@@ -925,12 +926,7 @@ function doLogin(){
         }
       }
 
-      // ③ どこにも登録がなく、localStorageも空 → 初回として登録
-      if(!authenticated&&!getLocalAccounts().length){
-        const newAcc={email:em,password:pw,name:em,role:'admin'};
-        saveLocalAccounts([newAcc]);
-        authenticated=true;foundName=em;foundRole='admin';
-      }
+      // ③ 未登録ユーザーはログイン不可
     }catch(e){
       // エラー時: localStorageのみで再確認
       const localAccs=getLocalAccounts();
@@ -943,11 +939,8 @@ function doLogin(){
     }
     if(authenticated){
       prof.name=foundName||em;prof.role=foundRole;
-      // ログイン情報を保存
+      // ログイン情報を常に保存
       try{localStorage.setItem('qb_saved_email',em);localStorage.setItem('qb_saved_pass',pw);}catch(e2){}
-      if(!document.getElementById('l-remember').checked){
-        try{localStorage.removeItem('qb_saved_email');localStorage.removeItem('qb_saved_pass');}catch(e2){}
-      }
       launchCRM();
     }else{
       btn.classList.remove('loading');
@@ -979,8 +972,9 @@ function doLogin(){
   }catch(e){}
 })();
 function doSignup(){
-  const n=document.getElementById('l-sname').value.trim(),e=document.getElementById('l-semail').value.trim(),p=document.getElementById('l-spass').value;
-  if(!n||!e||!p){alert('すべての項目を入力してください');return;}
+  const n=document.getElementById('l-sname').value.trim(),e=document.getElementById('l-semail').value.trim(),p=document.getElementById('l-spass').value,sc=document.getElementById('l-scode').value.trim();
+  if(!n||!e||!p||!sc){alert('すべての項目を入力してください');return;}
+  if(sc!=='queenbeescrm'){alert('入室コードが正しくありません');return;}
   if(p.length<8){alert('パスワードは8文字以上で設定してください');return;}
   const existing=getLocalAccounts();
   if(existing.find(a=>a.email===e)){alert('このメールアドレスはすでに登録されています');return;}
