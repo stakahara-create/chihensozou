@@ -406,7 +406,7 @@ select.fs{padding:10px 12px;background:#fff;border:1.5px solid var(--border);bor
 
     <!-- CALENDAR -->
     <div class="view" id="v-cal">
-      <div class="cal-hd"><div class="pg-ttl" id="cal-ttl"></div><div style="display:flex;gap:6px"><button class="btn btn-g btn-sm" onclick="calMv(-1)"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="btn btn-g btn-sm" onclick="calMv(1)"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div></div>
+      <div class="cal-hd"><div class="pg-ttl" id="cal-ttl"></div><div style="display:flex;gap:6px"><button class="btn btn-a btn-sm" onclick="openCalModal(null)"><i class="ti ti-plus" aria-hidden="true"></i>予定を追加</button><button class="btn btn-g btn-sm" onclick="calMv(-1)"><i class="ti ti-chevron-left" aria-hidden="true"></i></button><button class="btn btn-g btn-sm" onclick="calMv(1)"><i class="ti ti-chevron-right" aria-hidden="true"></i></button></div></div>
       <div style="display:flex;gap:10px;margin-bottom:8px;flex-wrap:wrap">
         <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#0f1f35;border:1px solid rgba(59,130,246,.4);display:inline-block"></span>企業 次回予定</span>
         <span style="font-size:10px;display:inline-flex;align-items:center;gap:4px;font-family:var(--mono)"><span style="width:8px;height:8px;border-radius:2px;background:#251505;border:1px solid rgba(245,158,11,.4);display:inline-block"></span>リード 次回予定</span>
@@ -1025,6 +1025,7 @@ function launchCRM(){
   document.getElementById('screen-crm').classList.add('active');
   loadSalesReps();refreshSalesRepSelects();
   loadCompanyLists();
+  loadManualEvents();
   applyProf();applyInt();navTo('action');
 }
 
@@ -1318,6 +1319,10 @@ function getCalEvents(){
   actions.forEach(a=>{
     if(a.nextContact)evs.push({date:a.nextContact,type:'action',label:(a.nextContactNote||'次回アクション')+' — '+a.company,id:a.id,company:a.company,actionType:a.type});
   });
+  // 手動追加予定を追加
+  manualEvents.forEach(e=>{
+    evs.push({date:e.date, label:e.title, type:'manual', id:e.id, note:e.note});
+  });
   return evs;
 }
 function calMv(d){calM+=d;if(calM>11){calM=0;calY++;}if(calM<0){calM=11;calY--;}renderCal();}
@@ -1335,7 +1340,7 @@ function renderCal(){
     const ds=`${calY}-${String(calM+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;
     const iT=today.getFullYear()===calY&&today.getMonth()===calM&&today.getDate()===d;
     const evs=allEvs.filter(e=>e.date===ds);
-    c+=`<div class="cal-cell${iT?' tc':''}" onclick="calClick('${ds}')"><div class="cal-num${iT?' tn':''}">${d}</div>${evs.slice(0,2).map(e=>`<div class="cal-ev ${e.type==='crm'?'ev-s':e.type==='lead'?'ev-l':'ev-a'}" style="font-size:9px;padding:1px 4px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${e.label.slice(0,16)}</div>`).join('')}${evs.length>2?`<div style="font-size:9px;color:var(--text3);font-family:var(--mono)">+${evs.length-2}</div>`:''}</div>`;
+    c+=`<div class="cal-cell${iT?' tc':''}" onclick="calClick('${ds}')"><div class="cal-num${iT?' tn':''}">${d}</div>${evs.slice(0,2).map(e=>`<div class="cal-ev ${e.type==='crm'?'ev-s':e.type==='lead'?'ev-l':'ev-a'}" style="font-size:9px;padding:1px 4px;border-radius:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;background:${e.type==='manual'?'rgba(168,85,247,.2)':''}">${e.label.slice(0,16)}</div>`).join('')}${evs.length>2?`<div style="font-size:9px;color:var(--text3);font-family:var(--mono)">+${evs.length-2}</div>`:''}</div>`;
   }
   const rem=(7-((first+days)%7))%7;for(let i=1;i<=rem;i++)c+=`<div class="cal-cell oth"><div class="cal-num">${i}</div></div>`;
   document.getElementById('cal-cells').innerHTML=c;
@@ -1356,14 +1361,102 @@ function renderCal(){
     document.getElementById('cal-detail').innerHTML='';
   }
 }
+
+// ===== 手動予定管理 =====
+let manualEvents = [];
+let editingCalEvId = null;
+
+function loadManualEvents(){
+  try{ manualEvents = JSON.parse(localStorage.getItem('qb_manual_events')||'[]'); }catch(e){ manualEvents=[]; }
+  if(window._fbReady && window._db){
+    window._db.ref('qb_manual_events').get().then(snap=>{
+      if(snap.exists()) manualEvents = Object.values(snap.val());
+      renderCal();
+    }).catch(()=>{});
+  }
+}
+
+function saveManualEvents(){
+  try{ localStorage.setItem('qb_manual_events', JSON.stringify(manualEvents)); }catch(e){}
+  if(window._fbReady && window._db){
+    window._db.ref('qb_manual_events').set(manualEvents).catch(()=>{});
+  }
+}
+
+function openCalModal(ds){
+  editingCalEvId = null;
+  document.getElementById('cal-ev-date').value = ds || '';
+  document.getElementById('cal-ev-title').value = '';
+  document.getElementById('cal-ev-note').value = '';
+  document.getElementById('cal-modal-ttl').textContent = '📅 予定を追加';
+  document.getElementById('cal-ev-list').innerHTML = '';
+  // その日の手動予定一覧を表示
+  if(ds){
+    const evs = manualEvents.filter(e=>e.date===ds);
+    if(evs.length){
+      document.getElementById('cal-ev-list').innerHTML = '<div style="font-size:11px;color:var(--text3);font-family:var(--mono);margin-bottom:8px">この日の予定</div>' +
+        evs.map(e=>`<div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:5px;font-size:12px">
+          <div><div style="font-weight:600">${e.title}</div>${e.note?`<div style="font-size:10px;color:var(--text3)">${e.note}</div>`:''}</div>
+          <div style="display:flex;gap:5px">
+            <span style="cursor:pointer;font-size:10px;color:var(--accent)" onclick="editCalEvent(${e.id})">編集</span>
+            <span style="cursor:pointer;font-size:10px;color:#ef4444" onclick="deleteCalEvent(${e.id})">削除</span>
+          </div>
+        </div>`).join('');
+    }
+  }
+  const modal = document.getElementById('cal-modal');
+  modal.style.display = 'flex';
+}
+
+function closeCalModal(){
+  document.getElementById('cal-modal').style.display = 'none';
+}
+
+function saveCalEvent(){
+  const date = document.getElementById('cal-ev-date').value;
+  const title = document.getElementById('cal-ev-title').value.trim();
+  const note = document.getElementById('cal-ev-note').value.trim();
+  if(!date || !title){ alert('日付とタイトルを入力してください'); return; }
+  if(editingCalEvId !== null){
+    const idx = manualEvents.findIndex(e=>e.id===editingCalEvId);
+    if(idx>=0) manualEvents[idx] = {...manualEvents[idx], date, title, note};
+  } else {
+    const newId = Date.now();
+    manualEvents.push({ id: newId, date, title, note });
+  }
+  saveManualEvents();
+  closeCalModal();
+  renderCal();
+}
+
+function editCalEvent(id){
+  const ev = manualEvents.find(e=>e.id===id);
+  if(!ev) return;
+  editingCalEvId = id;
+  document.getElementById('cal-ev-date').value = ev.date;
+  document.getElementById('cal-ev-title').value = ev.title;
+  document.getElementById('cal-ev-note').value = ev.note||'';
+  document.getElementById('cal-modal-ttl').textContent = '📅 予定を編集';
+  document.getElementById('cal-ev-list').innerHTML = '';
+}
+
+function deleteCalEvent(id){
+  if(!confirm('この予定を削除しますか？')) return;
+  manualEvents = manualEvents.filter(e=>e.id!==id);
+  saveManualEvents();
+  closeCalModal();
+  renderCal();
+}
+
 function calClick(ds){
+  openCalModal(ds);
   const allEvs=getCalEvents().filter(e=>e.date===ds);
   if(!allEvs.length){document.getElementById('cal-detail').innerHTML='';return;}
   let h=`<div class="fcard"><div class="fc-ttl">📅 ${ds} のスケジュール</div>`;
   allEvs.forEach(e=>{
     const typeColor=e.type==='crm'?'var(--blue)':e.type==='lead'?'var(--amber)':e.type==='action'?'var(--green)':'var(--text3)';
-    const typeLabel=e.type==='crm'?'企業予定':e.type==='lead'?'リード予定':e.type==='action'?'次回アクション':'実施済';
-    const btn=e.type==='crm'?`<button class="btn btn-g btn-xs" onclick="openCrmDtl(${e.id})"><i class="ti ti-building" aria-hidden="true"></i>企業ページへ</button>`:e.type==='lead'?`<button class="btn btn-g btn-xs" onclick="openLeadDtl(${e.id})"><i class="ti ti-users" aria-hidden="true"></i>リードページへ</button>`:e.type==='action'||e.type==='action-done'?`<button class="btn btn-g btn-xs" onclick="openActionForm(${e.id})"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション詳細</button>`:'';
+    const typeLabel=e.type==='crm'?'企業予定':e.type==='lead'?'リード予定':e.type==='action'?'次回アクション':e.type==='manual'?'手動予定':'実施済';
+    const btn=e.type==='crm'?`<button class="btn btn-g btn-xs" onclick="openCrmDtl(${e.id})"><i class="ti ti-building" aria-hidden="true"></i>企業ページへ</button>`:e.type==='lead'?`<button class="btn btn-g btn-xs" onclick="openLeadDtl(${e.id})"><i class="ti ti-users" aria-hidden="true"></i>リードページへ</button>`:e.type==='action'||e.type==='action-done'?`<button class="btn btn-g btn-xs" onclick="openActionForm(${e.id})"><i class="ti ti-phone-call" aria-hidden="true"></i>アクション詳細</button>`:e.type==='manual'?`<button class="btn btn-g btn-xs" onclick="editCalEvent(${e.id});document.getElementById('cal-modal').style.display='flex'"><i class="ti ti-edit" aria-hidden="true"></i>編集</button>`:'';
     h+=`<div style="display:flex;align-items:center;justify-content:space-between;padding:8px 0;border-bottom:1px solid var(--border)"><div><div style="font-size:12px;font-weight:600">${e.label}</div><span style="font-size:9px;padding:2px 6px;border-radius:3px;background:${typeColor}20;color:${typeColor};font-family:var(--mono)">${typeLabel}</span></div>${btn}</div>`;
   });
   document.getElementById('cal-detail').innerHTML=h+'</div>';
@@ -2140,5 +2233,32 @@ function openReportDetail(id){
 const sty=document.createElement('style');sty.textContent='@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}';document.head.appendChild(sty);
 // initCRM() は Firebase SDK ロード後に自動呼び出しされます
 </script>
+    <!-- CAL EVENT MODAL -->
+    <div id="cal-modal" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:9999;display:none;align-items:center;justify-content:center">
+      <div style="background:var(--bg1);border:1px solid var(--border2);border-radius:16px;padding:24px;width:90%;max-width:400px;box-shadow:0 8px 32px rgba(0,0,0,.4)">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:18px">
+          <div style="font-size:14px;font-weight:700;font-family:var(--mono)" id="cal-modal-ttl">📅 予定を追加</div>
+          <span style="cursor:pointer;color:var(--text3);font-size:18px" onclick="closeCalModal()">✕</span>
+        </div>
+        <div class="f-field" style="margin-bottom:12px">
+          <label style="font-size:11px;color:var(--text3);font-family:var(--mono);display:block;margin-bottom:5px">日付</label>
+          <input id="cal-ev-date" type="date" style="width:100%;padding:8px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;font-size:13px;color:var(--text);outline:none">
+        </div>
+        <div class="f-field" style="margin-bottom:12px">
+          <label style="font-size:11px;color:var(--text3);font-family:var(--mono);display:block;margin-bottom:5px">タイトル</label>
+          <input id="cal-ev-title" type="text" placeholder="例：○○社 訪問" style="width:100%;padding:8px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;font-size:13px;color:var(--text);outline:none">
+        </div>
+        <div class="f-field" style="margin-bottom:18px">
+          <label style="font-size:11px;color:var(--text3);font-family:var(--mono);display:block;margin-bottom:5px">メモ</label>
+          <textarea id="cal-ev-note" placeholder="メモを入力..." style="width:100%;padding:8px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:8px;font-size:13px;color:var(--text);outline:none;resize:vertical;min-height:72px;font-family:var(--font)"></textarea>
+        </div>
+        <div id="cal-ev-list" style="margin-bottom:14px"></div>
+        <div style="display:flex;gap:8px">
+          <button class="btn btn-a" style="flex:1" onclick="saveCalEvent()"><i class="ti ti-device-floppy" aria-hidden="true"></i>保存</button>
+          <button class="btn btn-g" onclick="closeCalModal()">キャンセル</button>
+        </div>
+      </div>
+    </div>
+
 </body>
 </html>
