@@ -671,18 +671,32 @@ select.fs{padding:10px 12px;background:#fff;border:1.5px solid var(--border);bor
         <div class="sec-t">接触NG企業リスト</div>
         <div class="pg-sub" style="margin-bottom:10px;font-size:11px">登録した企業名をアクション保存時に入力するとエラーが出ます</div>
         <div id="ng-company-list" style="margin-bottom:10px"></div>
-        <div style="display:flex;gap:7px;align-items:center">
+        <div style="display:flex;gap:7px;align-items:center;margin-bottom:7px">
           <input id="new-ng-input" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none" placeholder="企業名を入力">
           <button class="btn btn-a btn-sm" onclick="addNgCompany()"><i class="ti ti-plus" aria-hidden="true"></i>追加</button>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <label style="flex:1;padding:7px 10px;background:var(--bg2);border:1px dashed var(--border2);border-radius:6px;font-size:11px;color:var(--text3);font-family:var(--mono);cursor:pointer;text-align:center">
+            <i class="ti ti-upload" aria-hidden="true"></i> CSVでまとめて追加
+            <input type="file" accept=".csv" style="display:none" onchange="importNgCsv(this)">
+          </label>
+          <button class="btn btn-g btn-sm" onclick="exportNgCsv()"><i class="ti ti-download" aria-hidden="true"></i>CSV出力</button>
         </div>
       </div>
       <div class="prof-card">
         <div class="sec-t">既存企業リスト</div>
         <div class="pg-sub" style="margin-bottom:10px;font-size:11px">登録した企業名をアクション保存時に入力するとエラーが出ます</div>
         <div id="existing-company-list" style="margin-bottom:10px"></div>
-        <div style="display:flex;gap:7px;align-items:center">
+        <div style="display:flex;gap:7px;align-items:center;margin-bottom:7px">
           <input id="new-existing-input" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none" placeholder="企業名を入力">
           <button class="btn btn-a btn-sm" onclick="addExistingCompany()"><i class="ti ti-plus" aria-hidden="true"></i>追加</button>
+        </div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <label style="flex:1;padding:7px 10px;background:var(--bg2);border:1px dashed var(--border2);border-radius:6px;font-size:11px;color:var(--text3);font-family:var(--mono);cursor:pointer;text-align:center">
+            <i class="ti ti-upload" aria-hidden="true"></i> CSVでまとめて追加
+            <input type="file" accept=".csv" style="display:none" onchange="importExistingCsv(this)">
+          </label>
+          <button class="btn btn-g btn-sm" onclick="exportExistingCsv()"><i class="ti ti-download" aria-hidden="true"></i>CSV出力</button>
         </div>
       </div>
       <div class="prof-card"><div class="sec-t">通知設定</div>
@@ -1735,6 +1749,62 @@ function addExistingCompany(){
 
 function removeExistingCompany(i){
   existingCompanies.splice(i,1); saveCompanyLists(); renderCompanyLists();
+}
+
+
+function importNgCsv(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const lines = e.target.result.split(/\r?\n/).map(l=>l.trim()).filter(l=>l);
+    let added = 0;
+    lines.forEach(line=>{
+      // カンマ区切りの場合は1列目を使用
+      const name = line.split(',')[0].replace(/^"|"$/g,'').trim();
+      if(name && !ngCompanies.includes(name)){ngCompanies.push(name);added++;}
+    });
+    saveCompanyLists(); renderCompanyLists();
+    alert(added + '件追加しました（重複はスキップ）');
+    input.value='';
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function exportNgCsv(){
+  if(!ngCompanies.length){alert('リストが空です');return;}
+  const csv = ngCompanies.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '接触NG企業リスト.csv';
+  a.click();
+}
+
+function importExistingCsv(input){
+  const file = input.files[0]; if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    const lines = e.target.result.split(/\r?\n/).map(l=>l.trim()).filter(l=>l);
+    let added = 0;
+    lines.forEach(line=>{
+      const name = line.split(',')[0].replace(/^"|"$/g,'').trim();
+      if(name && !existingCompanies.includes(name)){existingCompanies.push(name);added++;}
+    });
+    saveCompanyLists(); renderCompanyLists();
+    alert(added + '件追加しました（重複はスキップ）');
+    input.value='';
+  };
+  reader.readAsText(file, 'UTF-8');
+}
+
+function exportExistingCsv(){
+  if(!existingCompanies.length){alert('リストが空です');return;}
+  const csv = existingCompanies.join('\n');
+  const blob = new Blob([csv], {type:'text/csv;charset=utf-8;'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = '既存企業リスト.csv';
+  a.click();
 }
 
 function saveAction(){
