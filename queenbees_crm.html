@@ -666,6 +666,25 @@ select.fs{padding:10px 12px;background:#fff;border:1.5px solid var(--border);bor
           <div id="gc-form" style="display:none;margin-top:9px"><div class="frow" style="margin-bottom:7px"><div class="field"><label>カレンダーID（省略時: primary）</label><input id="s-gcal" placeholder="primary"></div></div><button class="btn btn-a btn-sm" onclick="connectGc()"><i class="ti ti-link" aria-hidden="true"></i>連携を完了する</button></div>
         </div>
       </div>
+      
+      <div class="prof-card">
+        <div class="sec-t">接触NG企業リスト</div>
+        <div class="pg-sub" style="margin-bottom:10px;font-size:11px">登録した企業名をアクション保存時に入力するとエラーが出ます</div>
+        <div id="ng-company-list" style="margin-bottom:10px"></div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <input id="new-ng-input" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none" placeholder="企業名を入力">
+          <button class="btn btn-a btn-sm" onclick="addNgCompany()"><i class="ti ti-plus" aria-hidden="true"></i>追加</button>
+        </div>
+      </div>
+      <div class="prof-card">
+        <div class="sec-t">既存企業リスト</div>
+        <div class="pg-sub" style="margin-bottom:10px;font-size:11px">登録した企業名をアクション保存時に入力するとエラーが出ます</div>
+        <div id="existing-company-list" style="margin-bottom:10px"></div>
+        <div style="display:flex;gap:7px;align-items:center">
+          <input id="new-existing-input" style="flex:1;padding:7px 10px;background:var(--bg2);border:1px solid var(--border2);border-radius:6px;font-size:12px;color:var(--text);font-family:var(--font);outline:none" placeholder="企業名を入力">
+          <button class="btn btn-a btn-sm" onclick="addExistingCompany()"><i class="ti ti-plus" aria-hidden="true"></i>追加</button>
+        </div>
+      </div>
       <div class="prof-card"><div class="sec-t">通知設定</div>
         <div class="tgl-row"><div><div class="tgl-l">締切リマインダー</div><div class="tgl-s">アクション期限の3日前に通知</div></div><label style="cursor:pointer;font-size:11px;font-family:var(--mono);color:var(--text2);display:flex;align-items:center;gap:5px"><input type="checkbox" checked>ON</label></div>
         <div class="tgl-row"><div><div class="tgl-l">商談準備→企業移行通知</div><div class="tgl-s">リードが商談準備に変わったとき通知</div></div><label style="cursor:pointer;font-size:11px;font-family:var(--mono);color:var(--text2);display:flex;align-items:center;gap:5px"><input type="checkbox" checked>ON</label></div>
@@ -991,6 +1010,7 @@ function launchCRM(){
   document.getElementById('screen-login').classList.remove('active');
   document.getElementById('screen-crm').classList.add('active');
   loadSalesReps();refreshSalesRepSelects();
+  loadCompanyLists();
   applyProf();applyInt();navTo('action');
 }
 
@@ -1652,6 +1672,71 @@ function fillActionCompany(){
   const c=crms.find(x=>x.name===v);
   if(c){document.getElementById('af-industry').value=c.industry;}
 }
+
+// ===== 接触NG・既存企業リスト =====
+let ngCompanies = [];
+let existingCompanies = [];
+
+function loadCompanyLists(){
+  try{
+    ngCompanies = JSON.parse(localStorage.getItem('qb_ng_companies')||'[]');
+    existingCompanies = JSON.parse(localStorage.getItem('qb_existing_companies')||'[]');
+  }catch(e){ ngCompanies=[]; existingCompanies=[]; }
+  renderCompanyLists();
+}
+
+function saveCompanyLists(){
+  try{
+    localStorage.setItem('qb_ng_companies', JSON.stringify(ngCompanies));
+    localStorage.setItem('qb_existing_companies', JSON.stringify(existingCompanies));
+  }catch(e){}
+  // Firebaseにも保存
+  if(window._fbReady && window._db){
+    window._db.ref('qb_ng_companies').set(ngCompanies).catch(()=>{});
+    window._db.ref('qb_existing_companies').set(existingCompanies).catch(()=>{});
+  }
+}
+
+function renderCompanyLists(){
+  const ngEl = document.getElementById('ng-company-list');
+  const exEl = document.getElementById('existing-company-list');
+  if(!ngEl || !exEl) return;
+  ngEl.innerHTML = ngCompanies.length ? ngCompanies.map((c,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:5px;font-size:12px;">
+      <span><i class="ti ti-ban" style="color:#ef4444;margin-right:6px"></i>${c}</span>
+      <span style="cursor:pointer;color:var(--text3);font-size:11px" onclick="removeNgCompany(${i})">削除</span>
+    </div>`).join('') : '<div style="font-size:11px;color:var(--text3);font-family:var(--mono)">登録なし</div>';
+  exEl.innerHTML = existingCompanies.length ? existingCompanies.map((c,i)=>`
+    <div style="display:flex;align-items:center;justify-content:space-between;padding:6px 10px;background:var(--bg2);border-radius:6px;margin-bottom:5px;font-size:12px;">
+      <span><i class="ti ti-building" style="color:#f59e0b;margin-right:6px"></i>${c}</span>
+      <span style="cursor:pointer;color:var(--text3);font-size:11px" onclick="removeExistingCompany(${i})">削除</span>
+    </div>`).join('') : '<div style="font-size:11px;color:var(--text3);font-family:var(--mono)">登録なし</div>';
+}
+
+function addNgCompany(){
+  const v = document.getElementById('new-ng-input').value.trim();
+  if(!v) return;
+  if(ngCompanies.includes(v)){alert('すでに登録されています');return;}
+  ngCompanies.push(v); saveCompanyLists(); renderCompanyLists();
+  document.getElementById('new-ng-input').value='';
+}
+
+function removeNgCompany(i){
+  ngCompanies.splice(i,1); saveCompanyLists(); renderCompanyLists();
+}
+
+function addExistingCompany(){
+  const v = document.getElementById('new-existing-input').value.trim();
+  if(!v) return;
+  if(existingCompanies.includes(v)){alert('すでに登録されています');return;}
+  existingCompanies.push(v); saveCompanyLists(); renderCompanyLists();
+  document.getElementById('new-existing-input').value='';
+}
+
+function removeExistingCompany(i){
+  existingCompanies.splice(i,1); saveCompanyLists(); renderCompanyLists();
+}
+
 function saveAction(){
   const date=document.getElementById('af-date').value;
   const company=document.getElementById('af-company').value.trim();
@@ -1662,6 +1747,14 @@ function saveAction(){
   if(!date){se('af-date','aen-date');ok=false;}
   if(!company){se('af-company','aen-company');ok=false;}
   if(!ok)return;
+
+  // 接触NG・既存企業チェック
+  if(ngCompanies.some(c=>company.includes(c)||c.includes(company))){
+    alert('⛔ 接触NG企業です。この企業へのアクションは登録できません。');return;
+  }
+  if(existingCompanies.some(c=>company.includes(c)||c.includes(company))){
+    alert('⚠️ 既存企業リストに登録されている企業です。重複がないか確認してください。');return;
+  }
 
   // 新規 or 編集を明確に判定
   const editing=(currentActionId!==null&&currentActionId!==undefined);
