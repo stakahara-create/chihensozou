@@ -229,8 +229,8 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
           <div class="krh">粗利合計 <span style="font-size:9px;color:var(--text3);">（人材紹介80万/送客27卒102万/送客28卒59.5万/送客中途8.5万）</span></div>
           <div class="krow">
             <span class="kl">KPI: 2,500,000円</span>
-            <input class="ki" id="k-profit" type="text" inputmode="numeric" placeholder="0"
-              onfocus="mFocus(this)" onblur="kMoneyBlur(this,'profit',2500000)" oninput="kMoneyInput(this,'profit',2500000)"/>
+            <input class="ki" id="k-profit" type="number" placeholder="0"
+              onblur="kMoneyBlur(this,'profit',2500000)" oninput="kMoneyInput(this,'profit',2500000)"/>
             <span class="kunit">円</span>
             <div class="rate no" id="r-profit">—</div>
             <div class="badge" id="b-profit"></div>
@@ -671,19 +671,19 @@ function kSp(el,key){
   triggerSave();
 }
 function kMoneyInput(el,key,kpi){
-  el.value=el.value.replace(/[^0-9]/g,"");
+function kMoneyInput(el,key,kpi){
   if(!cd.kpi)cd.kpi={impr:{}};
   cd.kpi[key]=num(el.value)||"";
-  calcRate(key,num(el.value),kpi,true);
+  calcRate(key,num(el.value),kpi);
   triggerSave();
 }
 function kMoneyBlur(el,key,kpi){
-  var raw=num(el.value.replace(/,/g,""));
-  el.value=raw>0?raw.toLocaleString():"";
+  var raw=num(el.value);
   if(!cd.kpi)cd.kpi={impr:{}};
   cd.kpi[key]=raw||"";
-  calcRate(key,raw,kpi,true);
+  calcRate(key,raw,kpi);
   triggerSave();
+}
 }
 
 function calcRate(key,actual,kpi){
