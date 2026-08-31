@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>施設タイプ別 判断軸チートシート</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Zen+Kaku+Gothic+New:wght@400;500;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg: #EEEBE1;
+    --panel: #FBFAF6;
+    --ink: #1C2420;
+    --ink-soft: #5B6259;
+    --line: #D9D4C4;
+    --sidebar: #172420;
+    --sidebar-line: #2B3B34;
+    --sidebar-text: #E9E4D4;
+    --sidebar-text-dim: #9BA69B;
+    --teal: #2E6F5C;
+    --teal-soft: #E4EFE9;
+    --good: #3D7A4E;
+    --good-soft: #E7F1E4;
+    --ng: #A6412A;
+    --ng-soft: #F5E7E1;
+    --info: #3D5A80;
+    --info-soft: #E4E9F1;
+    --radius: 3px;
+  }
+
+  *{ box-sizing: border-box; }
+
+  html, body{
+    margin: 0;
+    padding: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .app{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .topbar{
+    padding: 30px 32px 22px;
+    border-bottom: 1px solid var(--line);
+    background: var(--bg);
+  }
+
+  .topbar .eyebrow{
+    font-size: 12px;
+    letter-spacing: 0.08em;
+    color: var(--teal);
+    font-weight: 700;
+    margin-bottom: 6px;
+  }
+
+  .topbar h1{
+    font-family: "Shippori Mincho", serif;
+    font-weight: 800;
+    font-size: 26px;
+    margin: 0 0 6px;
+    letter-spacing: 0.02em;
+  }
+
+  .topbar p{
+    margin: 0;
+    font-size: 13.5px;
+    color: var(--ink-soft);
+    line-height: 1.7;
+    max-width: 640px;
+  }
+
+  .layout{
+    flex: 1;
+    display: flex;
+    min-height: 0;
+  }
+
+  /* ---------- Sidebar ---------- */
+  .sidebar{
+    width: 300px;
+    flex-shrink: 0;
+    background: var(--sidebar);
+    color: var(--sidebar-text);
+    padding: 18px 0 40px;
+    overflow-y: auto;
+  }
+
+  .sidebar-label{
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    color: var(--sidebar-text-dim);
+    padding: 6px 24px 12px;
+  }
+
+  .facility-item{
+    display: block;
+    width: 100%;
+    text-align: left;
+    background: none;
+    border: none;
+    border-left: 3px solid transparent;
+    color: var(--sidebar-text);
+    padding: 14px 22px 14px 21px;
+    cursor: pointer;
+    font-family: inherit;
+    border-bottom: 1px solid var(--sidebar-line);
+  }
+
+  .facility-item:hover{ background: rgba(255,255,255,0.03); }
+
+  .facility-item.active{
+    background: rgba(255,255,255,0.06);
+    border-left-color: #C7A24A;
+  }
+
+  .facility-item .fname{
+    font-family: "Shippori Mincho", serif;
+    font-size: 15.5px;
+    font-weight: 600;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .facility-item .ftag{
+    font-size: 11.5px;
+    color: var(--sidebar-text-dim);
+    line-height: 1.5;
+    display: block;
+  }
+
+  /* ---------- Detail panel ---------- */
+  .detail{
+    flex: 1;
+    overflow-y: auto;
+    padding: 34px 40px 80px;
+    background: var(--panel);
+  }
+
+  .detail-head{
+    margin-bottom: 26px;
+    padding-bottom: 22px;
+    border-bottom: 1px solid var(--line);
+  }
+
+  .back-btn{
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: none;
+    border: none;
+    color: var(--teal);
+    font-family: inherit;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 0;
+    margin-bottom: 18px;
+    cursor: pointer;
+  }
+
+  .detail-head h2{
+    font-family: "Shippori Mincho", serif;
+    font-size: 27px;
+    font-weight: 800;
+    margin: 0 0 10px;
+  }
+
+  .detail-head .tagline{
+    font-size: 13.5px;
+    color: var(--teal);
+    font-weight: 700;
+    background: var(--teal-soft);
+    display: inline-block;
+    padding: 5px 12px;
+    border-radius: var(--radius);
+  }
+
+  /* ---------- Accordion ---------- */
+  .accordion{
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    margin-bottom: 14px;
+    background: #fff;
+    overflow: hidden;
+  }
+
+  .accordion-head{
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px 18px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+    font-family: inherit;
+  }
+
+  .accordion-icon{
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .accordion[data-type="work"] .accordion-icon{ background: var(--teal-soft); color: var(--teal); }
+  .accordion[data-type="good"] .accordion-icon{ background: var(--good-soft); color: var(--good); }
+  .accordion[data-type="ng"] .accordion-icon{ background: var(--ng-soft); color: var(--ng); }
+  .accordion[data-type="info"] .accordion-icon{ background: var(--info-soft); color: var(--info); }
+
+  .accordion-title{
+    flex: 1;
+  }
+
+  .accordion-title .t-main{
+    font-weight: 900;
+    font-size: 15.5px;
+    display: block;
+  }
+
+  .accordion-title .t-sub{
+    font-size: 12.5px;
+    color: var(--ink-soft);
+    display: block;
+    margin-top: 2px;
+    line-height: 1.5;
+  }
+
+  .chevron{
+    width: 18px;
+    height: 18px;
+    flex-shrink: 0;
+    transition: transform 0.22s ease;
+    color: var(--ink-soft);
+  }
+
+  .accordion.open .chevron{ transform: rotate(180deg); }
+
+  .accordion-body{
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.28s ease;
+  }
+
+  .accordion-body-inner{
+    padding: 4px 18px 20px 60px;
+    font-size: 13.5px;
+    line-height: 1.85;
+  }
+
+  .accordion-body-inner p{ margin: 0 0 12px; color: var(--ink); }
+
+  .fact-row{
+    display: flex;
+    gap: 10px;
+    padding: 8px 0;
+    border-top: 1px dashed var(--line);
+    font-size: 13px;
+  }
+  .fact-row:first-of-type{ border-top: none; }
+  .fact-row .fk{
+    width: 92px;
+    flex-shrink: 0;
+    font-weight: 700;
+    color: var(--ink-soft);
+  }
+  .fact-row .fv{ color: var(--ink); }
+
+  ul.detail-list{
+    margin: 10px 0 0;
+    padding: 0;
+    list-style: none;
+  }
+  ul.detail-list li{
+    position: relative;
+    padding-left: 18px;
+    margin-bottom: 8px;
+    color: var(--ink);
+  }
+  ul.detail-list li::before{
+    content: "";
+    position: absolute;
+    left: 2px;
+    top: 9px;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: currentColor;
+    opacity: 0.55;
+  }
+  .accordion[data-type="work"] ul.detail-list li::before{ color: var(--teal); }
+  .accordion[data-type="good"] ul.detail-list li::before{ color: var(--good); }
+  .accordion[data-type="ng"] ul.detail-list li::before{ color: var(--ng); }
+  .accordion[data-type="info"] ul.detail-list li::before{ color: var(--info); }
+
+  /* ---------- Responsive ---------- */
+  @media (max-width: 880px){
+    .topbar{ padding: 22px 20px 18px; }
+    .topbar h1{ font-size: 21px; }
+    .sidebar{ width: 100%; }
+    .layout{ position: relative; }
+    .detail{
+      position: fixed;
+      inset: 0;
+      top: 0;
+      transform: translateX(100%);
+      transition: transform 0.3s ease;
+      z-index: 30;
+      padding: 20px 20px 60px;
+    }
+    .detail.active{ transform: translateX(0); }
+    .back-btn{ display: inline-flex; }
+    .accordion-body-inner{ padding-left: 18px; }
+  }
+
+  @media (min-width: 881px){
+    .layout .sidebar{ display: block; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="topbar">
+    <div class="eyebrow">参考｜施設タイプ別 判断軸チートシート</div>
+    <h1>どの施設に、どんな人を紹介すべきか</h1>
+    <p>診断結果や面談時の説明にそのまま使えます。左のリストから施設タイプを選び、「施設の特徴」「働き方」「GOODペルソナ」「NGペルソナ」をタップすると詳細が開きます。</p>
+  </div>
+
+  <div class="layout">
+    <nav class="sidebar" id="sidebar">
+      <div class="sidebar-label">施設タイプを選択</div>
+      <div id="sidebarList"></div>
+    </nav>
+
+    <main class="detail" id="detail">
+      <button class="back-btn" id="backBtn">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M15 18L9 12L15 6" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        一覧に戻る
+      </button>
+      <div id="detailContent"></div>
+    </main>
+  </div>
+</div>
+
+<script>
+const FACILITIES = [
+  {
+    id: "tokuyo",
+    name: "特別養護老人ホーム",
+    tagline: "夜勤OK・介護度高めの利用者にも慣れている・安定志向",
+    info: {
+      overview: "老人福祉法・介護保険法に基づく公的な入所施設で、原則要介護3以上の方が対象。「終の棲家」として長期の入所を前提とすることが多い。",
+      operator: "社会福祉法人が運営母体の大部分を占める（自治体からの委託運営を含む）",
+      scale: "定員50〜100名規模が中心。ユニット型（個室・少人数ケア）と従来型（多床室）が混在",
+      users: "平均要介護度が高く、認知症を併発しているケースも多い。入所期間は長期（数年単位）に及ぶことが多い",
+      trend: "全国的に高齢化に伴う需要増が続く一方、待機者が多く入所ハードルはやや高め"
+    },
+    work: {
+      summary: "交代制勤務で夜勤あり。要介護度3以上の利用者が中心で、身体介護の比重が高い。社会福祉法人運営が多く、雇用が安定している。",
+      bullets: [
+        "二交代・三交代制で夜勤月4〜6回程度が一般的",
+        "要介護度の高い利用者が多く、身体介護（移乗・排泄・食事介助）が中心",
+        "社会福祉法人運営が多く、給与体系・福利厚生が安定"
+      ]
+    },
+    good: {
+      summary: "夜勤に抵抗がなく、重度の身体介護に慣れている経験者。長く腰を据えて働きたい人にも合う。",
+      income: "320万〜420万円（夜勤手当込み・正社員目安）",
+      requirements: "無資格可（初任者研修以上は優遇）。未経験可だが、夜勤に入れることが実質的な条件になりやすい",
+      conditions: "正社員中心・シフト制（夜勤あり）・社会保険完備が一般的",
+      bullets: [
+        "夜勤シフトに入ることに抵抗がない",
+        "要介護度の高い利用者の身体介護に慣れている、または学ぶ意欲がある",
+        "長期的に同じ職場で腰を据えて働きたい"
+      ]
+    },
+    ng: {
+      summary: "夜勤NG、体力面に不安がある、めまぐるしい環境変化を求める人には不向き。",
+      bullets: [
+        "夜勤が一切できない",
+        "身体的な負担の大きい介助に不安がある",
+        "短期間でいろいろな現場を経験したいタイプ"
+      ]
+    }
+  },
+  {
+    id: "roken",
+    name: "介護老人保健施設（老健）",
+    tagline: "医療的ケアに抵抗がない・リハビリ職との連携に興味がある",
+    info: {
+      overview: "介護保険法に基づき、病院と自宅の中間に位置づけられる施設。在宅復帰を目的とした一時入所（原則3〜6ヶ月）が基本。",
+      operator: "医療法人が運営母体となるケースが多い",
+      scale: "定員100名前後の中規模施設が中心",
+      users: "病院退院後、在宅復帰を目指すリハビリ対象者が中心。入退所の回転が比較的早い",
+      trend: "在宅復帰率が施設評価・報酬に直結するため、リハビリ体制の強化が進む傾向"
+    },
+    work: {
+      summary: "在宅復帰を目指すリハビリ主体の施設。看護師・理学療法士等と連携するチーム医療の要素が強く、入退所の入れ替わりが多い。",
+      bullets: [
+        "医師・看護師・PT/OT/STなど多職種と密に連携",
+        "在宅復帰支援が目的のため、入退所のサイクルが比較的短い",
+        "夜勤ありのシフト制が一般的"
+      ]
+    },
+    good: {
+      summary: "医療的ケアへの抵抗が少なく、リハビリ職など他職種と連携しながら働きたい人。",
+      income: "320万〜420万円（夜勤手当込み・正社員目安）",
+      requirements: "無資格可だが、医療的ケアに関わる場面が多いため初任者研修以上が歓迎されやすい",
+      conditions: "正社員中心・シフト制（夜勤あり）・多職種カンファレンスへの参加あり",
+      bullets: [
+        "喀痰吸引・経管栄養等の医療的ケアに抵抗がない",
+        "リハビリ職や看護師と連携しながら働くことに興味がある",
+        "利用者の入れ替わりが多い環境でも柔軟に対応できる"
+      ]
+    },
+    ng: {
+      summary: "医療行為に強い抵抗感がある、単独で完結する仕事を好む人には不向き。",
+      bullets: [
+        "医療的ケアに強い抵抗感がある",
+        "多職種との連携より単独作業を好む",
+        "利用者との長期的な関係構築を重視したい"
+      ]
+    }
+  },
+  {
+    id: "yuryo",
+    name: "有料老人ホーム",
+    tagline: "接客・ホスピタリティ重視・収入も重視したい",
+    info: {
+      overview: "民間事業者が運営する居住系施設で、「介護付き」「住宅型」等の種別がある。サービス内容・料金体系は施設ごとに幅が大きい。",
+      operator: "株式会社運営が中心。大手チェーンから地域密着の中小事業者まで幅広い",
+      scale: "定員数十名〜100名超まで、施設によって差が大きい",
+      users: "自立〜要介護の方まで幅広く受け入れ。入居金・月額利用料が比較的高めな施設も多い",
+      trend: "都市部を中心に施設数が増加傾向。差別化のためサービスの質・接遇力への投資が進む"
+    },
+    work: {
+      summary: "サービス業としての接遇要素が強く、施設のランクによって働き方や給与に幅がある。ホテルのような接客スキルが求められる場面もある。",
+      bullets: [
+        "身だしなみ・言葉遣いなど接遇マナーが重視される",
+        "施設のグレード（高級路線〜一般的な料金帯）により業務内容・給与に差",
+        "シフト制。夜勤の有無は施設による"
+      ]
+    },
+    good: {
+      summary: "接客業経験があり、ホスピタリティを大切にできる人。収入アップを目指したい人にも合う。",
+      income: "300万〜450万円（施設のグレードにより変動）",
+      requirements: "無資格可。接客・サービス業経験があれば選考でプラスに評価されやすい",
+      conditions: "正社員・パートいずれもあり。施設により夜勤の有無が異なる",
+      bullets: [
+        "接客業やサービス業での勤務経験がある",
+        "身だしなみやマナーを意識した対応ができる",
+        "収入面でのステップアップを重視している"
+      ]
+    },
+    ng: {
+      summary: "マニュアル外の接遇対応が苦手、身だしなみ等の規定に窮屈さを感じる人には不向き。",
+      bullets: [
+        "接遇マナーや身だしなみのルールに抵抗がある",
+        "臨機応変な接客対応が苦手",
+        "収入よりもケアの専門性を追求したい"
+      ]
+    }
+  },
+  {
+    id: "gh",
+    name: "グループホーム",
+    tagline: "認知症ケアが得意・少人数の家庭的な職場を好む",
+    info: {
+      overview: "認知症対応型共同生活介護。要支援2以上で認知症の診断がある方が対象の、地域密着型サービスの一つ。",
+      operator: "株式会社・NPO法人・社会福祉法人など運営母体は多様",
+      scale: "1ユニット5〜9名、1施設2ユニットまでが基本（定員18名程度が上限の目安）",
+      users: "認知症の診断があり、共同生活が可能な程度の心身状態の方が中心",
+      trend: "地域密着型サービスとして、住み慣れた地域での受け皿ニーズが高まっている"
+    },
+    work: {
+      summary: "1ユニット5〜9人程度の少人数制で、認知症の方への個別ケアが中心。家庭的な雰囲気の中、一人ひとりの裁量が大きい。",
+      bullets: [
+        "少人数のユニットケアで、利用者一人ひとりと深く関わる",
+        "認知症ケアの専門性が求められる",
+        "スタッフ数が少ない分、一人あたりの裁量・役割が大きい"
+      ]
+    },
+    good: {
+      summary: "認知症ケアに関心・経験があり、少人数の家庭的なチームで働きたい人。",
+      income: "280万〜380万円（正社員目安）",
+      requirements: "無資格可。認知症ケアへの関心があれば尚可、実務者研修以上は優遇されやすい",
+      conditions: "正社員・パートあり。シフト制（宿直対応の施設が多い）",
+      bullets: [
+        "認知症ケアに興味がある、または経験がある",
+        "少人数の職場で密なコミュニケーションを取りたい",
+        "利用者一人ひとりに寄り添うケアをしたい"
+      ]
+    },
+    ng: {
+      summary: "大規模施設でのマニュアル化された働き方を好む人、認知症ケアに苦手意識がある人には不向き。",
+      bullets: [
+        "認知症ケアに強い苦手意識がある",
+        "少人数ゆえの人間関係の近さに負担を感じやすい",
+        "大規模施設での分業型の働き方を好む"
+      ]
+    }
+  },
+  {
+    id: "sakoju",
+    name: "サ高住",
+    tagline: "医療的ケアは避けたい・自立度高めの利用者と関わりたい",
+    info: {
+      overview: "高齢者住まい法に基づくバリアフリー賃貸住宅。介護保険サービスではなく「住宅」に位置づけられ、外部の訪問介護等と組み合わせて利用するケースが多い。",
+      operator: "不動産・住宅関連事業者や医療法人など運営母体は多様",
+      scale: "施設規模は数十戸規模が多い",
+      users: "自立〜軽度要介護の方が中心。将来の介護ニーズを見据えて入居するケースも多い",
+      trend: "「住宅」としての位置づけのため供給が増加傾向。地域や物件による差が大きい"
+    },
+    work: {
+      summary: "自立〜軽度の要介護者が中心で、見守りと生活支援が主な業務。医療的ケアの比重は他施設に比べて低め。",
+      bullets: [
+        "自立度の高い利用者が多く、見守り・生活相談が業務の中心",
+        "医療的ケアの場面は比較的少ない",
+        "日勤中心のシフトが多い（施設により夜勤あり）"
+      ]
+    },
+    good: {
+      summary: "医療的ケアへの抵抗があり、コミュニケーション中心の関わりを大切にしたい人。",
+      income: "280万〜380万円（正社員目安）",
+      requirements: "無資格可。未経験者も採用されやすい",
+      conditions: "日勤中心。正社員・パートいずれもあり",
+      bullets: [
+        "医療的ケアよりも生活支援・見守りを中心に働きたい",
+        "自立度の高い利用者とのコミュニケーションを重視したい",
+        "比較的落ち着いた環境で働きたい"
+      ]
+    },
+    ng: {
+      summary: "重度の身体介護や医療的ケアで専門性を発揮したい人には物足りなさが出やすい。",
+      bullets: [
+        "重度の身体介護スキルを活かしたい",
+        "医療的ケアの経験を積みたい",
+        "より密度の高い介護業務を求めている"
+      ]
+    }
+  },
+  {
+    id: "day",
+    name: "デイサービス",
+    tagline: "夜勤NG・生活リズムを安定させたい・未経験者にも◎",
+    info: {
+      overview: "通所介護。利用者が日中施設に通い、入浴・食事・レクリエーション・機能訓練等を日帰りで受けるサービス。",
+      operator: "株式会社・NPO法人など、比較的小規模事業者の参入も多い",
+      scale: "定員10〜30名程度の小規模事業所が多い",
+      users: "在宅で生活する要支援・要介護者が中心。家族の介護負担軽減（レスパイト）目的の利用も多い",
+      trend: "事業所数は全国的に非常に多く、競争が激しい分野。特色（リハビリ特化型等）を打ち出す施設が増加"
+    },
+    work: {
+      summary: "日勤のみで、レクリエーションや機能訓練が業務の中心。規則的な勤務時間で生活リズムを整えやすい。",
+      bullets: [
+        "夜勤がなく、日勤のみの規則的な勤務",
+        "レクリエーション企画・機能訓練の補助が業務の中心",
+        "未経験者・ブランクのある人でも始めやすい"
+      ]
+    },
+    good: {
+      summary: "夜勤NGで生活リズムを安定させたい人。介護職未経験の人にも入りやすい。",
+      income: "280万〜360万円（正社員目安）",
+      requirements: "無資格・未経験可の求人が多い",
+      conditions: "日勤のみ。正社員・パート・アルバイトいずれもあり",
+      bullets: [
+        "夜勤ができない、または希望しない",
+        "規則正しい生活リズムで働きたい",
+        "介護職が未経験、またはブランクがある"
+      ]
+    },
+    ng: {
+      summary: "夜勤手当も含めてしっかり稼ぎたい人、レクリエーション企画が苦手な人には不向き。",
+      bullets: [
+        "夜勤手当を含めて収入を増やしたい",
+        "レクリエーションや企画業務に苦手意識がある",
+        "身体介護の実務経験を積みたい"
+      ]
+    }
+  },
+  {
+    id: "houmon",
+    name: "訪問介護",
+    tagline: "車移動OK・直行直帰など時間の融通を重視",
+    info: {
+      overview: "訪問介護員（ホームヘルパー）が利用者の自宅を訪問し、身体介護・生活援助を提供するサービス。",
+      operator: "株式会社・NPO法人が中心。小規模事業者も多い",
+      scale: "事業所自体は小規模だが、登録ヘルパーを多数抱える形態が多い",
+      users: "在宅生活を継続したい要介護者が中心。一人暮らし高齢者の利用も多い",
+      trend: "移動の負担や人手不足感が強く、全国的にヘルパー不足が課題となっている分野"
+    },
+    work: {
+      summary: "利用者宅を訪問してケアを行う。移動が多く、直行直帰でスキマ時間を活用しやすい一方、法律上ヘルパーには一定の資格が必要。",
+      bullets: [
+        "利用者宅への移動が多く、車の運転が必須になることが多い",
+        "直行直帰が可能で、勤務時間の融通が利きやすい",
+        "訪問介護員として働くには介護職員初任者研修以上の資格が法律上原則必要"
+      ]
+    },
+    good: {
+      summary: "運転に抵抗がなく、時間の融通を重視したい人。副業・複業的な働き方とも相性が良い。",
+      income: "280万〜400万円（訪問件数による歩合給ありの施設も多い）",
+      requirements: "介護職員初任者研修修了以上が実質必須（無資格では生活援助の一部業務に限られる）。普通自動車免許があると採用されやすい",
+      conditions: "登録ヘルパー・非常勤も多く、スキマ時間を活かした働き方が可能",
+      bullets: [
+        "車の運転に抵抗がない",
+        "直行直帰など時間の融通が利く働き方を希望している",
+        "一人で判断しながら業務を進めることに抵抗がない"
+      ]
+    },
+    ng: {
+      summary: "運転が苦手、チームで支え合いながら働きたい人には負担が大きくなりやすい。",
+      bullets: [
+        "車の運転ができない、または苦手",
+        "一人での移動・訪問の多さに不安がある",
+        "常にチームで相談しながら働きたい"
+      ]
+    }
+  },
+  {
+    id: "short",
+    name: "ショートステイ",
+    tagline: "短期集中で働きたい・派遣/登録型と相性が良い",
+    info: {
+      overview: "短期入所生活介護。数日〜数週間の短期間、施設に入所して介護を受けるサービス。家族のレスパイト（介護休息）目的での利用が中心。",
+      operator: "特養等に併設される形態が多い（単独型もあり）",
+      scale: "特養等に併設の場合、定員数床〜数十床程度",
+      users: "在宅介護を受けている要介護者で、家族の入院・冠婚葬祭・休息等の際に利用",
+      trend: "在宅介護を支える基盤サービスとして、需要は安定的に存在"
+    },
+    work: {
+      summary: "短期入所の利用者が中心で、入退所対応の頻度が高い。派遣・登録スタッフとの相性が良く、単発勤務も選びやすい。",
+      bullets: [
+        "数日〜数週間の短期入所者への対応が中心",
+        "入退所に伴う事務・引き継ぎ対応の頻度が高い",
+        "派遣・登録型スタッフの受け入れに慣れている施設が多い"
+      ]
+    },
+    good: {
+      summary: "単発・短期での勤務を希望する人。派遣や登録型の働き方をしたい人にも合う。",
+      income: "280万〜380万円（正社員目安）、派遣の場合は時給1,300〜1,600円程度が目安",
+      requirements: "無資格可。派遣・登録の場合は実務経験者が優遇されやすい",
+      conditions: "正社員のほか、派遣・登録・単発勤務の求人も多い",
+      bullets: [
+        "単発・短期の勤務スタイルを希望している",
+        "派遣や登録型としての働き方に興味がある",
+        "新しい利用者との出会いに前向きに対応できる"
+      ]
+    },
+    ng: {
+      summary: "特定の利用者と長期的な関係を築きたい人には物足りなさが出やすい。",
+      bullets: [
+        "特定の利用者と長期的な信頼関係を築きたい",
+        "短期間での入退所対応の忙しさに負担を感じやすい",
+        "安定した固定シフトを重視したい"
+      ]
+    }
+  }
+];
+
+const ICONS = {
+  info: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 21V6L12 3L20 6V21H14V14H10V21H4Z" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/></svg>',
+  work: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M12 7V12L15.5 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>',
+  good: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M8 12.5L10.5 15L16 9" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+  ng: '<svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><path d="M9 9L15 15M15 9L9 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>'
+};
+
+const sidebarList = document.getElementById('sidebarList');
+const detailContent = document.getElementById('detailContent');
+const detailPanel = document.getElementById('detail');
+const backBtn = document.getElementById('backBtn');
+
+let activeId = null;
+
+function renderSidebar(){
+  sidebarList.innerHTML = FACILITIES.map(f => `
+    <button class="facility-item${f.id === activeId ? ' active' : ''}" data-id="${f.id}">
+      <span class="fname">${f.name}</span>
+      <span class="ftag">${f.tagline}</span>
+    </button>
+  `).join('');
+
+  sidebarList.querySelectorAll('.facility-item').forEach(btn => {
+    btn.addEventListener('click', () => selectFacility(btn.dataset.id));
+  });
+}
+
+function accordionBlock(type, label, icon, f){
+  const d = f[type];
+  let inner = `<p>${d.summary || d.overview}</p>`;
+
+  if(type === 'info'){
+    inner += `
+      <div class="fact-row"><span class="fk">運営母体</span><span class="fv">${d.operator}</span></div>
+      <div class="fact-row"><span class="fk">施設規模</span><span class="fv">${d.scale}</span></div>
+      <div class="fact-row"><span class="fk">利用者像</span><span class="fv">${d.users}</span></div>
+      <div class="fact-row"><span class="fk">傾向</span><span class="fv">${d.trend}</span></div>
+    `;
+  }
+
+  if(type === 'good'){
+    inner += `
+      <div class="fact-row"><span class="fk">想定年収</span><span class="fv">${d.income}</span></div>
+      <div class="fact-row"><span class="fk">入社条件</span><span class="fv">${d.requirements}</span></div>
+      <div class="fact-row"><span class="fk">労働条件</span><span class="fv">${d.conditions}</span></div>
+    `;
+  }
+
+  if(d.bullets){
+    inner += `<ul class="detail-list">${d.bullets.map(b => `<li>${b}</li>`).join('')}</ul>`;
+  }
+
+  const subText = (d.summary || d.overview);
+
+  return `
+    <div class="accordion" data-type="${type}">
+      <button class="accordion-head">
+        <span class="accordion-icon">${icon}</span>
+        <span class="accordion-title">
+          <span class="t-main">${label}</span>
+          <span class="t-sub">${subText.length > 34 ? subText.slice(0, 34) + '…' : subText}</span>
+        </span>
+        <svg class="chevron" viewBox="0 0 24 24" fill="none"><path d="M6 9L12 15L18 9" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      </button>
+      <div class="accordion-body">
+        <div class="accordion-body-inner">${inner}</div>
+      </div>
+    </div>
+  `;
+}
+
+function renderDetail(f){
+  detailContent.innerHTML = `
+    <div class="detail-head">
+      <h2>${f.name}</h2>
+      <div class="tagline">向いている人：${f.tagline}</div>
+    </div>
+    ${accordionBlock('info', '施設の特徴', ICONS.info, f)}
+    ${accordionBlock('work', '働き方', ICONS.work, f)}
+    ${accordionBlock('good', 'GOODペルソナ', ICONS.good, f)}
+    ${accordionBlock('ng', 'NGペルソナ', ICONS.ng, f)}
+  `;
+
+  detailContent.querySelectorAll('.accordion-head').forEach(head => {
+    head.addEventListener('click', () => {
+      const acc = head.closest('.accordion');
+      const body = acc.querySelector('.accordion-body');
+      const isOpen = acc.classList.contains('open');
+      if(isOpen){
+        body.style.maxHeight = '0px';
+        acc.classList.remove('open');
+      } else {
+        acc.classList.add('open');
+        body.style.maxHeight = body.scrollHeight + 'px';
+      }
+    });
+  });
+
+  // open the "施設の特徴" section by default
+  const first = detailContent.querySelector('.accordion[data-type="info"]');
+  if(first){
+    first.classList.add('open');
+    const body = first.querySelector('.accordion-body');
+    body.style.maxHeight = body.scrollHeight + 'px';
+  }
+}
+
+function selectFacility(id){
+  activeId = id;
+  const f = FACILITIES.find(x => x.id === id);
+  renderSidebar();
+  renderDetail(f);
+  detailPanel.classList.add('active');
+  detailPanel.scrollTop = 0;
+}
+
+backBtn.addEventListener('click', () => {
+  detailPanel.classList.remove('active');
+});
+
+renderSidebar();
+selectFacility(FACILITIES[0].id);
+if(window.innerWidth <= 880){
+  detailPanel.classList.remove('active');
+}
+</script>
+</body>
+</html>
