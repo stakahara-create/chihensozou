@@ -281,6 +281,11 @@
 </div>
 
 <script>
+// ---------- shared state (must be declared before anything reads it) ----------
+let mode = 'idle'; // idle | listening | speaking
+let level = 0;
+let t = 0;
+
 // ---------- global error surface (so failures show on screen, not just devtools) ----------
 window.addEventListener('error', (e) => {
   const el = document.getElementById('statusLine');
@@ -319,9 +324,6 @@ const gaugeFill = document.getElementById('gaugeFill');
 const canvas = document.getElementById('orbCanvas');
 const ctx = canvas.getContext('2d');
 const SIZE = 600, CX = SIZE/2, CY = SIZE/2;
-let mode = 'idle'; // idle | listening | speaking
-let level = 0;
-let t = 0;
 
 // generate rigid 3D point cloud (dandelion-ish: several branch clusters)
 const POINTS = [];
