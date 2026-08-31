@@ -1,0 +1,824 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>ACT/LOG</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet"/>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F7FA;--sur:#FFF;--sur2:#F2F2F6;--bdr:#E0E0EA;
+  --text:#18181F;--text2:#60607A;--text3:#A0A0B8;
+  --acc:#5A4FD4;--accl:#EEF0FF;
+  --grn:#0EA56A;--grnbg:#EDFAF4;--grnbdr:#B6EDD8;
+  --amb:#C47E00;--ambbg:#FFF8E6;--ambbdr:#F0D080;
+  --red:#D03030;--r:10px;--rl:14px;
+}
+body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text);height:100vh;overflow:hidden;}
+#app{display:flex;height:100vh;}
+
+/* SIDEBAR */
+#sb{width:196px;flex-shrink:0;background:var(--sur);border-right:1px solid var(--bdr);overflow-y:auto;}
+.sb-logo{padding:16px 14px 12px;border-bottom:1px solid var(--bdr);}
+.sb-logo-t{font-family:"Syne",sans-serif;font-size:14px;font-weight:800;display:flex;align-items:center;gap:6px;}
+.sb-pip{width:8px;height:8px;border-radius:50%;background:var(--acc);}
+.sb-logo-s{font-size:9px;color:var(--text3);letter-spacing:.08em;margin-top:2px;}
+.sb-sec{padding:10px 12px 3px;font-size:10px;color:var(--text3);letter-spacing:.1em;font-weight:600;}
+.nav-btn{display:flex;align-items:center;gap:7px;padding:7px 10px;border-radius:var(--r);margin:1px 5px;cursor:pointer;font-size:12px;color:var(--text2);border:1px solid transparent;transition:.12s;}
+.nav-btn:hover{background:var(--sur2);}
+.nav-btn.active{background:var(--accl);border-color:rgba(90,79,212,.18);color:var(--acc);font-weight:600;}
+.mchip{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);margin:1px 5px;cursor:pointer;border:1px solid transparent;}
+.mchip:hover{background:var(--sur2);}
+.mchip.active{background:var(--sur2);border-color:var(--bdr);}
+.av{border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700;flex-shrink:0;}
+
+/* MAIN */
+#main{flex:1;display:flex;flex-direction:column;overflow:hidden;}
+#topbar{background:var(--sur);border-bottom:1px solid var(--bdr);padding:9px 20px;display:flex;align-items:center;gap:9px;flex-shrink:0;}
+.tb-title{font-family:"Syne",sans-serif;font-size:14px;font-weight:700;}
+.tb-badge{display:flex;align-items:center;gap:5px;background:var(--sur2);border:1px solid var(--bdr);border-radius:999px;padding:3px 10px 3px 4px;font-size:11px;}
+#sync-dot{width:7px;height:7px;border-radius:50%;background:#ccc;transition:.3s;}
+#sync-dot.ok{background:var(--grn);}
+#sync-dot.err{background:var(--red);}
+#sync-dot.ing{background:var(--amb);animation:blink 1s infinite;}
+@keyframes blink{0%,100%{opacity:1;}50%{opacity:.3;}}
+#sync-lbl{font-size:10px;color:var(--text3);}
+.msel{margin-left:auto;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:4px 7px;font-size:11px;cursor:pointer;}
+.sbtn{background:var(--acc);color:#fff;border:none;border-radius:var(--r);padding:6px 13px;font-size:11px;cursor:pointer;font-weight:500;}
+.sbtn:hover{background:#4A3FC4;}
+#content{flex:1;overflow-y:auto;}
+
+/* PAGES */
+.page{display:none;padding:18px 20px;}
+.page.active{display:block;}
+
+/* CARD */
+.card{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rl);padding:14px 16px;margin-bottom:10px;box-shadow:0 1px 4px rgba(0,0,0,.06);}
+.ct{font-family:"Syne",sans-serif;font-size:13px;font-weight:700;margin-bottom:2px;display:flex;align-items:center;gap:5px;}
+.cs{font-size:10px;color:var(--text3);margin-bottom:10px;}
+
+/* PROMISE */
+.pg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;}
+.pc{background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;}
+.pc.rate-ok{background:var(--grnbg);border-color:var(--grnbdr);}
+.pc.rate-ng{background:var(--ambbg);border-color:var(--ambbdr);}
+.pl{font-size:9px;color:var(--text3);display:block;margin-bottom:4px;font-weight:600;}
+.pv{font-size:20px;font-weight:700;font-family:"Syne",sans-serif;color:var(--text);}
+.pu{font-size:9px;color:var(--text3);margin-top:2px;}
+.mi{width:100%;background:transparent;border:none;font-size:20px;font-weight:700;font-family:"Syne",sans-serif;color:var(--text);outline:none;}
+.mi::placeholder{color:var(--text3);}
+
+/* KPI */
+.ks{margin-bottom:12px;}
+.kst{font-size:12px;font-weight:700;margin-bottom:5px;padding-bottom:4px;border-bottom:2px solid var(--accl);}
+.kr{background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;margin-bottom:4px;}
+.krh{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:4px;}
+.krow{display:flex;align-items:center;gap:8px;padding:4px 0;}
+.kl{font-size:11px;color:var(--text2);min-width:90px;}
+.ki{width:72px;padding:4px 8px;border:1px solid var(--bdr);border-radius:6px;font-size:14px;font-weight:700;font-family:"Syne",sans-serif;text-align:right;outline:none;background:var(--sur);}
+.ki:focus{border-color:var(--acc);}
+.kunit{font-size:10px;color:var(--text3);}
+.rate{font-size:13px;font-weight:700;font-family:"Syne",sans-serif;margin-left:auto;min-width:48px;text-align:right;}
+.rate.ok{color:var(--grn);}
+.rate.ng{color:var(--amb);}
+.rate.no{color:var(--text3);}
+.badge{font-size:16px;min-width:22px;text-align:center;}
+
+/* IMPR */
+.impr{display:none;background:var(--ambbg);border:1px solid var(--ambbdr);border-left:3px solid var(--amb);border-radius:var(--r);padding:8px 10px;margin-top:6px;}
+.impr-lbl{font-size:10px;font-weight:700;color:var(--amb);margin-bottom:3px;}
+.ta-sm{width:100%;background:var(--sur);border:1px solid var(--bdr);border-radius:6px;padding:5px 8px;font-size:11px;font-family:"Noto Sans JP",sans-serif;resize:vertical;outline:none;min-height:50px;}
+.ta-sm:focus{border-color:var(--acc);}
+
+/* SP (送客進捗) */
+.sp-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(110px,1fr));gap:6px;}
+.sp-cell{background:var(--sur);border:1px solid var(--bdr);border-radius:8px;padding:8px 10px;}
+.sp-lbl{font-size:10px;color:var(--text3);margin-bottom:4px;}
+.sp-row{display:flex;align-items:center;gap:4px;}
+.sp-inp{width:44px;border:none;border-bottom:1px solid var(--bdr);font-size:14px;font-weight:700;font-family:"Syne",sans-serif;text-align:center;outline:none;background:transparent;}
+.sp-inp:focus{border-bottom-color:var(--acc);}
+.sp-t{font-size:10px;color:var(--text3);}
+
+/* FB */
+.fb-box{background:var(--sur);border:1px solid rgba(90,79,212,.2);border-left:3px solid var(--acc);border-radius:var(--r);padding:9px 11px;margin-top:6px;}
+.fb-lbl{font-size:10px;font-weight:700;color:var(--acc);margin-bottom:4px;}
+.ta{width:100%;background:var(--sur2);border:1px solid var(--bdr);border-radius:6px;padding:7px 9px;font-family:"Noto Sans JP",sans-serif;font-size:12px;resize:vertical;outline:none;}
+.ta:focus{border-color:var(--acc);}
+
+/* KPI TABLE */
+.tw{overflow-x:auto;}
+.kt{width:100%;border-collapse:collapse;font-size:11px;}
+.kt th{padding:6px 8px;text-align:left;font-size:10px;color:var(--text3);border-bottom:2px solid var(--bdr);white-space:nowrap;}
+.kt td{padding:6px 8px;border-bottom:1px solid var(--bdr);}
+.kt tr:hover td{background:var(--sur2);}
+
+/* TEAM */
+.tg{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;}
+.tc{background:var(--sur);border:1px solid var(--bdr);border-radius:var(--rl);padding:13px 15px;}
+
+/* COMPARE */
+.cg{display:grid;grid-template-columns:repeat(auto-fit,minmax(120px,1fr));gap:8px;}
+
+/* TOAST */
+#toast{position:fixed;bottom:16px;right:16px;background:var(--sur);border:1px solid var(--bdr);border-radius:var(--r);padding:8px 14px;font-size:12px;box-shadow:0 6px 20px rgba(0,0,0,.1);transform:translateY(60px);opacity:0;transition:.3s;z-index:9999;}
+#toast.show{transform:translateY(0);opacity:1;}
+#toast.s{border-color:var(--grnbdr);color:var(--grn);}
+#toast.e{border-color:#FFCCCC;color:var(--red);}
+</style>
+</head>
+<body>
+<div id="app">
+
+<nav id="sb">
+  <div class="sb-logo">
+    <div class="sb-logo-t"><span class="sb-pip"></span>ACT/LOG</div>
+    <div class="sb-logo-s">MONTHLY ACTION SHEET</div>
+  </div>
+
+  <div class="sb-sec">MENU</div>
+  <div class="nav-btn" id="nav-kpi" onclick="gotoPage('kpi')">📋 KPI一覧</div>
+  <div class="nav-btn" id="nav-team" onclick="gotoPage('team')">&#x1F465; チーム全体</div>
+  <div class="nav-btn" id="nav-compare" onclick="gotoPage('compare')">&#x1F501; 前月比較</div>
+
+  <div class="sb-sec">MEMBER</div>
+  <div class="mchip active" id="chip-asami" onclick="pickMember('asami')">
+    <div class="av" style="width:26px;height:26px;font-size:11px;background:#EEF0FF;color:#5A4FD4;">浅</div>
+    <span style="font-size:12px;font-weight:500;">浅見</span>
+  </div>
+  <div class="mchip" id="chip-nomura" onclick="pickMember('nomura')">
+    <div class="av" style="width:26px;height:26px;font-size:11px;background:#EDFAF4;color:#0EA56A;">野</div>
+    <span style="font-size:12px;font-weight:500;">野村</span>
+  </div>
+  <div class="mchip" id="chip-satake" onclick="pickMember('satake')">
+    <div class="av" style="width:26px;height:26px;font-size:11px;background:#FFF0F0;color:#D03030;">佐</div>
+    <span style="font-size:12px;font-weight:500;">佐竹</span>
+  </div>
+  <div class="mchip" id="chip-takahara" onclick="pickMember('takahara')">
+    <div class="av" style="width:26px;height:26px;font-size:11px;background:#E0F7FA;color:#0891B2;">高</div>
+    <span style="font-size:12px;font-weight:500;">高原</span>
+  </div>
+</nav>
+
+<div id="main">
+  <div id="topbar">
+    <div class="tb-title" id="tb-title">入力</div>
+    <div class="tb-badge">
+      <div class="av" id="tb-av" style="width:20px;height:20px;font-size:9px;background:#EEF0FF;color:#5A4FD4;">浅</div>
+      <span id="tb-name">浅見</span>
+    </div>
+    <div id="sync-dot"></div>
+    <span id="sync-lbl">—</span>
+    <select class="msel" id="month-sel" onchange="changeMonth()">
+      <option value="2026-04">2026年4月</option>
+      <option value="2026-05">2026年5月</option>
+      <option value="2026-06" selected>2026年6月</option>
+      <option value="2026-07">2026年7月</option>
+      <option value="2026-08">2026年8月</option>
+      <option value="2026-09">2026年9月</option>
+      <option value="2026-10">2026年10月</option>
+      <option value="2026-11">2026年11月</option>
+      <option value="2026-12">2026年12月</option>
+      <option value="2027-01">2027年1月</option>
+      <option value="2027-02">2027年2月</option>
+      <option value="2027-03">2027年3月</option>
+    </select>
+    <button class="sbtn" onclick="manualSave()">&#x1F4BE; 保存</button>
+  </div>
+
+  <div id="content">
+
+  <!-- 入力 -->
+  <div class="page active" id="page-input">
+    <div class="card">
+      <div class="ct">&#x1F3C6; 公約・広告費</div>
+      <div class="cs">公約目標250万固定。広告費と実績を入力してください</div>
+      <div class="pg">
+        <div class="pc">
+          <label class="pl">公約目標（固定）</label>
+          <div class="pv" style="color:var(--acc);">2,500,000</div>
+          <div class="pu">円</div>
+        </div>
+        <div class="pc">
+          <label class="pl">広告費用</label>
+          <input class="mi" id="f-ad" type="text" inputmode="numeric" placeholder="0"
+            onfocus="mFocus(this)" onblur="mBlur(this,'adcost')" oninput="mInput(this,'adcost')"/>
+          <div class="pu">円</div>
+        </div>
+        <div class="pc">
+          <label class="pl">実績金額</label>
+          <input class="mi" id="f-promise" type="text" inputmode="numeric" placeholder="0"
+            onfocus="mFocus(this)" onblur="mBlur(this,'promise')" oninput="mInput(this,'promise')"/>
+          <div class="pu">円</div>
+        </div>
+        <div class="pc" id="pc-rate">
+          <label class="pl">進捗率</label>
+          <div class="pv" id="pv-rate">—</div>
+          <div class="pu">%</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct">&#x1F4CA; 月次KPI</div>
+      <div class="cs">現状を入力 → 達成率が自動計算。79%以下で改善策欄が表示されます</div>
+
+      <div class="ks">
+        <div class="kst">&#x1F4B0; 粗利</div>
+        <div class="kr">
+          <div class="krh">粗利合計 <span style="font-size:9px;color:var(--text3);">（人材紹介80万/送客27卒102万/送客28卒59.5万/送客中途8.5万）</span></div>
+          <div class="krow">
+            <span class="kl">KPI: 2,500,000円</span>
+            <input class="ki" id="k-profit" type="text" inputmode="numeric" placeholder="0"
+              onfocus="mFocus(this)" onblur="kMoneyBlur(this,'profit',2500000)" oninput="kMoneyInput(this,'profit',2500000)"/>
+            <span class="kunit">円</span>
+            <div class="rate no" id="r-profit">—</div>
+            <div class="badge" id="b-profit"></div>
+          </div>
+          <div class="impr" id="impr-profit">
+            <div class="impr-lbl">&#x1F4A1; 改善策</div>
+            <textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('profit',this.value)"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="ks">
+        <div class="kst">&#x1F464; 人材紹介 決定者数</div>
+        <div class="kr">
+          <div class="krow">
+            <span class="kl">KPI: 1名</span>
+            <input class="ki" id="k-hr" type="number" placeholder="0" oninput="kInput(this,'hr',1)"/>
+            <span class="kunit">名</span>
+            <div class="rate no" id="r-hr">—</div>
+            <div class="badge" id="b-hr"></div>
+          </div>
+          <div class="impr" id="impr-hr">
+            <div class="impr-lbl">&#x1F4A1; 改善策</div>
+            <textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('hr',this.value)"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <div class="ks">
+        <div class="kst">&#x1F4DE; 面談獲得数</div>
+        <div class="kr">
+          <div class="krh">27卒</div>
+          <div class="krow"><span class="kl">KPI: 10名</span><input class="ki" id="k-mg27" type="number" placeholder="0" oninput="kInput(this,'mg27',10)"/><span class="kunit">名</span><div class="rate no" id="r-mg27">—</div><div class="badge" id="b-mg27"></div></div>
+          <div class="impr" id="impr-mg27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg27',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">28卒</div>
+          <div class="krow"><span class="kl">KPI: 30名</span><input class="ki" id="k-mg28" type="number" placeholder="0" oninput="kInput(this,'mg28',30)"/><span class="kunit">名</span><div class="rate no" id="r-mg28">—</div><div class="badge" id="b-mg28"></div></div>
+          <div class="impr" id="impr-mg28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg28',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">中途</div>
+          <div class="krow"><span class="kl">KPI: 6名</span><input class="ki" id="k-mgMid" type="number" placeholder="0" oninput="kInput(this,'mgMid',6)"/><span class="kunit">名</span><div class="rate no" id="r-mgMid">—</div><div class="badge" id="b-mgMid"></div></div>
+          <div class="impr" id="impr-mgMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mgMid',this.value)"></textarea></div>
+        </div>
+      </div>
+
+      <div class="ks">
+        <div class="kst">&#x1F91D; 面談実施数</div>
+        <div class="kr">
+          <div class="krh">27卒</div>
+          <div class="krow"><span class="kl">KPI: 9名</span><input class="ki" id="k-ms27" type="number" placeholder="0" oninput="kInput(this,'ms27',9)"/><span class="kunit">名</span><div class="rate no" id="r-ms27">—</div><div class="badge" id="b-ms27"></div></div>
+          <div class="impr" id="impr-ms27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms27',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">28卒</div>
+          <div class="krow"><span class="kl">KPI: 27名</span><input class="ki" id="k-ms28" type="number" placeholder="0" oninput="kInput(this,'ms28',27)"/><span class="kunit">名</span><div class="rate no" id="r-ms28">—</div><div class="badge" id="b-ms28"></div></div>
+          <div class="impr" id="impr-ms28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms28',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">中途</div>
+          <div class="krow"><span class="kl">KPI: 5名</span><input class="ki" id="k-msMid" type="number" placeholder="0" oninput="kInput(this,'msMid',5)"/><span class="kunit">名</span><div class="rate no" id="r-msMid">—</div><div class="badge" id="b-msMid"></div></div>
+          <div class="impr" id="impr-msMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('msMid',this.value)"></textarea></div>
+        </div>
+      </div>
+
+      <div class="ks">
+        <div class="kst">&#x1F4E4; 送客進捗</div>
+        <div class="kr">
+          <div class="sp-grid">
+            <div class="sp-cell"><div class="sp-lbl">27卒（目標8名）</div><div class="sp-row"><input class="sp-inp" id="k-sk27" type="number" placeholder="0" oninput="kSp(this,'sk27')"/><span class="sp-t">名 / 8名</span></div></div>
+            <div class="sp-cell"><div class="sp-lbl">28卒（目標24名）</div><div class="sp-row"><input class="sp-inp" id="k-sk28" type="number" placeholder="0" oninput="kSp(this,'sk28')"/><span class="sp-t">名 / 24名</span></div></div>
+            <div class="sp-cell"><div class="sp-lbl">中途（目標5名）</div><div class="sp-row"><input class="sp-inp" id="k-skMid" type="number" placeholder="0" oninput="kSp(this,'skMid')"/><span class="sp-t">名 / 5名</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="ks">
+        <div class="kst">&#x2705; 先方面談実施数</div>
+        <div class="kr">
+          <div class="krh">27卒</div>
+          <div class="krow"><span class="kl">KPI: 6名</span><input class="ki" id="k-sm27" type="number" placeholder="0" oninput="kInput(this,'sm27',6)"/><span class="kunit">名</span><div class="rate no" id="r-sm27">—</div><div class="badge" id="b-sm27"></div></div>
+          <div class="impr" id="impr-sm27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm27',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">28卒</div>
+          <div class="krow"><span class="kl">KPI: 19名</span><input class="ki" id="k-sm28" type="number" placeholder="0" oninput="kInput(this,'sm28',19)"/><span class="kunit">名</span><div class="rate no" id="r-sm28">—</div><div class="badge" id="b-sm28"></div></div>
+          <div class="impr" id="impr-sm28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm28',this.value)"></textarea></div>
+          <div class="krh" style="margin-top:7px;">中途</div>
+          <div class="krow"><span class="kl">KPI: 4名</span><input class="ki" id="k-smMid" type="number" placeholder="0" oninput="kInput(this,'smMid',4)"/><span class="kunit">名</span><div class="rate no" id="r-smMid">—</div><div class="badge" id="b-smMid"></div></div>
+          <div class="impr" id="impr-smMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('smMid',this.value)"></textarea></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct">&#x1F4AC; マネージャーFB</div>
+      <div class="cs">全体へのフィードバック</div>
+      <div class="fb-box">
+        <div class="fb-lbl">M マネージャーコメント</div>
+        <textarea class="ta" id="f-fb" rows="3" placeholder="フィードバックを記入" oninput="cd.fb=this.value;triggerSave()"></textarea>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="ct">&#x1F680; 次月アクション設計</div>
+      <div class="cs">来月の動き方を今月中に決める</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
+        <div style="background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;">
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">&#x1F3C6; 公約</div>
+          <textarea class="ta" id="f-nextC" rows="4" placeholder="来月の公約数値と設計" oninput="cd.nextC=this.value;triggerSave()"></textarea>
+        </div>
+        <div style="background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;">
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">&#x1F4CC; 行動KPI</div>
+          <textarea class="ta" id="f-nextK" rows="4" placeholder="週次・日次の具体行動量" oninput="cd.nextK=this.value;triggerSave()"></textarea>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- KPI一覧 -->
+  <div class="page" id="page-kpi">
+    <div class="card">
+      <div class="ct">&#x1F4CB; KPI一覧 — 全メンバー</div>
+      <div class="cs" id="kpi-sub"></div>
+      <div class="tw"><table class="kt">
+        <thead><tr>
+          <th>メンバー</th><th>公約目標</th><th>実績</th><th>進捗率</th>
+          <th>粗利</th><th>粗利達成率</th>
+          <th>面談獲得27卒</th><th>面談獲得28卒</th><th>面談獲得中途</th>
+          <th>面談実施27卒</th><th>面談実施28卒</th><th>面談実施中途</th>
+          <th>送客27卒</th><th>送客28卒</th><th>送客中途</th>
+          <th>先方面談27卒</th><th>先方面談28卒</th><th>先方面談中途</th>
+        </tr></thead>
+        <tbody id="kpi-tbody"></tbody>
+      </table></div>
+    </div>
+  </div>
+
+  <!-- チーム全体 -->
+  <div class="page" id="page-team">
+    <div class="card"><div class="ct">&#x1F465; チーム全体</div><div class="cs" id="team-sub"></div></div>
+    <div class="tg" id="team-grid"></div>
+  </div>
+
+  <!-- 前月比較 -->
+  <div class="page" id="page-compare">
+    <div class="card">
+      <div class="ct">&#x1F501; 前月比較</div>
+      <div class="cs" id="cmp-sub"></div>
+      <div class="cg" id="cmp-grid"></div>
+    </div>
+  </div>
+
+  </div><!-- /#content -->
+</div><!-- /#main -->
+</div><!-- /#app -->
+<div id="toast"></div>
+
+<script>
+// CONFIG
+var MEMBERS=[
+  {id:"asami",   name:"浅見", ini:"浅", col:"#5A4FD4", bg:"#EEF0FF"},
+  {id:"nomura",  name:"野村", ini:"野", col:"#0EA56A", bg:"#EDFAF4"},
+  {id:"satake",  name:"佐竹", ini:"佐", col:"#D03030", bg:"#FFF0F0"},
+  {id:"takahara",name:"高原", ini:"高", col:"#0891B2", bg:"#E0F7FA"}
+];
+var PTGT=2500000;
+var FB="https://acsyon-63f0a-default-rtdb.asia-southeast1.firebasedatabase.app";
+var KPI_KEYS=[
+  {k:"profit",kpi:2500000,money:true},
+  {k:"hr",kpi:1},
+  {k:"mg27",kpi:10},{k:"mg28",kpi:30},{k:"mgMid",kpi:6},
+  {k:"ms27",kpi:9},{k:"ms28",kpi:27},{k:"msMid",kpi:5},
+  {k:"sm27",kpi:6},{k:"sm28",kpi:19},{k:"smMid",kpi:4}
+];
+
+// STATE
+var cm="asami";
+var month="2026-06";
+var cd={};
+var cache={};
+var useLocal=true;
+var saveTimer=null;
+var editing=false;
+var pollTimer=null;
+
+function blank(){
+  return {adcost:"",promise:"",
+    kpi:{profit:"",hr:"",mg27:"",mg28:"",mgMid:"",ms27:"",ms28:"",msMid:"",sk27:"",sk28:"",skMid:"",sm27:"",sm28:"",smMid:"",impr:{}},
+    fb:"",nextC:"",nextK:""};
+}
+
+// FIREBASE
+function fbGet(k,cb){
+  fetch(FB+"/sheets/"+k+".json")
+    .then(function(r){return r.ok?r.json():null;})
+    .then(function(v){cb(v);})
+    .catch(function(){cb(null);});
+}
+function fbSet(k,v,cb){
+  fetch(FB+"/sheets/"+k+".json",{method:"PUT",headers:{"Content-Type":"application/json"},body:JSON.stringify(v)})
+    .then(function(r){cb(r.ok);})
+    .catch(function(){cb(false);});
+}
+function lsGet(k){try{var v=localStorage.getItem("al:"+k);return v?JSON.parse(v):null;}catch(e){return null;}}
+function lsSet(k,v){try{localStorage.setItem("al:"+k,JSON.stringify(v));return true;}catch(e){return false;}}
+
+function sKey(m,mo){return m+"__"+mo;}
+function loadSheet(m,mo,cb){
+  var k=sKey(m,mo);
+  if(cache[k]!==undefined){cb(cache[k]);return;}
+  if(useLocal){var v=lsGet(k);cache[k]=v;cb(v);}
+  else fbGet(k,function(v){cache[k]=v;cb(v);});
+}
+function saveSheet(m,mo,data,cb){
+  var k=sKey(m,mo);
+  cache[k]=data;
+  if(useLocal){var ok=lsSet(k,data);if(cb)cb(ok);}
+  else fbSet(k,data,function(ok){if(cb)cb(ok);});
+}
+
+// SYNC STATUS
+function syncStatus(s,t){
+  var d=document.getElementById("sync-dot");
+  d.className=s;
+  document.getElementById("sync-lbl").textContent=t;
+}
+
+// AUTO SAVE
+function triggerSave(){
+  editing=true;
+  if(saveTimer)clearTimeout(saveTimer);
+  saveTimer=setTimeout(function(){
+    saveSheet(cm,month,cd,function(ok){
+      syncStatus(ok?"ok":"err", ok?"&#x1F7E2; 自動保存済み":"&#x26A0;&#xFE0F; 保存失敗");
+      setTimeout(function(){syncStatus("ok","&#x1F7E2; 全員と同期中");editing=false;},2000);
+    });
+  },1200);
+}
+
+// MANUAL SAVE
+function manualSave(){
+  saveSheet(cm,month,cd,function(ok){
+    showToast(ok?"s":"e", ok?"&#x2713; 保存しました":"保存に失敗しました");
+    if(ok)syncStatus("ok","&#x1F7E2; 全員と同期中");
+  });
+}
+function showToast(cls,msg){
+  var t=document.getElementById("toast");
+  t.innerHTML=msg;t.className="show "+cls;
+  setTimeout(function(){t.className="";},3000);
+}
+
+// POLLING
+function startPoll(){
+  if(pollTimer)clearInterval(pollTimer);
+  pollTimer=setInterval(function(){
+    if(editing)return;
+    var pg=document.querySelector(".page.active");
+    if(!pg)return;
+    var pid=pg.id;
+    if(pid==="page-input"){
+      delete cache[sKey(cm,month)];
+      fbGet(sKey(cm,month),function(fresh){
+        if(fresh&&JSON.stringify(fresh)!==JSON.stringify(cd)){
+          cd=fresh;cache[sKey(cm,month)]=fresh;paintForm();
+          syncStatus("ok","&#x1F504; 更新を反映しました");
+          setTimeout(function(){syncStatus("ok","&#x1F7E2; 全員と同期中");},3000);
+        }
+      });
+    }
+    if(pid==="page-kpi"){MEMBERS.forEach(function(m){delete cache[sKey(m.id,month)];});renderKpiTable();}
+    if(pid==="page-team"){MEMBERS.forEach(function(m){delete cache[sKey(m.id,month)];});renderTeam();}
+  },15000);
+}
+
+// INIT
+function init(){
+  var lm=localStorage.getItem("al_cm");
+  var lmo=localStorage.getItem("al_mo");
+  if(lm&&MEMBERS.find(function(x){return x.id===lm;}))cm=lm;
+  if(lmo){
+    var sel=document.getElementById("month-sel");
+    var opt=Array.from(sel.options).find(function(o){return o.value===lmo;});
+    if(opt)sel.value=lmo;
+  }
+  month=document.getElementById("month-sel").value;
+  updateChips();
+  updateTopbar();
+  loadSheet(cm,month,function(d){
+    cd=d||blank();
+    fixKpi();
+    paintForm();
+    syncStatus("ok","起動完了");
+  });
+  // Firebase connection check (GET only)
+  setTimeout(function(){
+    syncStatus("ing","接続中...");
+    fetch(FB+"/sheets.json?shallow=true")
+      .then(function(r){
+        if(r.ok){
+          useLocal=false;
+          Object.keys(cache).forEach(function(k){delete cache[k];});
+          loadSheet(cm,month,function(d){
+            cd=d||blank();fixKpi();paintForm();
+            syncStatus("ok","&#x1F7E2; 全員と同期中");
+            startPoll();
+          });
+        }else syncStatus("err","&#x26A0;&#xFE0F; ローカル保存中");
+      })
+      .catch(function(){syncStatus("err","&#x26A0;&#xFE0F; ローカル保存中");});
+  },600);
+}
+
+function fixKpi(){
+  if(!cd)cd=blank();
+  if(!cd.kpi)cd.kpi={impr:{}};
+  if(!cd.kpi.impr)cd.kpi.impr={};
+}
+
+// MEMBER
+function pickMember(id){
+  cm=id;
+  localStorage.setItem("al_cm",id);
+  updateChips();
+  updateTopbar();
+  loadSheet(cm,month,function(d){
+    cd=d||blank();fixKpi();paintForm();
+  });
+  // go to input page
+  document.querySelectorAll(".page").forEach(function(p){p.classList.remove("active");});
+  document.getElementById("page-input").classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(function(n){n.classList.remove("active");});
+  document.getElementById("tb-title").textContent="入力";
+}
+function updateChips(){
+  MEMBERS.forEach(function(m){
+    var c=document.getElementById("chip-"+m.id);
+    if(c)c.classList.toggle("active",m.id===cm);
+  });
+}
+function updateTopbar(){
+  var m=MEMBERS.find(function(x){return x.id===cm;});
+  if(!m)return;
+  var av=document.getElementById("tb-av");
+  av.textContent=m.ini;av.style.background=m.bg;av.style.color=m.col;
+  document.getElementById("tb-name").textContent=m.name;
+}
+
+// PAGE SWITCH
+function gotoPage(p){
+  document.querySelectorAll(".page").forEach(function(pg){pg.classList.remove("active");});
+  document.getElementById("page-"+p).classList.add("active");
+  document.querySelectorAll(".nav-btn").forEach(function(n){n.classList.remove("active");});
+  document.getElementById("nav-"+p).classList.add("active");
+  var t={kpi:"KPI一覧",team:"チーム全体",compare:"前月比較"};
+  document.getElementById("tb-title").textContent=t[p]||p;
+  if(p==="kpi")renderKpiTable();
+  if(p==="team")renderTeam();
+  if(p==="compare")renderCompare();
+}
+
+// MONTH
+function changeMonth(){
+  month=document.getElementById("month-sel").value;
+  localStorage.setItem("al_mo",month);
+  Object.keys(cache).forEach(function(k){delete cache[k];});
+  var pg=document.querySelector(".page.active");
+  var pid=pg?pg.id:"page-input";
+  if(pid==="page-input"){loadSheet(cm,month,function(d){cd=d||blank();fixKpi();paintForm();});}
+  if(pid==="page-kpi")renderKpiTable();
+  if(pid==="page-team")renderTeam();
+  if(pid==="page-compare")renderCompare();
+}
+
+// PAINT FORM
+function paintForm(){
+  if(editing)return;
+  setMI("f-ad",cd.adcost,true);
+  setMI("f-promise",cd.promise,true);
+  updatePromRate();
+  var k=cd.kpi||{};
+  setMI("k-profit",k.profit,true);
+  setV("k-hr",k.hr);
+  setV("k-mg27",k.mg27);setV("k-mg28",k.mg28);setV("k-mgMid",k.mgMid);
+  setV("k-ms27",k.ms27);setV("k-ms28",k.ms28);setV("k-msMid",k.msMid);
+  setV("k-sk27",k.sk27);setV("k-sk28",k.sk28);setV("k-skMid",k.skMid);
+  setV("k-sm27",k.sm27);setV("k-sm28",k.sm28);setV("k-smMid",k.smMid);
+  // rates
+  calcRate("profit",num(k.profit),2500000,true);
+  KPI_KEYS.filter(function(x){return !x.money;}).forEach(function(x){
+    calcRate(x.k,num(x.k==="hr"?k.hr:k[x.k]),x.kpi,false);
+  });
+  calcRate("hr",num(k.hr),1,false);
+  // restore impr
+  KPI_KEYS.forEach(function(x){
+    var el=document.getElementById("impr-"+x.k);
+    if(el){var ta=el.querySelector("textarea");if(ta)ta.value=(k.impr&&k.impr[x.k])||"";}
+  });
+  setTA("f-fb",cd.fb);
+  setTA("f-nextC",cd.nextC);
+  setTA("f-nextK",cd.nextK);
+}
+function setV(id,v){var el=document.getElementById(id);if(el)el.value=v||"";}
+function setMI(id,v,money){
+  var el=document.getElementById(id);if(!el)return;
+  if(money){var n=num(v);el.value=n>0?n.toLocaleString():""}
+  else el.value=v||"";
+}
+function setTA(id,v){var el=document.getElementById(id);if(el)el.value=v||"";}
+
+// MONEY HELPERS
+function num(v){return Number(String(v||0).replace(/,/g,""))||0;}
+function mFocus(el){el.value=el.value.replace(/,/g,"");}
+function mBlur(el,field){
+  var raw=num(el.value);el.value=raw>0?raw.toLocaleString():"";
+  cd[field]=raw||"";
+  updatePromRate();triggerSave();
+}
+function mInput(el,field){
+  el.value=el.value.replace(/[^0-9]/g,"");
+  cd[field]=num(el.value)||"";
+  updatePromRate();triggerSave();
+}
+function updatePromRate(){
+  var ad=num(cd.adcost),act=num(cd.promise),total=PTGT+ad;
+  var el=document.getElementById("pv-rate");
+  var cell=document.getElementById("pc-rate");
+  if(!el)return;
+  if(!total){el.textContent="—";el.style.color="var(--text)";return;}
+  var r=Math.round(act/total*100);
+  el.textContent=r;
+  el.style.color=r>=100?"var(--grn)":"var(--amb)";
+  if(cell){cell.className="pc "+(r>=100?"rate-ok":"rate-ng");}
+}
+
+// KPI INPUT
+function kInput(el,key,kpi){
+  if(!cd.kpi)cd.kpi={impr:{}};
+  cd.kpi[key]=el.value===""?"":num(el.value);
+  calcRate(key,num(el.value),kpi,false);
+  triggerSave();
+}
+function kSp(el,key){
+  if(!cd.kpi)cd.kpi={impr:{}};
+  cd.kpi[key]=el.value===""?"":num(el.value);
+  triggerSave();
+}
+function kMoneyInput(el,key,kpi){
+  el.value=el.value.replace(/[^0-9]/g,"");
+  if(!cd.kpi)cd.kpi={impr:{}};
+  cd.kpi[key]=num(el.value)||"";
+  calcRate(key,num(el.value),kpi,true);
+  triggerSave();
+}
+function kMoneyBlur(el,key,kpi){
+  var raw=num(el.value.replace(/,/g,""));
+  el.value=raw>0?raw.toLocaleString():"";
+  if(!cd.kpi)cd.kpi={impr:{}};
+  cd.kpi[key]=raw||"";
+  calcRate(key,raw,kpi,true);
+  triggerSave();
+}
+
+function calcRate(key,actual,kpi){
+  var rel=document.getElementById("r-"+key);
+  var bel=document.getElementById("b-"+key);
+  var iel=document.getElementById("impr-"+key);
+  if(!rel)return;
+  if(!actual){
+    rel.textContent="—";rel.className="rate no";
+    if(bel)bel.textContent="";
+    if(iel)iel.style.display="none";
+    return;
+  }
+  var r=Math.round(actual/kpi*100);
+  rel.textContent=r+"%";
+  rel.className="rate "+(r>=100?"ok":"ng");
+  if(bel)bel.textContent=r>=100?"&#x1F44C;":r>=80?"":"&#x26A0;&#xFE0F;";
+  if(iel)iel.style.display=r<80?"block":"none";
+}
+
+function saveImpr(key,val){
+  if(!cd.kpi)cd.kpi={impr:{}};
+  if(!cd.kpi.impr)cd.kpi.impr={};
+  cd.kpi.impr[key]=val;
+  triggerSave();
+}
+
+// KPI TABLE
+function renderKpiTable(){
+  document.getElementById("kpi-sub").textContent=month.replace("-","年")+"月 — 全メンバー";
+  var count=0;
+  var results=[];
+  MEMBERS.forEach(function(m,i){
+    loadSheet(m.id,month,function(d){
+      results[i]=d||blank();count++;
+      if(count===MEMBERS.length)buildKpiTable(results);
+    });
+  });
+}
+function buildKpiTable(all){
+  var fmtY=function(v){return v>0?"&#xA5;"+v.toLocaleString():"—";};
+  var rd=function(a,kpi){
+    if(!a)return"—";
+    var r=Math.round(a/kpi*100);
+    var col=r>=100?"var(--grn)":"var(--amb)";
+    return"<span style=\"color:"+col+"\">"+a+"<br><small>"+r+"%</small></span>";
+  };
+  document.getElementById("kpi-tbody").innerHTML=MEMBERS.map(function(m,i){
+    var d=all[i]||blank();var k=d.kpi||{};
+    var ad=num(d.adcost),act=num(d.promise),total=PTGT+ad;
+    var pr=total>0?Math.round(act/total*100):null;
+    return"<tr>"+
+      "<td><div style=\"display:flex;align-items:center;gap:5px;\"><div class=\"av\" style=\"width:20px;height:20px;font-size:9px;background:"+m.bg+";color:"+m.col+"\">"+m.ini+"</div>"+m.name+"</div></td>"+
+      "<td style=\"font-weight:600;\">&#xA5;2,500,000</td>"+
+      "<td>"+fmtY(act)+"</td>"+
+      "<td style=\"color:"+(pr!==null?(pr>=100?"var(--grn)":"var(--amb)"):"var(--text3)")+"\">"+( pr!==null?pr+"%":"—")+"</td>"+
+      "<td>"+rd(num(k.profit),2500000)+"</td>"+
+      "<td style=\"color:"+(num(k.profit)?Math.round(num(k.profit)/2500000*100)>=100?"var(--grn)":"var(--amb)":"var(--text3)")+"\">"+( num(k.profit)?Math.round(num(k.profit)/2500000*100)+"%":"—")+"</td>"+
+      "<td>"+rd(num(k.mg27),10)+"</td><td>"+rd(num(k.mg28),30)+"</td><td>"+rd(num(k.mgMid),6)+"</td>"+
+      "<td>"+rd(num(k.ms27),9)+"</td><td>"+rd(num(k.ms28),27)+"</td><td>"+rd(num(k.msMid),5)+"</td>"+
+      "<td>"+(num(k.sk27)||"—")+"/8</td><td>"+(num(k.sk28)||"—")+"/24</td><td>"+(num(k.skMid)||"—")+"/5</td>"+
+      "<td>"+rd(num(k.sm27),6)+"</td><td>"+rd(num(k.sm28),19)+"</td><td>"+rd(num(k.smMid),4)+"</td>"+
+    "</tr>";
+  }).join("");
+}
+
+// TEAM
+function renderTeam(){
+  document.getElementById("team-sub").textContent=month.replace("-","年")+"月";
+  var count=0;var results=[];
+  MEMBERS.forEach(function(m,i){
+    loadSheet(m.id,month,function(d){results[i]=d||blank();count++;if(count===MEMBERS.length)buildTeam(results);});
+  });
+}
+function buildTeam(all){
+  document.getElementById("team-grid").innerHTML=MEMBERS.map(function(m,i){
+    var d=all[i]||blank();var k=d.kpi||{};
+    var ad=num(d.adcost),act=num(d.promise),total=PTGT+ad;
+    var pr=total>0?Math.round(act/total*100):null;
+    var rows=[
+      {l:"粗利",a:num(k.profit),kpi:2500000,money:true},
+      {l:"面談獲得27卒",a:num(k.mg27),kpi:10},
+      {l:"面談獲得28卒",a:num(k.mg28),kpi:30},
+      {l:"面談実施27卒",a:num(k.ms27),kpi:9},
+      {l:"先方面談27卒",a:num(k.sm27),kpi:6}
+    ];
+    return"<div class=\"tc\" style=\"border-top:3px solid "+m.col+";\">"+
+      "<div style=\"display:flex;align-items:center;gap:8px;margin-bottom:10px;padding-bottom:8px;border-bottom:1px solid var(--bdr);\">"+
+      "<div class=\"av\" style=\"width:32px;height:32px;font-size:13px;background:"+m.bg+";color:"+m.col+"\">"+m.ini+"</div>"+
+      "<div><div style=\"font-size:13px;font-weight:700;\">"+m.name+"</div><div style=\"font-size:10px;color:var(--text3);\">"+month.replace("-","年")+"月</div></div>"+
+      "<div style=\"margin-left:auto;font-size:11px;font-weight:600;color:"+(pr!==null?(pr>=100?"var(--grn)":"var(--amb)"):"var(--text3)")+"\">"+( pr!==null?pr+"%":"—")+"</div>"+
+      "</div>"+
+      "<div style=\"display:flex;flex-direction:column;gap:4px;\">"+
+      rows.map(function(r){
+        var rt=r.a&&r.kpi?Math.round(r.a/r.kpi*100):null;var hit=rt!==null&&rt>=100;
+        return"<div style=\"display:flex;align-items:center;gap:5px;font-size:11px;\">"+
+          "<span style=\"flex:1;color:var(--text2);\">"+r.l+"</span>"+
+          "<span style=\"font-weight:700;font-family:Syne;color:"+(hit?"var(--grn)":rt?"var(--amb)":"var(--text3)")+"\">"+(r.a?r.a+(r.money?"円":"名"):"—")+"</span>"+
+          (rt!==null?"<span style=\"font-size:10px;color:"+(hit?"var(--grn)":"var(--amb)") +";\">"+rt+"%</span>":"")+"</div>";
+      }).join("")+"</div></div>";
+  }).join("");
+}
+
+// COMPARE
+function renderCompare(){
+  var parts=month.split("-").map(Number);
+  var pd=new Date(parts[0],parts[1]-2,1);
+  var pm=pd.getFullYear()+"-"+String(pd.getMonth()+1).padStart(2,"0");
+  var m=MEMBERS.find(function(x){return x.id===cm;});
+  document.getElementById("cmp-sub").textContent=(m?m.name+"さん  ":"")+month.replace("-","年")+"月 vs "+pm.replace("-","年")+"月";
+  loadSheet(cm,month,function(curr){
+    loadSheet(cm,pm,function(prev){
+      var grid=document.getElementById("cmp-grid");
+      if(!prev){grid.innerHTML="<div style=\"padding:12px;background:var(--sur2);border-radius:var(--r);text-align:center;font-size:11px;color:var(--text3);\">前月データがありません</div>";return;}
+      var mets=[
+        {l:"実績金額",c:num(curr&&curr.promise),p:num(prev.promise),money:true},
+        {l:"面談獲得27卒",c:num(curr&&curr.kpi&&curr.kpi.mg27),p:num(prev.kpi&&prev.kpi.mg27)},
+        {l:"面談獲得28卒",c:num(curr&&curr.kpi&&curr.kpi.mg28),p:num(prev.kpi&&prev.kpi.mg28)},
+        {l:"面談実施27卒",c:num(curr&&curr.kpi&&curr.kpi.ms27),p:num(prev.kpi&&prev.kpi.ms27)},
+        {l:"先方面談27卒",c:num(curr&&curr.kpi&&curr.kpi.sm27),p:num(prev.kpi&&prev.kpi.sm27)}
+      ];
+      grid.innerHTML=mets.map(function(item){
+        var d=item.c-item.p,s=d>0?"+":"",col=d>0?"var(--grn)":d<0?"var(--red)":"var(--text3)",ar=d>0?"↑":d<0?"↓":"→";
+        var disp=item.money?(item.c>0?"&#xA5;"+item.c.toLocaleString():"—"):(item.c||"—");
+        return"<div style=\"background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;\">"+
+          "<div style=\"font-size:10px;color:var(--text3);\">"+item.l+"</div>"+
+          "<div style=\"font-size:19px;font-weight:700;font-family:Syne;\">"+disp+"</div>"+
+          "<div style=\"font-size:11px;color:"+col+";\">"+ar+" "+s+(item.money&&d?"&#xA5;"+Math.abs(d).toLocaleString():d)+" <span style=\"color:var(--text3);\">前月比</span></div>"+
+          "</div>";
+      }).join("");
+    });
+  });
+}
+
+init();
+</script>
+</body>
+</html>
