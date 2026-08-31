@@ -230,8 +230,8 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
           <div style="font-size:10px;color:var(--acc);margin-bottom:4px;">※ 実績金額 − 広告費 で自動計算</div>
           <div class="krow">
             <span class="kl">KPI: 2,500,000円</span>
-            <input class="ki" id="k-profit" type="number" placeholder="0" readonly
-              style="background:var(--sur2);color:var(--text2);cursor:default;"/>
+            <input class="ki" id="k-profit" type="text" placeholder="自動計算" readonly
+              style="background:var(--sur2);color:var(--text2);cursor:default;width:110px;"/>
             <span class="kunit">円</span>
             <div class="rate no" id="r-profit">—</div>
             <div class="badge" id="b-profit"></div>
@@ -650,11 +650,14 @@ function mInput(el,field){
 function updatePromRate(){
   var ad=num(cd.adcost),act=num(cd.promise),total=PTGT+ad;
   // 粗利 = 実績金額 - 広告費（自動計算）
-  var profit=act-ad;
+  var profit=act>0||ad>0?act-ad:0;
   if(!cd.kpi)cd.kpi={impr:{}};
   cd.kpi.profit=profit>0?profit:"";
   var kEl=document.getElementById("k-profit");
-  if(kEl)kEl.value=profit>0?profit:"";
+  if(kEl){
+    kEl.value=profit>0?profit.toLocaleString():"";
+    kEl.style.color=profit>0?"var(--text)":"var(--text3)";
+  }
   calcRate("profit",profit>0?profit:0,2500000);
   // 進捗率
   var el=document.getElementById("pv-rate");
