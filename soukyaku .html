@@ -74,12 +74,12 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
 .kst{font-size:12px;font-weight:700;margin-bottom:5px;padding-bottom:4px;border-bottom:2px solid var(--accl);}
 .kr{background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--r);padding:10px 12px;margin-bottom:4px;}
 .krh{font-size:10px;font-weight:600;color:var(--text2);margin-bottom:4px;}
-.krow{display:flex;align-items:center;gap:8px;padding:4px 0;}
+.krow{display:flex;align-items:center;gap:8px;padding:6px 0;flex-wrap:wrap;}
 .kl{font-size:11px;color:var(--text2);min-width:90px;}
-.ki{width:72px;padding:4px 8px;border:1px solid var(--bdr);border-radius:6px;font-size:14px;font-weight:700;font-family:"Syne",sans-serif;text-align:right;outline:none;background:var(--sur);}
+.ki{width:84px;padding:5px 9px;border:1px solid var(--bdr);border-radius:6px;font-size:15px;font-weight:700;font-family:"Syne",sans-serif;text-align:right;outline:none;background:var(--sur);flex-shrink:0;}
 .ki:focus{border-color:var(--acc);}
-.kunit{font-size:10px;color:var(--text3);}
-.rate{font-size:13px;font-weight:700;font-family:"Syne",sans-serif;margin-left:auto;min-width:48px;text-align:right;}
+.kunit{font-size:11px;color:var(--text3);flex-shrink:0;}
+.rate{font-size:13px;font-weight:700;font-family:"Syne",sans-serif;margin-left:auto;min-width:52px;text-align:right;flex-shrink:0;}
 .rate.ok{color:var(--grn);}
 .rate.ng{color:var(--amb);}
 .rate.no{color:var(--text3);}
@@ -138,8 +138,8 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
 
   <div class="sb-sec">MENU</div>
   <div class="nav-btn" id="nav-kpi" onclick="gotoPage('kpi')">📋 KPI一覧</div>
-  <div class="nav-btn" id="nav-team" onclick="gotoPage('team')">&#x1F465; チーム全体</div>
-  <div class="nav-btn" id="nav-compare" onclick="gotoPage('compare')">&#x1F501; 前月比較</div>
+  <div class="nav-btn" id="nav-team" onclick="gotoPage('team')">👥 チーム全体</div>
+  <div class="nav-btn" id="nav-compare" onclick="gotoPage('compare')">🔁 前月比較</div>
 
   <div class="sb-sec">MEMBER</div>
   <div class="mchip active" id="chip-asami" onclick="pickMember('asami')">
@@ -183,7 +183,7 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
       <option value="2027-02">2027年2月</option>
       <option value="2027-03">2027年3月</option>
     </select>
-    <button class="sbtn" onclick="manualSave()">&#x1F4BE; 保存</button>
+    <button class="sbtn" onclick="manualSave()">💾 保存</button>
   </div>
 
   <div id="content">
@@ -191,7 +191,7 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
   <!-- 入力 -->
   <div class="page active" id="page-input">
     <div class="card">
-      <div class="ct">&#x1F3C6; 公約・広告費</div>
+      <div class="ct">🏆 公約・広告費</div>
       <div class="cs">公約目標250万固定。広告費と実績を入力してください</div>
       <div class="pg">
         <div class="pc">
@@ -220,11 +220,11 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
     </div>
 
     <div class="card">
-      <div class="ct">&#x1F4CA; 月次KPI</div>
+      <div class="ct">📊 月次KPI</div>
       <div class="cs">現状を入力 → 達成率が自動計算。79%以下で改善策欄が表示されます</div>
 
       <div class="ks">
-        <div class="kst">&#x1F4B0; 粗利</div>
+        <div class="kst">💰 粗利</div>
         <div class="kr">
           <div class="krh">粗利合計 <span style="font-size:9px;color:var(--text3);">（人材紹介80万/送客27卒102万/送客28卒59.5万/送客中途8.5万）</span></div>
           <div class="krow">
@@ -236,14 +236,14 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
             <div class="badge" id="b-profit"></div>
           </div>
           <div class="impr" id="impr-profit">
-            <div class="impr-lbl">&#x1F4A1; 改善策</div>
+            <div class="impr-lbl">💡 改善策</div>
             <textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('profit',this.value)"></textarea>
           </div>
         </div>
       </div>
 
       <div class="ks">
-        <div class="kst">&#x1F464; 人材紹介 決定者数</div>
+        <div class="kst">👤 人材紹介 決定者数</div>
         <div class="kr">
           <div class="krow">
             <span class="kl">KPI: 1名</span>
@@ -253,44 +253,44 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
             <div class="badge" id="b-hr"></div>
           </div>
           <div class="impr" id="impr-hr">
-            <div class="impr-lbl">&#x1F4A1; 改善策</div>
+            <div class="impr-lbl">💡 改善策</div>
             <textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('hr',this.value)"></textarea>
           </div>
         </div>
       </div>
 
       <div class="ks">
-        <div class="kst">&#x1F4DE; 面談獲得数</div>
+        <div class="kst">📞 面談獲得数</div>
         <div class="kr">
           <div class="krh">27卒</div>
           <div class="krow"><span class="kl">KPI: 10名</span><input class="ki" id="k-mg27" type="number" placeholder="0" oninput="kInput(this,'mg27',10)"/><span class="kunit">名</span><div class="rate no" id="r-mg27">—</div><div class="badge" id="b-mg27"></div></div>
-          <div class="impr" id="impr-mg27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg27',this.value)"></textarea></div>
+          <div class="impr" id="impr-mg27"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg27',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">28卒</div>
           <div class="krow"><span class="kl">KPI: 30名</span><input class="ki" id="k-mg28" type="number" placeholder="0" oninput="kInput(this,'mg28',30)"/><span class="kunit">名</span><div class="rate no" id="r-mg28">—</div><div class="badge" id="b-mg28"></div></div>
-          <div class="impr" id="impr-mg28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg28',this.value)"></textarea></div>
+          <div class="impr" id="impr-mg28"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mg28',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">中途</div>
           <div class="krow"><span class="kl">KPI: 6名</span><input class="ki" id="k-mgMid" type="number" placeholder="0" oninput="kInput(this,'mgMid',6)"/><span class="kunit">名</span><div class="rate no" id="r-mgMid">—</div><div class="badge" id="b-mgMid"></div></div>
-          <div class="impr" id="impr-mgMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mgMid',this.value)"></textarea></div>
+          <div class="impr" id="impr-mgMid"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('mgMid',this.value)"></textarea></div>
         </div>
       </div>
 
       <div class="ks">
-        <div class="kst">&#x1F91D; 面談実施数</div>
+        <div class="kst">🤝 面談実施数</div>
         <div class="kr">
           <div class="krh">27卒</div>
           <div class="krow"><span class="kl">KPI: 9名</span><input class="ki" id="k-ms27" type="number" placeholder="0" oninput="kInput(this,'ms27',9)"/><span class="kunit">名</span><div class="rate no" id="r-ms27">—</div><div class="badge" id="b-ms27"></div></div>
-          <div class="impr" id="impr-ms27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms27',this.value)"></textarea></div>
+          <div class="impr" id="impr-ms27"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms27',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">28卒</div>
           <div class="krow"><span class="kl">KPI: 27名</span><input class="ki" id="k-ms28" type="number" placeholder="0" oninput="kInput(this,'ms28',27)"/><span class="kunit">名</span><div class="rate no" id="r-ms28">—</div><div class="badge" id="b-ms28"></div></div>
-          <div class="impr" id="impr-ms28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms28',this.value)"></textarea></div>
+          <div class="impr" id="impr-ms28"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('ms28',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">中途</div>
           <div class="krow"><span class="kl">KPI: 5名</span><input class="ki" id="k-msMid" type="number" placeholder="0" oninput="kInput(this,'msMid',5)"/><span class="kunit">名</span><div class="rate no" id="r-msMid">—</div><div class="badge" id="b-msMid"></div></div>
-          <div class="impr" id="impr-msMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('msMid',this.value)"></textarea></div>
+          <div class="impr" id="impr-msMid"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('msMid',this.value)"></textarea></div>
         </div>
       </div>
 
       <div class="ks">
-        <div class="kst">&#x1F4E4; 送客進捗</div>
+        <div class="kst">📤 送客進捗</div>
         <div class="kr">
           <div class="sp-grid">
             <div class="sp-cell"><div class="sp-lbl">27卒（目標8名）</div><div class="sp-row"><input class="sp-inp" id="k-sk27" type="number" placeholder="0" oninput="kSp(this,'sk27')"/><span class="sp-t">名 / 8名</span></div></div>
@@ -301,23 +301,23 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
       </div>
 
       <div class="ks">
-        <div class="kst">&#x2705; 先方面談実施数</div>
+        <div class="kst">✅ 先方面談実施数</div>
         <div class="kr">
           <div class="krh">27卒</div>
           <div class="krow"><span class="kl">KPI: 6名</span><input class="ki" id="k-sm27" type="number" placeholder="0" oninput="kInput(this,'sm27',6)"/><span class="kunit">名</span><div class="rate no" id="r-sm27">—</div><div class="badge" id="b-sm27"></div></div>
-          <div class="impr" id="impr-sm27"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm27',this.value)"></textarea></div>
+          <div class="impr" id="impr-sm27"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm27',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">28卒</div>
           <div class="krow"><span class="kl">KPI: 19名</span><input class="ki" id="k-sm28" type="number" placeholder="0" oninput="kInput(this,'sm28',19)"/><span class="kunit">名</span><div class="rate no" id="r-sm28">—</div><div class="badge" id="b-sm28"></div></div>
-          <div class="impr" id="impr-sm28"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm28',this.value)"></textarea></div>
+          <div class="impr" id="impr-sm28"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('sm28',this.value)"></textarea></div>
           <div class="krh" style="margin-top:7px;">中途</div>
           <div class="krow"><span class="kl">KPI: 4名</span><input class="ki" id="k-smMid" type="number" placeholder="0" oninput="kInput(this,'smMid',4)"/><span class="kunit">名</span><div class="rate no" id="r-smMid">—</div><div class="badge" id="b-smMid"></div></div>
-          <div class="impr" id="impr-smMid"><div class="impr-lbl">&#x1F4A1; 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('smMid',this.value)"></textarea></div>
+          <div class="impr" id="impr-smMid"><div class="impr-lbl">💡 改善策</div><textarea class="ta-sm" placeholder="原因と改善アクション" oninput="saveImpr('smMid',this.value)"></textarea></div>
         </div>
       </div>
     </div>
 
     <div class="card">
-      <div class="ct">&#x1F4AC; マネージャーFB</div>
+      <div class="ct">💬 マネージャーFB</div>
       <div class="cs">全体へのフィードバック</div>
       <div class="fb-box">
         <div class="fb-lbl">M マネージャーコメント</div>
@@ -326,15 +326,15 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
     </div>
 
     <div class="card">
-      <div class="ct">&#x1F680; 次月アクション設計</div>
+      <div class="ct">🚀 次月アクション設計</div>
       <div class="cs">来月の動き方を今月中に決める</div>
       <div style="display:grid;grid-template-columns:1fr 1fr;gap:10px;">
         <div style="background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;">
-          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">&#x1F3C6; 公約</div>
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">🏆 公約</div>
           <textarea class="ta" id="f-nextC" rows="4" placeholder="来月の公約数値と設計" oninput="cd.nextC=this.value;triggerSave()"></textarea>
         </div>
         <div style="background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;">
-          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">&#x1F4CC; 行動KPI</div>
+          <div style="font-size:10px;font-weight:700;color:var(--text2);margin-bottom:5px;">📌 行動KPI</div>
           <textarea class="ta" id="f-nextK" rows="4" placeholder="週次・日次の具体行動量" oninput="cd.nextK=this.value;triggerSave()"></textarea>
         </div>
       </div>
@@ -344,7 +344,7 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
   <!-- KPI一覧 -->
   <div class="page" id="page-kpi">
     <div class="card">
-      <div class="ct">&#x1F4CB; KPI一覧 — 全メンバー</div>
+      <div class="ct">📋 KPI一覧 — 全メンバー</div>
       <div class="cs" id="kpi-sub"></div>
       <div class="tw"><table class="kt">
         <thead><tr>
@@ -362,14 +362,14 @@ body{font-family:"Noto Sans JP",sans-serif;background:var(--bg);color:var(--text
 
   <!-- チーム全体 -->
   <div class="page" id="page-team">
-    <div class="card"><div class="ct">&#x1F465; チーム全体</div><div class="cs" id="team-sub"></div></div>
+    <div class="card"><div class="ct">👥 チーム全体</div><div class="cs" id="team-sub"></div></div>
     <div class="tg" id="team-grid"></div>
   </div>
 
   <!-- 前月比較 -->
   <div class="page" id="page-compare">
     <div class="card">
-      <div class="ct">&#x1F501; 前月比較</div>
+      <div class="ct">🔁 前月比較</div>
       <div class="cs" id="cmp-sub"></div>
       <div class="cg" id="cmp-grid"></div>
     </div>
@@ -456,8 +456,8 @@ function triggerSave(){
   if(saveTimer)clearTimeout(saveTimer);
   saveTimer=setTimeout(function(){
     saveSheet(cm,month,cd,function(ok){
-      syncStatus(ok?"ok":"err", ok?"&#x1F7E2; 自動保存済み":"&#x26A0;&#xFE0F; 保存失敗");
-      setTimeout(function(){syncStatus("ok","&#x1F7E2; 全員と同期中");editing=false;},2000);
+      syncStatus(ok?"ok":"err", ok?"🟢 自動保存済み":"⚠️ 保存失敗");
+      setTimeout(function(){syncStatus("ok","🟢 全員と同期中");editing=false;},2000);
     });
   },1200);
 }
@@ -465,8 +465,8 @@ function triggerSave(){
 // MANUAL SAVE
 function manualSave(){
   saveSheet(cm,month,cd,function(ok){
-    showToast(ok?"s":"e", ok?"&#x2713; 保存しました":"保存に失敗しました");
-    if(ok)syncStatus("ok","&#x1F7E2; 全員と同期中");
+    showToast(ok?"s":"e", ok?"✓ 保存しました":"保存に失敗しました");
+    if(ok)syncStatus("ok","🟢 全員と同期中");
   });
 }
 function showToast(cls,msg){
@@ -488,8 +488,8 @@ function startPoll(){
       fbGet(sKey(cm,month),function(fresh){
         if(fresh&&JSON.stringify(fresh)!==JSON.stringify(cd)){
           cd=fresh;cache[sKey(cm,month)]=fresh;paintForm();
-          syncStatus("ok","&#x1F504; 更新を反映しました");
-          setTimeout(function(){syncStatus("ok","&#x1F7E2; 全員と同期中");},3000);
+          syncStatus("ok","🔄 更新を反映しました");
+          setTimeout(function(){syncStatus("ok","🟢 全員と同期中");},3000);
         }
       });
     }
@@ -527,12 +527,12 @@ function init(){
           Object.keys(cache).forEach(function(k){delete cache[k];});
           loadSheet(cm,month,function(d){
             cd=d||blank();fixKpi();paintForm();
-            syncStatus("ok","&#x1F7E2; 全員と同期中");
+            syncStatus("ok","🟢 全員と同期中");
             startPoll();
           });
-        }else syncStatus("err","&#x26A0;&#xFE0F; ローカル保存中");
+        }else syncStatus("err","⚠️ ローカル保存中");
       })
-      .catch(function(){syncStatus("err","&#x26A0;&#xFE0F; ローカル保存中");});
+      .catch(function(){syncStatus("err","⚠️ ローカル保存中");});
   },600);
 }
 
@@ -700,7 +700,7 @@ function calcRate(key,actual,kpi){
   var r=Math.round(actual/kpi*100);
   rel.textContent=r+"%";
   rel.className="rate "+(r>=100?"ok":"ng");
-  if(bel)bel.textContent=r>=100?"&#x1F44C;":r>=80?"":"&#x26A0;&#xFE0F;";
+  if(bel)bel.textContent=r>=100?"👌":r>=80?"":"⚠️";
   if(iel)iel.style.display=r<80?"block":"none";
 }
 
@@ -724,7 +724,7 @@ function renderKpiTable(){
   });
 }
 function buildKpiTable(all){
-  var fmtY=function(v){return v>0?"&#xA5;"+v.toLocaleString():"—";};
+  var fmtY=function(v){return v>0?"¥"+v.toLocaleString():"—";};
   var rd=function(a,kpi){
     if(!a)return"—";
     var r=Math.round(a/kpi*100);
@@ -737,7 +737,7 @@ function buildKpiTable(all){
     var pr=total>0?Math.round(act/total*100):null;
     return"<tr>"+
       "<td><div style=\"display:flex;align-items:center;gap:5px;\"><div class=\"av\" style=\"width:20px;height:20px;font-size:9px;background:"+m.bg+";color:"+m.col+"\">"+m.ini+"</div>"+m.name+"</div></td>"+
-      "<td style=\"font-weight:600;\">&#xA5;2,500,000</td>"+
+      "<td style=\"font-weight:600;\">¥2,500,000</td>"+
       "<td>"+fmtY(act)+"</td>"+
       "<td style=\"color:"+(pr!==null?(pr>=100?"var(--grn)":"var(--amb)"):"var(--text3)")+"\">"+( pr!==null?pr+"%":"—")+"</td>"+
       "<td>"+rd(num(k.profit),2500000)+"</td>"+
@@ -807,11 +807,11 @@ function renderCompare(){
       ];
       grid.innerHTML=mets.map(function(item){
         var d=item.c-item.p,s=d>0?"+":"",col=d>0?"var(--grn)":d<0?"var(--red)":"var(--text3)",ar=d>0?"↑":d<0?"↓":"→";
-        var disp=item.money?(item.c>0?"&#xA5;"+item.c.toLocaleString():"—"):(item.c||"—");
+        var disp=item.money?(item.c>0?"¥"+item.c.toLocaleString():"—"):(item.c||"—");
         return"<div style=\"background:var(--sur2);border:1px solid var(--bdr);border-radius:var(--rl);padding:10px 12px;\">"+
           "<div style=\"font-size:10px;color:var(--text3);\">"+item.l+"</div>"+
           "<div style=\"font-size:19px;font-weight:700;font-family:Syne;\">"+disp+"</div>"+
-          "<div style=\"font-size:11px;color:"+col+";\">"+ar+" "+s+(item.money&&d?"&#xA5;"+Math.abs(d).toLocaleString():d)+" <span style=\"color:var(--text3);\">前月比</span></div>"+
+          "<div style=\"font-size:11px;color:"+col+";\">"+ar+" "+s+(item.money&&d?"¥"+Math.abs(d).toLocaleString():d)+" <span style=\"color:var(--text3);\">前月比</span></div>"+
           "</div>";
       }).join("");
     });
