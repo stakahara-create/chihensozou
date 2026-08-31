@@ -620,25 +620,31 @@ function routeCommand(q){
   return null;
 }
 
+// ★ ここをCloudflare Workerをデプロイした後のURLに書き換えてください
+// 例: "https://z-proxy.your-subdomain.workers.dev"
+const PROXY_URL = "https://REPLACE-ME.workers.dev";
+
 async function callClaude(userText){
   const systemPrompt = `あなたは「Z」という名前の、高原晟也さんの音声パートナーです。仕事の相談にも雑談にも、何でも自由に付き合ってください。
 参考までに晟也さんは知変創造(スポーツ協賛セールス、八王子ビートレインズ・山梨クィーンビーズ・上野原サンライズを担当)の代表取締役であり、エノバンス(新卒紹介エージェント)でもチームを率いていますが、話題を仕事に限定する必要はありません。相手が振った話題に自然についていってください。
 音声で話しかけられている想定なので、口頭で聞いて自然な、短く簡潔な日本語(2〜4文程度)で答えてください。箇条書きや記号の多用は避け、話し言葉にしてください。分からないことは正直に分からないと言い、想像で具体的な社名・数字を作らないでください。`;
+  if(PROXY_URL.includes('REPLACE-ME')){
+    return 'プロキシのURLがまだ設定されていません。z-proxy-worker.jsをデプロイして、そのURLをZ.html内のPROXY_URLに設定してください。';
+  }
   try{
-    const response = await fetch("https://api.anthropic.com/v1/messages", {
+    const response = await fetch(PROXY_URL, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
-        model: "claude-sonnet-4-6",
-        max_tokens: 400,
         system: systemPrompt,
         messages: [{ role: "user", content: userText }]
       })
     });
     const data = await response.json();
+    if(data.error){ return 'プロキシ側でエラー: ' + (data.error.message || JSON.stringify(data.error)); }
     const textBlock = (data.content || []).find(b => b.type === 'text');
     return textBlock ? textBlock.text : "うまく応答を生成できませんでした。";
-  }catch(e){ return "通信エラーで応答できませんでした。ネットワーク状況を確認してください。"; }
+  }catch(e){ return "通信エラーで応答できませんでした。プロキシのURLとCORS設定を確認してください。"; }
 }
 
 async function handleUserUtterance(text){
